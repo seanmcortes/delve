@@ -60,7 +60,7 @@ class Game:
 	def load_data(self):
 		image_folder = path.join(path.dirname(__file__), 'image')
 		self.title_font_path = path.join(image_folder, 'CuteFont-Regular.ttf')	# get path for cutefont
-	
+
 
 	"""
 	Display text on the screen.
@@ -85,6 +85,30 @@ class Game:
 		self.screen.blit(text_surface, text_rect)
 	# https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
 
+	def quitgame(self):
+	    pygame.quit()
+	    quit()
+
+	def text_objects(self, text, font):
+	    textSurface = font.render(text, True, BLACK)
+	    return textSurface, textSurface.get_rect()
+
+	def button(self, msg, x, y, w, h, ic, ac, action=None):
+	    mouse = pygame.mouse.get_pos()
+	    click = pygame.mouse.get_pressed()
+	    if x + w > mouse[0] > x and y + h > mouse[1] > y:
+	        pygame.draw.rect(self.screen, ac,(x,y,w,h))
+
+	        if click[0] == 1 and action != None:
+	            action()
+	    else:
+	    	pygame.draw.rect(self.screen, ic,(x,y,w,h))
+
+	    smallText = pygame.font.SysFont(self.title_font_path,20)
+	    textSurf, textRect = self.text_objects("Quit", smallText)
+	    textRect.center = ( (x+(w/2)), (y+(h/2)) )
+	    self.screen.blit(textSurf, textRect)
+
 	"""
 	Display the main menu screen.
 
@@ -94,7 +118,15 @@ class Game:
 	3. Exit the game
 	"""
 	def run_main_menu(self):
-		pass
+		self.show_main_menu = True
+		while self.show_main_menu:
+			self.dt = self.clock.tick(FPS) / 1000
+			self.events_game_over()
+			self.screen.fill(BLACK)
+			self.text_to_screen("DELVE", self.title_font_path, 100, WHITE, WIDTH / 2, HEIGHT / 4)
+			self.button("Quit", 400, 400, 100, 50, LIGHTGREY, DARKGREY, self.quitgame)
+			pygame.display.flip()
+
 
 
 	"""
@@ -113,7 +145,7 @@ class Game:
 
 
 	"""
-	Fill screen and display text for game over screen. 
+	Fill screen and display text for game over screen.
 	"""
 	def draw_game_over(self):
 		self.screen.fill(BLACK)
@@ -122,7 +154,7 @@ class Game:
 		self.text_to_screen("Save", self.title_font_path, 25, WHITE, WIDTH / 2, HEIGHT / 1.75)
 		self.text_to_screen("Main Menu", self.title_font_path, 25, WHITE, WIDTH / 2, HEIGHT / 1.5)
 		pygame.display.flip()
-	
+
 
 	"""
 	Event listener for game over screen.
