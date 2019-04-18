@@ -84,10 +84,15 @@ class Game:
 
 		self.screen.blit(text_surface, text_rect)
 	# https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
-
+	"""
+	Helper functions for main menu
+	"""
 	def quitgame(self):
 	    pygame.quit()
 	    quit()
+
+	def playgame(self):
+	    self.show_main_menu = False
 
 	def text_objects(self, text, font):
 	    textSurface = font.render(text, True, BLACK)
@@ -105,7 +110,7 @@ class Game:
 	    	pygame.draw.rect(self.screen, ic,(x,y,w,h))
 
 	    smallText = pygame.font.SysFont(self.title_font_path,20)
-	    textSurf, textRect = self.text_objects("Quit", smallText)
+	    textSurf, textRect = self.text_objects(msg, smallText)
 	    textRect.center = ( (x+(w/2)), (y+(h/2)) )
 	    self.screen.blit(textSurf, textRect)
 
@@ -125,6 +130,7 @@ class Game:
 			self.screen.fill(BLACK)
 			self.text_to_screen("DELVE", self.title_font_path, 100, WHITE, WIDTH / 2, HEIGHT / 4)
 			self.button("Quit", 400, 400, 100, 50, LIGHTGREY, DARKGREY, self.quitgame)
+			self.button("Play", 140, 400, 100, 50, LIGHTGREY, DARKGREY, self.playgame)
 			pygame.display.flip()
 
 
