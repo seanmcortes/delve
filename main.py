@@ -102,12 +102,20 @@ class Game:
 	    mouse = pygame.mouse.get_pos()
 	    click = pygame.mouse.get_pressed()
 	    if x + w > mouse[0] > x and y + h > mouse[1] > y:
-	        pygame.draw.rect(self.screen, ac,(x,y,w,h))
+	        pygame.draw.rect(self.screen, ic,(x,y,w,h))
+	        pygame.draw.line(self.screen, LIGHTGREY, (x-1, y-1), (x+w, y-1))
+	        pygame.draw.line(self.screen, WHITE, (x-1, y+h+1), (x+w+1, y+h+1))
+	        pygame.draw.line(self.screen, LIGHTGREY, (x-1, y-1), (x-1, y+h))
+	        pygame.draw.line(self.screen, WHITE, (x+w+1, y-1), (x+w+1, y+h+1))
 
 	        if click[0] == 1 and action != None:
 	            action()
 	    else:
 	    	pygame.draw.rect(self.screen, ic,(x,y,w,h))
+	    	pygame.draw.line(self.screen, WHITE, (x-1, y-1), (x+w, y-1))
+	    	pygame.draw.line(self.screen, DARKGREY, (x-1, y+h+1), (x+w+1, y+h+1))
+	    	pygame.draw.line(self.screen, WHITE, (x-1, y-1), (x-1, y+h))
+	    	pygame.draw.line(self.screen, DARKGREY, (x+w+1, y-1), (x+w+1, y+h+1))
 
 	    smallText = pygame.font.SysFont(self.title_font_path,20)
 	    textSurf, textRect = self.text_objects(msg, smallText)
