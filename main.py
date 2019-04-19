@@ -107,6 +107,8 @@ class Game:
 	        pygame.draw.line(self.screen, WHITE, (x-1, y+h+1), (x+w+1, y+h+1))
 	        pygame.draw.line(self.screen, LIGHTGREY, (x-1, y-1), (x-1, y+h))
 	        pygame.draw.line(self.screen, WHITE, (x+w+1, y-1), (x+w+1, y+h+1))
+	        x=x+1
+	        y=y+1
 
 	        if click[0] == 1 and action != None:
 	            action()
