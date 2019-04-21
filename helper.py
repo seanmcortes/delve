@@ -23,46 +23,8 @@ def text_to_screen(screen, text, path, size, color, x=0, y=0, align="center"):
 
     screen.blit(text_surface, text_rect)
 
-
-"""
-    Render button on screen.
-    Args:
-        msg (str): text on button
-        x: x-coord position on screen
-        y: y-coord position on screen
-        w: width of button
-        h: height of button
-        ic:
-        ac:
-        action: function which executes when button is pressed
-"""
-def button(screen, msg, x, y, w, h, ic, ac, action=None):
-    mouse = pygame.mouse.get_pos()
-    click = pygame.mouse.get_pressed()
-    if x + w > mouse[0] > x and y + h > mouse[1] > y:
-        pygame.draw.rect(screen, ic,(x,y,w,h))
-        pygame.draw.line(screen, LIGHTGREY, (x-1, y-1), (x+w, y-1))
-        pygame.draw.line(screen, WHITE, (x-1, y+h+1), (x+w+1, y+h+1))
-        pygame.draw.line(screen, LIGHTGREY, (x-1, y-1), (x-1, y+h))
-        pygame.draw.line(screen, WHITE, (x+w+1, y-1), (x+w+1, y+h+1))
-        x=x+1
-        y=y+1
-
-        if click[0] == 1 and action != None:
-            action()
-        else:
-            pygame.draw.rect(screen, ic,(x,y,w,h))
-            pygame.draw.line(screen, WHITE, (x-1, y-1), (x+w, y-1))
-            pygame.draw.line(screen, DARKGREY, (x-1, y+h+1), (x+w+1, y+h+1))
-            pygame.draw.line(screen, WHITE, (x-1, y-1), (x-1, y+h))
-            pygame.draw.line(screen, DARKGREY, (x+w+1, y-1), (x+w+1, y+h+1))
-
-        smallText = pygame.font.SysFont(TITLE_FONT_PATH,20)
-        textSurf, textRect = text_objects(msg, smallText)
-        textRect.center = ( (x+(w/2)), (y+(h/2)) )
-        screen.blit(textSurf, textRect)
-
-
-def text_objects(text, font):
-    textSurface = font.render(text, True, BLACK)
-    return textSurface, textSurface.get_rect()
+def text_objects(message, font_path, font_size, font_color):
+    text_font = pygame.freetype.Font(font_path, font_size)
+    textSurface, rect = text_font.render(message, font_color)
+    #textRect = textSurface.get_rect()
+    return textSurface, rect
