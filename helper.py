@@ -26,4 +26,5 @@ def text_to_screen(screen, text, path, size, color, x=0, y=0, align="center"):
 def text_objects(message, font_path, font_size, font_color):
     text_font = pygame.freetype.Font(font_path, font_size)
     textSurface, rect = text_font.render(message, font_color)
+    #
     return textSurface, rect

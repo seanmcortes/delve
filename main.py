@@ -5,7 +5,7 @@ import pygame.freetype
 from settings import *
 from sprites import *
 from scenes import *
-
+#
 """
 Manages games scenes
 """
