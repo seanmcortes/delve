@@ -5,16 +5,6 @@ from helper import *
 from settings import *
 from sprites import *
 
-# class SceneManager(object):
-#   def __init__(self):
-#       self.go_to(MainMenuScene())
-
-#   def go_to(self, scene):
-#       self.scene = scene
-#       self.scene.manager = self
-
-# https://stackoverflow.com/questions/14700889/pygame-level-menu-states
-
 
 """
 Parent class for game scene.
@@ -47,7 +37,6 @@ class GameScene(object):
             pygame.draw.line(screen, LIGHTGREY, (0, y), (WIDTH, y))
 
 
-
 """
 Display the main menu screen.
 
@@ -75,7 +64,6 @@ class MainMenuScene(object):
     def playgame(self):
         self.Game.go_to(Level1Scene())
         
-
     def update(self):
         pass
 
@@ -108,7 +96,6 @@ class Level1Scene(GameScene):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-
 
 
 """
