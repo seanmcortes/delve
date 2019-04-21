@@ -7,7 +7,7 @@ from sprites import *
 import scenes
 from scenes import *
 from helper import *
-
+#
 #Source: https://stackoverflow.com/questions/28005641/how-to-add-a-background-image-into-pygame
 class Background(pygame.sprite.Sprite):
 	def __init__(self, image_file, location):
@@ -34,8 +34,6 @@ class MenuButton():
         self.textRect.center = ( (self.x+(self.w/2)), (self.y+(self.h/2)) )
         self.NORMAL = True
         self.CLICKED = False
-
-        
 
     class img_holder():
         def __init__(self):
