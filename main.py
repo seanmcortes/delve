@@ -18,7 +18,6 @@ class Game:
         pygame.key.set_repeat(500, 100)
         self.playing = True
         self.go_to(MainMenuScene(self))
-        #
 
     def go_to(self, scene):
         self.scene = scene

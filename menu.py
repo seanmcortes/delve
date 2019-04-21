@@ -16,6 +16,17 @@ class Background(pygame.sprite.Sprite):
 		self.rect = self.image.get_rect()
 		self.rect.left, self.rect.top = location
 
+class TextObject():
+	def __init__(self, text, path, size, color, x=0, y=0, align="center"):
+		font = pygame.freetype.Font(path, size)
+		self.surface, self.rect = font.render(text, color)
+
+		if align == "center":
+			self.rect.center = (x, y)
+
+	def render(self,screen):
+		 screen.blit(self.surface, self.rect)
+
 class MenuButton():
 	def __init__(self, game, msg, location, action=None):
 		pygame.sprite.Sprite.__init__(self)  #call Sprite initializer
@@ -74,42 +85,50 @@ class MenuButton():
 	        self.screen.blit(self.image, self.rect)
 	        self.screen.blit(self.textSurf, self.textRect)
 
-	"""
-	Helper functions for main menu
-	"""
+"""
+Display the main menu screen.
+
+Allow the user to perform the following options:
+1. Start the game from level 1
+2. Load a saved file
+3. Exit the game
+"""
 class MainMenuScene():
 	def __init__(self, game):
-		self.show_main_menu = True
+		#self.show_main_menu = True
 		self.game = game
+		self.text_logo = TextObject("DELVE", 'image/CuteFont-Regular.ttf', 175, WHITE, WIDTH / 2, HEIGHT / 4)
+		self.textObjects = [self.text_logo]
 		self.all_buttons = []
 		self.background = Background('image/menuback.jpg', [0,0])
 		self.button1 = MenuButton(self.game, "Play", [140,400], self.playgame)
-		self.button2 = MenuButton(self.game, "Quit", [400,400], self.quitgame)
+		self.button2 = MenuButton(self.game, "Load", [270,400], self.loadgame)
+		self.button3 = MenuButton(self.game, "Quit", [400,400], self.quitgame)
 		self.all_buttons.append(self.button1)
 		self.all_buttons.append(self.button2)
-		self.logoSurf, self.logoRect = text_objects("DELVE", 'image/CuteFont-Regular.ttf', 100, WHITE, WIDTH / 2, HEIGHT / 4)
+		self.all_buttons.append(self.button3)
 
 	def quitgame(self):
 		pygame.quit()
 		quit()
 
 	def playgame(self):
-		self.show_main_menu = False
+		#self.show_main_menu = False
 		self.game.go_to(scenes.Level1Scene())
 
-	"""
-	Display the main menu screen.
+	def loadgame(self):
+		self.game.go_to(GameOverScene(self.game))
 
-	Allow the user to perform the following options:
-	1. Start the game from level 1
-	2. Load a saved file
-	3. Exit the game
-	"""
+	def mainmenu(self):
+		self.game.go_to(MainMenuScene(self.game))
+
 	def render(self, screen):
 		self.dt = self.game.clock.tick(FPS) / 1000
 		self.game.screen.fill(BLACK)
 		self.game.screen.blit(self.background.image, self.background.rect)
-		self.game.screen.blit(self.logoSurf, self.logoRect)
+		for t in self.textObjects:
+			t.render(self.game.screen)
+		#self.game.screen.blit(self.logoSurf, self.logoRect)
 		#text_to_screen(self.game.screen, "DELVE", 'image/CuteFont-Regular.ttf', 100, WHITE, WIDTH / 2, HEIGHT / 4)
 
 		for p in self.all_buttons:
@@ -140,6 +159,24 @@ class MainMenuScene():
 	    for p in self.all_buttons:
 	        p.update()
 
+"""
+Display the game over screen
 
+Ask the user if they would like to continue and prompt with "yes" or "no"
 
-    # https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
+    1. Yes (reload current level)
+    2. No (exit to main menu)
+
+"""
+class GameOverScene(MainMenuScene):
+	def __init__(self, game):
+		#super().__init__(game)
+		self.game = game
+		self.background = Background('image/gameoverback.jpg', [0,0])
+		self.text_logo = TextObject("GAME OVER", 'image/CuteFont-Regular.ttf', 100, WHITE, WIDTH / 2, HEIGHT / 4)
+		self.text_message = TextObject("Would you like to continue?", 'image/CuteFont-Regular.ttf', 50, WHITE, WIDTH / 2, (HEIGHT / 3)+50)
+		self.textObjects = [self.text_logo, self.text_message]
+		self.all_buttons = []
+		self.button1 = MenuButton(self.game, "Yes", [270,350], self.playgame)
+		self.button2 = MenuButton(self.game, "No", [270,425], self.mainmenu)
+		self.all_buttons = [self.button1, self.button2]

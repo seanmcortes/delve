@@ -60,32 +60,3 @@ class Level1Scene(GameScene):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-
-
-"""
-Display the game over screen
-
-Ask the user if they would like to continue and prompt with "yes" or "no"
-
-    1. Yes (reload current level)
-    2. No (exit to main menu)
-
-"""
-class GameOverScene(object):
-    def __init__(self):
-        super().__init__()
-
-    def render(self, screen):
-        text_to_screen(screen, "GAME OVER!", TITLE_FONT_PATH, 100, WHITE, WIDTH / 2, HEIGHT / 4)
-        text_to_screen(screen, "Retry", TITLE_FONT_PATH, 25, WHITE, WIDTH / 2, HEIGHT / 2)
-        text_to_screen(screen, "Save", TITLE_FONT_PATH, 25, WHITE, WIDTH / 2, HEIGHT / 1.75)
-        text_to_screen(screen, "Main Menu", TITLE_FONT_PATH, 25, WHITE, WIDTH / 2, HEIGHT / 1.5)
-
-    def update(self):
-        pass
-
-    def handle_events(self, events):
-        for event in events:
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
