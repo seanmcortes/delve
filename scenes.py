@@ -60,7 +60,7 @@ Allow the user to perform the following options:
 """
 class MainMenuScene(object):
     def __init__(self):
-        super(MainMenuScene, self).__init__()
+        super().__init__()
 
     def render(self, screen):
         screen.fill(BLACK)
@@ -93,7 +93,7 @@ Display Level 1
 """
 class Level1Scene(GameScene):
     def __init__(self):
-        super(Level1Scene, self).__init__()
+        super().__init__()
 
     def render(self, screen):
         screen.fill(BLACK)
@@ -122,7 +122,7 @@ Ask the user if they would like to continue and prompt with "yes" or "no"
 """
 class GameOverScene(object):
     def __init__(self):
-        super(GameOverScene, self).__init__()
+        super().__init__()
 
     def render(self, screen):
         text_to_screen(screen, "GAME OVER!", TITLE_FONT_PATH, 100, WHITE, WIDTH / 2, HEIGHT / 4)
