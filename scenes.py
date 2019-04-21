@@ -37,47 +37,7 @@ class GameScene(object):
         for y in range(0, HEIGHT, TILESIZE):
             pygame.draw.line(screen, LIGHTGREY, (0, y), (WIDTH, y))
 
-<<<<<<< HEAD
-=======
 
-"""
-Display the main menu screen.
-
-Allow the user to perform the following options:
-
-    1. Start the game from level 1
-    2. Load a saved file
-    3. Exit the game
-
-"""
-class MainMenuScene(object):
-    def __init__(self):
-        super().__init__()
-
-    def render(self, screen):
-        screen.fill(BLACK)
-        text_to_screen(screen, "DELVE", TITLE_FONT_PATH, 100, WHITE, WIDTH / 2, HEIGHT / 4)
-        button(screen, "Quit", 400, 400, 100, 50, LIGHTGREY, DARKGREY, self.quitgame)
-        button(screen, "Play", 140, 400, 100, 50, LIGHTGREY, DARKGREY, self.playgame)
-
-    def quitgame(self):
-        pygame.quit()
-        sys.exit()
-
-    def playgame(self):
-        self.Game.go_to(Level1Scene())
-        
-    def update(self):
-        pass
-
-    def handle_events(self, events):
-        for event in events:
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-
-
->>>>>>> d6c4f71e621a84c495d20db1acdcfd4586f38533
 """
 Display Level 1
 

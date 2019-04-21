@@ -35,6 +35,8 @@ class MenuButton():
         self.NORMAL = True
         self.CLICKED = False
 
+        
+
     class img_holder():
         def __init__(self):
             self.normal = pygame.image.load('image/button_normal.png')
