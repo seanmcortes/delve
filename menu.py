@@ -18,20 +18,6 @@ class Background(pygame.sprite.Sprite):
 		self.rect = self.image.get_rect()
 		self.rect.left, self.rect.top = location
 
-class TextObject():
-	def __init__(self, text, path, size, color, x=0, y=0, align="center"):
-		font = pygame.freetype.Font(path, size)
-		self.surface, self.rect = font.render(text, color)
-
-		if align == "center":
-			self.rect.center = (x, y)
-		else:
-			self.rect.left = x
-			self.rect.top = y
-
-	def render(self,screen):
-		 screen.blit(self.surface, self.rect)
-
 class MenuButton():
 	def __init__(self, game, msg, location, action=None, optional_argument=None):
 		pygame.sprite.Sprite.__init__(self)  #call Sprite initializer
@@ -46,8 +32,7 @@ class MenuButton():
 		self.w = 100
 		self.screen = game.screen
 		self.action = action
-		self.textSurf, self.textRect = text_objects(self.msg, 'image/CuteFont-Regular.ttf',20, BLACK)
-		self.textRect.center = ( (self.x+(self.w/2)), (self.y+(self.h/2)) )
+		self.text = TextObject(self.msg, 'image/CuteFont-Regular.ttf',20, BLACK, (self.x+(self.w/2)), (self.y+(self.h/2)) )
 		self.NORMAL = True
 		self.CLICKED = False
 		self.optional_argument = optional_argument
@@ -78,18 +63,17 @@ class MenuButton():
 	        if self.CLICKED == True:
 	            if self.NORMAL == False:
 	                self.y += 1
-	                self.textRect.center = ( (self.x+(self.w/2)), (self.y+(self.h/2)) )
+	                self.text.rect.center = ( (self.x+(self.w/2)), (self.y+(self.h/2)) )
 	                self.NORMAL = True
 	            elif self.NORMAL == True:
 	                self.y -= 1
-	                self.textRect.center = ( (self.x+(self.w/2)), (self.y+(self.h/2)) )
+	                self.text.rect.center = ( (self.x+(self.w/2)), (self.y+(self.h/2)) )
 	                self.image = self.img.normal
 	                self.CLICKED = False
+
 	def draw(self):
-	        #self.textSurf, self.textRect = text_objects(self.msg, 'image/CuteFont-Regular.ttf',50, BLACK)
-	        #self.textRect.center = ( (self.x+(self.w/2)), (self.y+(self.h/2)) )
 	        self.screen.blit(self.image, self.rect)
-	        self.screen.blit(self.textSurf, self.textRect)
+	        self.text.render(self.screen)
 
 """
 Display the main menu screen.
