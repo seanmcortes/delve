@@ -211,11 +211,15 @@ class LoadGameScene(MainMenuScene):
 					number = "Not an integer"
 				if isinstance(number, int) and count < 3: #to do: make sure number is an actual level
 					date = f.readline().strip()
-					save_text = "Level: " + str(number) + " Time: " + date
+					if (number < 10):
+						save_text = "Level:   " + str(number) + " Time: " + date
+					else:
+						save_text = "Level: " + str(number) + " Time: " + date
 					self.textObjects.append(TextObject(save_text, 'image/CuteFont-Regular.ttf', 40, WHITE, 210, y+14, "left"))
 					self.all_buttons.append(MenuButton(self.game, "Load", [100, y], self.loadlevel, number))
 					y += 60
 					count += 1
+				f.close()
 
 	def loadlevel(self, level):
 		#Source: https://jaxenter.com/implement-switch-case-statement-python-138315.html
