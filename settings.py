@@ -1,3 +1,5 @@
+from os import path
+
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 DARKGREY = (40, 40, 40)
@@ -15,4 +17,7 @@ BGCOLOR = DARKGREY
 
 TILESIZE = 32
 GRIDWIDTH = WIDTH / TILESIZE
-GRIDHEIGHT = HEIGHT / TILESIZE 
+GRIDHEIGHT = HEIGHT / TILESIZE
+
+IMAGE_FOLDER = path.join(path.dirname(__file__), 'image')
+TITLE_FONT_PATH = path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf')
