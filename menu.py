@@ -4,7 +4,7 @@ import sys
 from os import path
 from settings import *
 from sprites import *
-import scenes
+# import scenes
 from scenes import *
 from helper import *
 from os import listdir #for file handling
@@ -104,7 +104,7 @@ class MainMenuScene():
 
 	def playgame(self):
 		#self.show_main_menu = False
-		self.game.go_to(scenes.Level1Scene())
+		self.game.go_to(Level1Scene(self.game))
 
 	def loadgame(self):
 		self.game.go_to(LoadGameScene(self.game))
@@ -208,7 +208,7 @@ class LoadGameScene(MainMenuScene):
 	def loadlevel(self, level):
 		#Source: https://jaxenter.com/implement-switch-case-statement-python-138315.html
 		switcher = {
-	        1: scenes.Level1Scene,
+	        1: Level1Scene,
 	        2: GameOverScene,
 	        3: GameOverScene,
 	        4: GameOverScene,

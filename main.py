@@ -5,6 +5,7 @@ import pygame.freetype
 from settings import *
 from sprites import *
 from scenes import *
+from menu import *
 #
 """
 Manages games scenes
@@ -27,7 +28,7 @@ class Game:
 
     def go_to(self, scene):
         self.scene = scene
-        self.scene.game = self
+        # self.scene.game = self
 
     def run(self):
         while self.playing:

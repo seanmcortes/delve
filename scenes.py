@@ -4,7 +4,6 @@ from os import path
 from helper import *
 from settings import *
 from sprites import *
-from menu import *
 #
 
 """
@@ -13,10 +12,10 @@ Parent class for game scene.
 Contains initialization of sprites/player, and functions to draw the game grid.
 """
 class GameScene(object):
-    def __init__(self):
+    def __init__(self, game):
         self.all_sprites = pygame.sprite.Group()
         self.player = Player(self, 0, 0)
-        # self.game = game
+        self.game = game
 
     def render(self):
         raise NotImplementedError
@@ -45,8 +44,8 @@ Display Level 1
 - Simple tutorial, show player how to move character and what the objectives of the game are.
 """
 class Level1Scene(GameScene):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, game):
+        super().__init__(game)
 
     def render(self):
         self.game.screen.fill(BLACK)
