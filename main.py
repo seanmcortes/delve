@@ -17,7 +17,13 @@ class Game:
         self.clock = pygame.time.Clock()
         pygame.key.set_repeat(500, 100)
         self.playing = True
+        self.load_data()
         self.go_to(MainMenuScene(self))
+
+    def load_data(self):
+        game_folder = path.dirname(__file__)
+        image_folder = path.join(game_folder, 'image')
+        self.title_font = path.join(image_folder, 'Cutefont')
 
     def go_to(self, scene):
         self.scene = scene
