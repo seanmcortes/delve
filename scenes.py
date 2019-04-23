@@ -16,8 +16,9 @@ class GameScene(object):
     def __init__(self):
         self.all_sprites = pygame.sprite.Group()
         self.player = Player(self, 0, 0)
+        # self.game = game
 
-    def render(self, screen):
+    def render(self):
         raise NotImplementedError
 
     def update(self):
@@ -26,16 +27,16 @@ class GameScene(object):
     def handle_events(self, events):
         raise NotImplementedError
 
-    def draw(self, screen):
-        screen.fill(BGCOLOR)
-        self.draw_grid(screen)
-        self.all_sprites.draw(screen)
+    def draw(self):
+        self.game.screen.fill(BGCOLOR)
+        self.draw_grid()
+        self.all_sprites.draw(self.game.screen)
 
-    def draw_grid(self, screen):
+    def draw_grid(self):
         for x in range(0, WIDTH, TILESIZE):
-            pygame.draw.line(screen, LIGHTGREY, (x, 0), (x, HEIGHT))
+            pygame.draw.line(self.game.screen, LIGHTGREY, (x, 0), (x, HEIGHT))
         for y in range(0, HEIGHT, TILESIZE):
-            pygame.draw.line(screen, LIGHTGREY, (0, y), (WIDTH, y))
+            pygame.draw.line(self.game.screen, LIGHTGREY, (0, y), (WIDTH, y))
 
 
 """
@@ -47,10 +48,10 @@ class Level1Scene(GameScene):
     def __init__(self):
         super().__init__()
 
-    def render(self, screen):
-        screen.fill(BLACK)
-        self.draw(screen)
-        self.draw_grid(screen)
+    def render(self):
+        self.game.screen.fill(BLACK)
+        self.draw()
+        self.draw_grid()
 
     def update(self):
         pass

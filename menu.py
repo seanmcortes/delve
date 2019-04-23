@@ -112,7 +112,7 @@ class MainMenuScene():
 	def mainmenu(self):
 		self.game.go_to(MainMenuScene(self.game))
 
-	def render(self, screen):
+	def render(self):
 		self.dt = self.game.clock.tick(FPS) / 1000
 		#self.game.screen.fill(BLACK)
 		self.game.screen.blit(self.background.image, self.background.rect)

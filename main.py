@@ -27,14 +27,14 @@ class Game:
 
     def go_to(self, scene):
         self.scene = scene
-        self.scene.Game = self
+        self.scene.game = self
 
     def run(self):
         while self.playing:
             self.dt = self.clock.tick(FPS) / 1000
             self.scene.handle_events(pygame.event.get())
             self.scene.update()
-            self.scene.render(self.screen)
+            self.scene.render()
             pygame.display.flip()
 
 
