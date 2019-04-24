@@ -11,6 +11,7 @@ class GameObject(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.interactable = False
+        self.collidable = False
 
     def update(self):
         self.rect.x = self.x * TILESIZE
@@ -30,6 +31,13 @@ class Player(GameObject):
 class Wall(GameObject):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
+        self.groups = scene.all_sprites, scene.walls
+        pygame.sprite.Sprite.__init__(self, self.groups)
         self.image.fill(LIGHTGREY)
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
+
+"""
+Sources:
+https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2002/sprites.py
+"""

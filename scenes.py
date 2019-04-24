@@ -4,6 +4,7 @@ from os import path
 from helper import *
 from settings import *
 from sprites import *
+from enemy import Enemy
 #
 
 """
@@ -14,6 +15,7 @@ Contains initialization of sprites/player, and functions to draw the game grid.
 class GameScene(object):
     def __init__(self, game):
         self.all_sprites = pygame.sprite.Group()
+        self.walls = pygame.sprite.Group()
         self.game = game
 
         self.layout = [
@@ -97,21 +99,22 @@ Display tutorial level for enemies
 class TutorialEnemy(GameScene):
     def __init__(self, game):
         super().__init__(game)
+        self.enemy = Enemy(self, 18, 9, LEFT, [DOWN, LEFT])
         self.layout = [
             "WWWWWWWWWWWWWWWWWWWW",
             "W.P................W",
             "W..................W",
             "W..................W",
             "W..................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
+            "W...........WWW....W",
+            "W...........W.W....W",
+            "W...........W.W....W",
+            "W...........W.WWWWWW",
+            "W...........W......W",
+            "W...........W.WWWWWW",
+            "W.......WWWWW.W....W",
+            "W.......W.....W....W",
+            "W.......WWWWWWW....W",
             "W..................W",
             "W..................W",
             "W..................W",
@@ -126,10 +129,9 @@ class TutorialEnemy(GameScene):
         self.draw_grid()
         self.draw_layout()
 
-
-
     def handle_events(self, events):
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
