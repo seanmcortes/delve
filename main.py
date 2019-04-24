@@ -19,7 +19,14 @@ class Game:
         pygame.key.set_repeat(500, 100)
         self.playing = True
         self.load_data()
+        self.dt = None # sub-initialization in run()
+        self.scene = None # sub-initialization in go_to()
+        self.title_font = None # sub-initialization in load_data()
+
+        # Naive debug menu: Un-comment to go straight to scene on load
         self.go_to(MainMenuScene(self))
+        # self.go_to(Level1Scene(self))
+        # self.go_to(TutorialEnemy(self))
 
     def load_data(self):
         game_folder = path.dirname(__file__)
@@ -28,7 +35,6 @@ class Game:
 
     def go_to(self, scene):
         self.scene = scene
-        # self.scene.game = self
 
     def run(self):
         while self.playing:
