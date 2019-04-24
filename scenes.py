@@ -16,15 +16,28 @@ class GameScene(object):
         self.all_sprites = pygame.sprite.Group()
         self.game = game
 
-        self.player = Player(self, 10, 10)
-
-        for x in range(0, 20):
-            Wall(self, x, 0)
-            Wall(self, x, 19)
-
-        for y in range(0, 20):
-            Wall(self, 0, y)
-            Wall(self, 19, y)
+        self.layout = [
+            "WWWWWWWWWWWWWWWWWWWW",
+            "WP.................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "WWWWWWWWWWWWWWWWWWWW"
+        ]
 
     def render(self):
         raise NotImplementedError
@@ -46,6 +59,15 @@ class GameScene(object):
         for y in range(0, HEIGHT, TILESIZE):
             pygame.draw.line(self.game.screen, LIGHTGREY, (0, y), (WIDTH, y))
 
+    def draw_layout(self):
+        for row, tiles in enumerate(self.layout):
+            for col, tile in enumerate(tiles):
+                if tile == 'W':
+                    Wall(self, col, row)
+                if tile == 'P':
+                    Player(self, col, row)
+    # https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2007/main.py
+
 
 """
 Display Level 1
@@ -60,6 +82,51 @@ class Level1Scene(GameScene):
         self.game.screen.fill(BLACK)
         self.draw()
         self.draw_grid()
+        self.draw_layout()
+
+    def handle_events(self, events):
+        for event in events:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+
+"""
+Display tutorial level for enemies
+"""
+class TutorialEnemy(GameScene):
+    def __init__(self, game):
+        super().__init__(game)
+        self.layout = [
+            "WWWWWWWWWWWWWWWWWWWW",
+            "W.P................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "W..................W",
+            "WWWWWWWWWWWWWWWWWWWW"
+        ]
+
+    def render(self):
+        self.game.screen.fill(BLACK)
+        self.draw()
+        self.draw_grid()
+        self.draw_layout()
+
+
 
     def handle_events(self, events):
         for event in events:
