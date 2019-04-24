@@ -24,9 +24,9 @@ class Game:
         self.title_font = None # sub-initialization in load_data()
 
         # Naive debug menu: Un-comment to go straight to scene on load
-        self.go_to(MainMenuScene(self))
+        # self.go_to(MainMenuScene(self))
         # self.go_to(Level1Scene(self))
-        # self.go_to(TutorialEnemy(self))
+        self.go_to(TutorialEnemy(self))
 
     def load_data(self):
         game_folder = path.dirname(__file__)
@@ -54,3 +54,9 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+"""
+Sources:
+https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2007/main.py
+"""

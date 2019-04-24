@@ -100,6 +100,7 @@ class TutorialEnemy(GameScene):
     def __init__(self, game):
         super().__init__(game)
         self.enemy = Enemy(self, 18, 9, LEFT, [DOWN, LEFT])
+        self.enemy = Enemy(self, 1, 18, RIGHT, [UP, LEFT, DOWN])
         self.layout = [
             "WWWWWWWWWWWWWWWWWWWW",
             "W.P................W",
@@ -135,3 +136,8 @@ class TutorialEnemy(GameScene):
                 pygame.quit()
                 sys.exit()
 
+
+"""
+Sources:
+https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2007/main.py
+"""

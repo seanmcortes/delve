@@ -14,6 +14,7 @@ class Enemy(GameObject):
         self.turn_counter = 0
         self.reverse = False
         self.move_count = [0]
+        self.time_counter = 0
 
     def move(self, dx=0, dy=0):
         if not self.collision_wall(dx, dy):
@@ -51,7 +52,6 @@ class Enemy(GameObject):
                     self.directionY = self.turns[self.turn_counter][1]
                     self.turn_counter += 1
                     self.move_count.append(0)
-        pygame.time.delay(1000)
 
     def move_algorithm_reverse(self):
         if self.move(self.directionX, self.directionY):
@@ -68,7 +68,6 @@ class Enemy(GameObject):
                     self.directionY = self.turns_reverse[self.turn_counter][1]
             else:
                 self.move_count_reverse[self.turn_counter] -= 1
-        pygame.time.delay(1000)
 
     def opposite_direction(self, direction):
         return [x * -1 for x in direction]
@@ -81,6 +80,8 @@ class Enemy(GameObject):
             self.move_algorithm()
         else:
             self.move_algorithm_reverse()
+
+        pygame.time.delay(500)
 
 
 """

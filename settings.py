@@ -1,5 +1,3 @@
-from os import path
-
 # colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -27,5 +25,8 @@ TILESIZE = 32
 GRIDWIDTH = WIDTH / TILESIZE
 GRIDHEIGHT = HEIGHT / TILESIZE
 
-IMAGE_FOLDER = path.join(path.dirname(__file__), 'image')
-TITLE_FONT_PATH = path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf')
+
+"""
+Sources:
+https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2022/settings.py
+"""

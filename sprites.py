@@ -37,6 +37,7 @@ class Wall(GameObject):
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
 
+
 """
 Sources:
 https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2002/sprites.py
