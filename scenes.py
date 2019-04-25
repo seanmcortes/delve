@@ -4,6 +4,7 @@ from os import path
 from helper import *
 from settings import *
 from sprites import *
+from map import create_tiles
 from enemy import Enemy
 #
 
@@ -17,6 +18,7 @@ class GameScene(object):
         self.all_sprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
         self.game = game
+        self.tile_map = create_tiles("level1.map")
 
         self.layout = [
             "WWWWWWWWWWWWWWWWWWWW",
@@ -52,6 +54,7 @@ class GameScene(object):
 
     def draw(self):
         self.game.screen.fill(BGCOLOR)
+        self.game.screen.blit(self.tile_map, [0,0])
         self.draw_grid()
         self.all_sprites.draw(self.game.screen)
 
