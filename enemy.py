@@ -1,6 +1,6 @@
 import pygame
 from sprites import GameObject
-from settings import RED, TILESIZE
+from settings import RED, TILESIZE, ENEMY_SPEED
 
 
 class Enemy(GameObject):
@@ -12,12 +12,19 @@ class Enemy(GameObject):
         self.directionY = direction[1]
         self.turns = turns
         self.turn_counter = 0
-        self.reverse = False
         self.move_count = [0]
         self.time_counter = 0
+        self.reverse = False
+        self.move_count_reverse = None
+        self.turns_reverse = None
+
+        self.update_delay = ENEMY_SPEED
+        self.last_update = pygame.time.get_ticks()
 
     def move(self, dx=0, dy=0):
         if not self.collision_wall(dx, dy):
+            # self.x += dx / ENEMY_SPEED
+            # self.y += dy / ENEMY_SPEED
             self.x += dx
             self.y += dy
             return True
@@ -63,6 +70,10 @@ class Enemy(GameObject):
                     self.turn_counter = 0
                     self.directionX = self.direction[0]
                     self.directionY = self.direction[1]
+                    self.move_count_reverse = None
+                    self.turns_reverse = None
+                    self.move_count = [0]
+                    self.turn_counter = 0
                 else:
                     self.directionX = self.turns_reverse[self.turn_counter][0]
                     self.directionY = self.turns_reverse[self.turn_counter][1]
@@ -76,15 +87,20 @@ class Enemy(GameObject):
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
 
-        if not self.reverse:
-            self.move_algorithm()
-        else:
-            self.move_algorithm_reverse()
+        now = pygame.time.get_ticks()
 
-        pygame.time.delay(500)
+        if now - self.last_update >= self.update_delay:
+            self.last_update = now
+            if not self.reverse:
+                self.move_algorithm()
+            else:
+                self.move_algorithm_reverse()
+
+        # pygame.time.delay(100)
 
 
 """
 Sources:
 https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2002/sprites.py
+https://stackoverflow.com/questions/10762823/how-can-i-pause-one-pygame-function-without-pausing-others
 """
