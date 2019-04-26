@@ -4,8 +4,9 @@ import pygame
 import pygame.freetype
 from settings import *
 from sprites import *
-from scenes import *
+from scenes import Level1Scene, TutorialEnemy
 from menu import *
+
 #
 """
 Manages games scenes
@@ -22,11 +23,17 @@ class Game:
         self.dt = None # sub-initialization in run()
         self.scene = None # sub-initialization in go_to()
         self.title_font = None # sub-initialization in load_data()
+        self.debug = False
 
-        # Naive debug menu: Un-comment to go straight to scene on load
-        # self.go_to(MainMenuScene(self))
-        # self.go_to(Level1Scene(self))
-        self.go_to(TutorialEnemy(self))
+        if "-debug" in sys.argv:
+            self.debug = True
+
+        # Naive debug menu. e.g. 'python main.py -debug Level1Scene'
+        if self.debug:
+            function_index = sys.argv.index("-debug") + 1
+            self.go_to(eval(sys.argv[function_index])(self))
+        else:
+            self.go_to(MainMenuScene(self))
 
     def load_data(self):
         game_folder = path.dirname(__file__)
