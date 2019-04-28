@@ -86,7 +86,6 @@ class Level1Scene(GameScene):
     def render(self):
         self.game.screen.fill(BLACK)
         self.draw()
-        self.draw_grid()
         self.draw_layout()
 
     def handle_events(self, events):
@@ -130,7 +129,6 @@ class TutorialEnemy(GameScene):
     def render(self):
         self.game.screen.fill(BLACK)
         self.draw()
-        self.draw_grid()
         self.draw_layout()
 
     def handle_events(self, events):
@@ -143,4 +141,5 @@ class TutorialEnemy(GameScene):
 """
 Sources:
 https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2007/main.py
+https://stackoverflow.com/questions/14700889/pygame-level-menu-states
 """
