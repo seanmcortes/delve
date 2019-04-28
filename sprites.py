@@ -21,12 +21,12 @@ class GameObject(pygame.sprite.Sprite):
 class Player(GameObject):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
+        self.groups = scene.all_sprites, scene.player
         self.image.fill(ORANGE)
 
     def move(self, dx=0, dy=0):
         self.x += dx
         self.y += dy
-
 
 class Wall(GameObject):
     def __init__(self, scene, x, y):

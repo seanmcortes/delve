@@ -16,10 +16,10 @@ Contains initialization of sprites/player, and functions to draw the game grid.
 class GameScene(object):
     def __init__(self, game):
         self.all_sprites = pygame.sprite.Group()
+        self.player = None
         self.walls = pygame.sprite.Group()
         self.game = game
         self.tile_map = create_tiles("level1.map")
-
         self.layout = [
             "WWWWWWWWWWWWWWWWWWWW",
             "WP.................W",
@@ -44,41 +44,39 @@ class GameScene(object):
         ]
 
     def render(self):
-        raise NotImplementedError
-
-    def update(self):
-        #self.rect.x = self.x * TILESIZE
-        #self.rect.y = self.y * TILESIZE
-        self.all_sprites.update()
-
-    def handle_events(self, events, dx=0, dy=0):
-        for event in events:
-            keyState = pygame.key.get_pressed()
-            if keyState[pygame.K_w]:
-                if not self.collision_wall(dx, dy):
-                    self.move(dx, dy)
-            if keyState[pygame.K_s]:
-                if not self.collision_wall(dx, dy):
-                    self.move(dx, dy)
-            if keyState[pygame.K_a]:
-                if not self.collision_wall(dx, dy):
-                    self.move(dx, dy)
-            if keyState[pygame.K_d]:
-                if not self.collision_wall(dx, dy):
-                    self.move(dx, dy)
-        
-        #raise NotImplementedError
-    def collision_wall(self, dx, dy):
-        for wall in self.scene.walls:
-            if wall.x == self.x + dx and wall.y == self.y + dy:
-                return True
-        return False
-
-    def draw(self):
         self.game.screen.fill(BGCOLOR)
         self.game.screen.blit(self.tile_map, [0,0])
         self.draw_grid()
         self.all_sprites.draw(self.game.screen)
+
+    def update(self):
+        self.all_sprites.update()
+
+    def handle_events(self, events):
+        for event in events:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            keyState = pygame.key.get_pressed()
+            if keyState[pygame.K_w]:
+                if not self.collision_wall(dx=0, dy=-1):
+                    self.player.move(dx=0, dy=-1)
+            if keyState[pygame.K_s]:
+                if not self.collision_wall(dx=0, dy=1):
+                    self.player.move(dx=0, dy=1)
+            if keyState[pygame.K_a]:
+                if not self.collision_wall(dx=-1, dy=0):
+                    self.player.move(dx=-1, dy=0)
+            if keyState[pygame.K_d]:
+                if not self.collision_wall(dx=1, dy=0):
+                    self.player.move(dx=1, dy=0)
+        
+    def collision_wall(self, dx, dy):
+        for wall in self.walls:
+            if wall.x == self.player.x + dx and wall.y == self.player.y + dy:
+                return True
+        return False
 
     def draw_grid(self):
         for x in range(0, WIDTH, TILESIZE):
@@ -92,7 +90,7 @@ class GameScene(object):
                 if tile == 'W':
                     Wall(self, col, row)
                 if tile == 'P':
-                    Player(self, col, row)
+                    self.player = Player(self, col, row)
     # https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2007/main.py
 
 
@@ -104,19 +102,7 @@ Display Level 1
 class Level1Scene(GameScene):
     def __init__(self, game):
         super().__init__(game)
-
-    def render(self):
-        self.game.screen.fill(BLACK)
-        self.draw()
-        self.draw_grid()
         self.draw_layout()
-
-    def handle_events(self, events):
-        for event in events:
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-
 
 """
 Display tutorial level for enemies
@@ -148,19 +134,6 @@ class TutorialEnemy(GameScene):
             "W..................W",
             "WWWWWWWWWWWWWWWWWWWW"
         ]
-
-    def render(self):
-        self.game.screen.fill(BLACK)
-        self.draw()
-        self.draw_grid()
-        self.draw_layout()
-
-    def handle_events(self, events):
-        for event in events:
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-
 
 """
 Sources:
