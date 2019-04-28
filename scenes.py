@@ -47,10 +47,32 @@ class GameScene(object):
         raise NotImplementedError
 
     def update(self):
+        #self.rect.x = self.x * TILESIZE
+        #self.rect.y = self.y * TILESIZE
         self.all_sprites.update()
 
-    def handle_events(self, events):
-        raise NotImplementedError
+    def handle_events(self, events, dx=0, dy=0):
+        for event in events:
+            keyState = pygame.key.get_pressed()
+            if keyState[pygame.K_w]:
+                if not self.collision_wall(dx, dy):
+                    self.move(dx, dy)
+            if keyState[pygame.K_s]:
+                if not self.collision_wall(dx, dy):
+                    self.move(dx, dy)
+            if keyState[pygame.K_a]:
+                if not self.collision_wall(dx, dy):
+                    self.move(dx, dy)
+            if keyState[pygame.K_d]:
+                if not self.collision_wall(dx, dy):
+                    self.move(dx, dy)
+        
+        #raise NotImplementedError
+    def collision_wall(self, dx, dy):
+        for wall in self.scene.walls:
+            if wall.x == self.x + dx and wall.y == self.y + dy:
+                return True
+        return False
 
     def draw(self):
         self.game.screen.fill(BGCOLOR)
