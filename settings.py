@@ -1,6 +1,7 @@
 # colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+BLUE = (0, 0, 255)
 DARKGREY = (40, 40, 40)
 LIGHTGREY = (100, 100, 100)
 ORANGE = (255, 165, 0)

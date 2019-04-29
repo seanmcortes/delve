@@ -12,19 +12,31 @@ class GameObject(pygame.sprite.Sprite):
         self.y = y
         self.interactable = False
         self.collidable = False
+        self.orientation = None
 
     def update(self):
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
-
 
 class Player(GameObject):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
         self.groups = scene.all_sprites, scene.player
         self.image.fill(ORANGE)
+        self.orientation = RIGHT
 
     def move(self, dx=0, dy=0):
+        self.x += dx
+        self.y += dy
+
+class Block(GameObject):
+  def __init__(self, scene, x, y):
+      super().__init__(scene, x, y)
+      self.groups = scene.all_sprites, scene.block
+      self.image.fill(BLUE)
+      self.interactable = True
+
+  def move(self, dx=0, dy=0):
         self.x += dx
         self.y += dy
 

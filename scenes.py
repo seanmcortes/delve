@@ -18,6 +18,7 @@ class GameScene(object):
         self.all_sprites = pygame.sprite.Group()
         self.player = None
         self.walls = pygame.sprite.Group()
+        self.block = None
         self.game = game
         self.tile_map = create_tiles("level1.map")
         self.layout = [
@@ -29,7 +30,7 @@ class GameScene(object):
             "W..................W",
             "W..................W",
             "W..................W",
-            "W..................W",
+            "W........B.........W",
             "W..................W",
             "W..................W",
             "W..................W",
@@ -61,21 +62,51 @@ class GameScene(object):
             keyState = pygame.key.get_pressed()
             if keyState[pygame.K_w]:
                 if not self.collision_wall(dx=0, dy=-1):
-                    self.player.move(dx=0, dy=-1)
+                    if not self.collision_block(dx=0, dy=-1):
+                        self.player.move(dx=0, dy=-1)
+                        self.player.orientation = UP
+                    else:
+                        self.player.move(dx=0, dy=-1)
+                        self.block.move(dx=0, dy=-1)
+                        self.player.orientation = UP
             if keyState[pygame.K_s]:
                 if not self.collision_wall(dx=0, dy=1):
-                    self.player.move(dx=0, dy=1)
+                    if not self.collision_block(dx=0, dy=1):
+                        self.player.move(dx=0, dy=1)
+                        self.player.orientation = DOWN
+                    else:
+                        self.player.move(dx=0, dy=1)
+                        self.block.move(dx=0, dy=1)
+                        self.player.orientation = DOWN
             if keyState[pygame.K_a]:
                 if not self.collision_wall(dx=-1, dy=0):
-                    self.player.move(dx=-1, dy=0)
+                    if not self.collision_block(dx=-1, dy=0):
+                        self.player.move(dx=-1, dy=0)
+                        self.player.orientation = LEFT
+                    else:
+                        self.player.move(dx=-1, dy=0)
+                        self.block.move(dx=-1,dy=0)
+                        self.player.orientation = LEFT
             if keyState[pygame.K_d]:
                 if not self.collision_wall(dx=1, dy=0):
-                    self.player.move(dx=1, dy=0)
+                    if not self.collision_block(dx=1, dy=0):
+                        self.player.move(dx=1, dy=0)
+                        self.player.orientation = RIGHT
+                    else:
+                        self.player.move(dx=1, dy=0)
+                        self.block.move(dx=1,dy=0)
+                        self.player.orientation = RIGHT
+                        
         
     def collision_wall(self, dx, dy):
         for wall in self.walls:
             if wall.x == self.player.x + dx and wall.y == self.player.y + dy:
                 return True
+        return False
+
+    def collision_block(self,dx, dy):
+        if self.block.x == self.player.x + dx and self.block.y == self.player.y +dy:
+            return True
         return False
 
     def draw_grid(self):
@@ -91,6 +122,8 @@ class GameScene(object):
                     Wall(self, col, row)
                 if tile == 'P':
                     self.player = Player(self, col, row)
+                if tile == 'B':
+                    self.block = Block(self, col, row)
     # https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2007/main.py
 
 
