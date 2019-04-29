@@ -4,8 +4,8 @@ import sys
 from os import path
 from settings import *
 from sprites import *
-# import scenes
-from scenes import *
+import scenes
+#from scenes import *
 from helper import *
 from os import listdir #for file handling
 from os.path import isfile, join #for file handling
@@ -104,7 +104,7 @@ class MainMenuScene():
 
 	def playgame(self):
 		#self.show_main_menu = False
-		self.game.go_to(Level1Scene(self.game))
+		self.game.go_to(scenes.Level1Scene(self.game))
 
 	def loadgame(self):
 		self.game.go_to(LoadGameScene(self.game))
@@ -226,3 +226,70 @@ class LoadGameScene(MainMenuScene):
 			self.game.go_to(func(self.game))
 		else:
 			self.game.go_to(func())
+
+class SaveGameScene(MainMenuScene):
+	def __init__(self, game):
+		#super().__init__(game)
+		self.game = game
+		self.background = Background('image/menuback.jpg', [0,0])
+		self.text_logo = TextObject("Pause Menu", 'image/CuteFont-Regular.ttf', 100, WHITE, WIDTH / 2, HEIGHT / 4)
+		self.textObjects = [self.text_logo]
+		self.button1 = MenuButton(self.game, "Back", [270,450], self.mainmenu)
+		self.all_buttons = [self.button1]
+		save_path = 'save'
+		#Source: https://stackoverflow.com/questions/3207219/how-do-i-list-all-files-of-a-directory
+		#gets only files not any directories
+		y = 250
+		count = 0
+		files = [f for f in listdir(save_path) if isfile(join(save_path, f))]
+		for o in files:
+			f = open(join(save_path, o), "r")
+			if f.mode == 'r':
+				try:
+					number = int(f.readline().strip())
+				except:
+					number = "Not an integer"
+				if isinstance(number, int) and count < 3: #to do: make sure number is an actual level
+					date = f.readline().strip()
+					if (number < 10):
+						save_text = "Level:   " + str(number) + " Time: " + date
+					else:
+						save_text = "Level: " + str(number) + " Time: " + date
+					self.textObjects.append(TextObject(save_text, 'image/CuteFont-Regular.ttf', 40, WHITE, 210, y+14, "left"))
+					self.all_buttons.append(MenuButton(self.game, "Load", [100, y], self.loadlevel, number))
+					y += 60
+					count += 1
+				f.close()
+
+class PauseScene(MainMenuScene):
+	def __init__(self, game):
+		#super().__init__(game)
+		self.game = game
+		self.background = Background('image/menuback.jpg', [0,0])
+		self.text_logo = TextObject("Pause Menu", 'image/CuteFont-Regular.ttf', 100, WHITE, WIDTH / 2, HEIGHT / 4)
+		self.textObjects = [self.text_logo]
+		self.button1 = MenuButton(self.game, "Save Game", [270,300], self.savegame)
+		self.button2 = MenuButton(self.game, "Main Menu", [270,375], self.mainmenu)
+		self.button3 = MenuButton(self.game, "Back", [270,450], self.unpause)
+		self.all_buttons = [self.button1, self.button2, self.button3]
+		save_path = 'save'
+
+	def paused(self):
+		self.PAUSED = True
+		while self.PAUSED:
+			self.dt = self.game.clock.tick(FPS) / 1000
+			self.handle_events(pygame.event.get())
+			self.update()
+			self.render()
+			pygame.display.flip()
+
+	def unpause(self):
+		self.PAUSED = False
+
+	"""Override of mainmenu submethod for PauseScene"""
+	def mainmenu(self):
+			self.unpause()
+			self.game.go_to(MainMenuScene(self.game))
+
+	def savegame(self):
+			saveScreen = SaveGameScene(self.game)
