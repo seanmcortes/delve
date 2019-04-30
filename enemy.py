@@ -12,11 +12,13 @@ class Enemy(GameObject):
         self.orientation = orientation
         self.moves = moves
         self.interactable = False
-        self.collidable = True
+        self.collidable = False
         self.move_counter = 0
         self.move_counter_increment = 1
         self.reverse = False
-        self.direction = self.moves[self.move_counter]
+
+        if len(moves) > 0:
+            self.direction = None
         # self.direction = direction
         # self.directionX = moves[0]
         # self.directionY = moves[1]
@@ -50,26 +52,10 @@ class Enemy(GameObject):
             return False
 
     """
-    Check if enemy has collided with a collidable object
-    
-    Args:
-        dx (int): x-coordinate for collision check
-        dy (int): y-coordinate for collision check
-    
-    Returns:
-        bool: True if collision with collidable object. False if not
-    """
-    def collision_object(self, dx, dy):
-        for game_object in self.scene.all_sprites:
-            if game_object.collidable and (game_object.x == self.x + dx and game_object.y == self.y + dy):
-                return True
-        return False
-
-    """
     Handle enemy patrol route. Reverses route if collision occurs.
     """
     def move_algorithm(self):
-        if self.move_counter >= len(self.moves): # enemy finishes movement
+        if self.move_counter >= len(self.moves) or self.move_counter < 0: # enemy finishes movement
             self.reverse = not self.reverse
             self.move_counter_increment *= -1
         else: # enemy has not finished movement, check for collisions then move
@@ -148,7 +134,9 @@ class Enemy(GameObject):
 
         if now - self.last_update >= self.update_delay:
             self.last_update = now
-            self.move_algorithm()
+
+            if len(self.moves) > 0:
+                self.move_algorithm()
 
 
 # Sources:

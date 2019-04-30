@@ -128,12 +128,20 @@ class TutorialEnemy(GameScene):
     def __init__(self, game):
         super().__init__(game)
         self.draw_layout("tutorialenemyobject.map")
-        self.enemy = Enemy(self, 18, 9, LEFT, [LEFT, LEFT, LEFT, LEFT, LEFT,
-                                               DOWN, DOWN, DOWN,
-                                               LEFT, LEFT, LEFT, LEFT])
-        # self.enemy = Enemy(self, 1, 18, RIGHT, [UP, LEFT, DOWN])
-        print(type(self.enemy))
+        self.spawn_enemies()
 
+    def spawn_enemies(self):
+        Enemy(self, 18, 9, LEFT, [LEFT, LEFT, LEFT, LEFT, LEFT,
+                                  DOWN, DOWN, DOWN,
+                                  LEFT, LEFT, LEFT, LEFT])
+
+        Enemy(self, 1, 18, RIGHT, [RIGHT, RIGHT, RIGHT, RIGHT, RIGHT,
+                                   UP, UP, UP, UP,
+                                   LEFT, LEFT, LEFT, LEFT,
+                                   DOWN, DOWN, DOWN, DOWN])
+
+        Enemy(self, 3, 3, UP, [RIGHT, RIGHT, RIGHT])
+        self.block = Block(self, 10, 10)
 
 # Sources:
 # https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2007/main.py
