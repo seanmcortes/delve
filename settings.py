@@ -30,7 +30,5 @@ GRIDHEIGHT = HEIGHT / TILESIZE
 ENEMY_SPEED = 200 # delay in ms between enemy movement
 
 
-"""
-Sources:
-https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2022/settings.py
-"""
+# Sources:
+# https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2022/settings.py

@@ -23,8 +23,6 @@ class Enemy(GameObject):
 
     def move(self, dx=0, dy=0):
         if not self.collision_wall(dx, dy):
-            # self.x += dx / ENEMY_SPEED
-            # self.y += dy / ENEMY_SPEED
             self.x += dx
             self.y += dy
             return True
@@ -99,8 +97,6 @@ class Enemy(GameObject):
         # pygame.time.delay(100)
 
 
-"""
-Sources:
-https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2002/sprites.py
-https://stackoverflow.com/questions/10762823/how-can-i-pause-one-pygame-function-without-pausing-others
-"""
+# Sources:
+# https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2002/sprites.py
+# https://stackoverflow.com/questions/10762823/how-can-i-pause-one-pygame-function-without-pausing-others

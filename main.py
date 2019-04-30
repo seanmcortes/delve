@@ -85,8 +85,6 @@ if __name__ == "__main__":
     main()
 
 
-"""
-Sources:
-https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2007/main.py
-https://stackoverflow.com/questions/14700889/pygame-level-menu-states
-"""
+# Sources:
+# https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2007/main.py
+# https://stackoverflow.com/questions/14700889/pygame-level-menu-states

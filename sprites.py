@@ -48,7 +48,5 @@ class Wall(GameObject):
         self.image.fill(LIGHTGREY)
 
 
-"""
-Sources:
-https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2002/sprites.py
-"""
+# Sources:
+# https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2002/sprites.py

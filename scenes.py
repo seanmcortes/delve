@@ -138,7 +138,7 @@ class Level1Scene(GameScene):
     def __init__(self, game):
         super().__init__(game)
         self.draw_layout()
-        
+
 
 """
 Display tutorial level for enemies
@@ -173,8 +173,6 @@ class TutorialEnemy(GameScene):
         self.draw_layout()
 
 
-"""
-Sources:
-https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2007/main.py
-https://stackoverflow.com/questions/14700889/pygame-level-menu-states
-"""
+# Sources:
+# https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2007/main.py
+# https://stackoverflow.com/questions/14700889/pygame-level-menu-states
