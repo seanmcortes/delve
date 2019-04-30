@@ -4,7 +4,7 @@ import sys
 from os import path
 from settings import *
 from sprites import *
-import scenes
+#import scenes
 #from scenes import *
 from helper import *
 from os import listdir #for file handling
@@ -104,7 +104,7 @@ class MainMenuScene():
 
 	def playgame(self):
 		#self.show_main_menu = False
-		self.game.go_to(scenes.Level1Scene(self.game))
+		self.game.select_scene(1)
 
 	def loadgame(self):
 		self.game.go_to(LoadGameScene(self.game))
@@ -187,25 +187,27 @@ class LoadGameScene(MainMenuScene):
 		count = 0
 		files = [f for f in listdir(save_path) if isfile(join(save_path, f))]
 		for o in files:
-			f = open(join(save_path, o), "r")
-			if f.mode == 'r':
-				try:
-					number = int(f.readline().strip())
-				except:
-					number = "Not an integer"
-				if isinstance(number, int) and count < 3: #to do: make sure number is an actual level
-					date = f.readline().strip()
-					if (number < 10):
-						save_text = "Level:   " + str(number) + " Time: " + date
-					else:
-						save_text = "Level: " + str(number) + " Time: " + date
-					self.textObjects.append(TextObject(save_text, 'image/CuteFont-Regular.ttf', 40, WHITE, 210, y+14, "left"))
-					self.all_buttons.append(MenuButton(self.game, "Load", [100, y], self.loadlevel, number))
-					y += 60
-					count += 1
-				f.close()
+				f = open(join(save_path, o), "r")
+				if f.mode == 'r' and count < 5:
+					try:
+						number = int(f.readline().strip())
+					except:
+						number = "Not an integer"
+					if isinstance(number, int) and count < 3: #to do: make sure number is an actual level
+						date = f.readline().strip()
+						if (number < 10):
+							save_text = "Level:   " + str(number) + " Time: " + date
+						else:
+							save_text = "Level: " + str(number) + " Time: " + date
+						self.textObjects.append(TextObject(save_text, 'image/CuteFont-Regular.ttf', 40, WHITE, 210, y+14, "left"))
+						self.all_buttons.append(MenuButton(self.game, "Load", [100, y], self.loadlevel, number))
+						y += 60
+						count += 1
+					f.close()
 
 	def loadlevel(self, level):
+		self.game.select_scene(level)
+		"""
 		#Source: https://jaxenter.com/implement-switch-case-statement-python-138315.html
 		switcher = {
 	        1: Level1Scene,
@@ -226,6 +228,7 @@ class LoadGameScene(MainMenuScene):
 			self.game.go_to(func(self.game))
 		else:
 			self.game.go_to(func())
+		"""
 
 class SaveGameScene(MainMenuScene):
 	def __init__(self, game):
@@ -236,30 +239,37 @@ class SaveGameScene(MainMenuScene):
 		self.textObjects = [self.text_logo]
 		self.button1 = MenuButton(self.game, "Back", [270,450], self.mainmenu)
 		self.all_buttons = [self.button1]
-		save_path = 'save'
+		self.files = [] #holds the file names as a string
+		sself.save_path = 'save'
 		#Source: https://stackoverflow.com/questions/3207219/how-do-i-list-all-files-of-a-directory
 		#gets only files not any directories
 		y = 250
 		count = 0
-		files = [f for f in listdir(save_path) if isfile(join(save_path, f))]
+		files = [f for f in listdir(self.save_path) if isfile(join(self.save_path, f))]
 		for o in files:
-			f = open(join(save_path, o), "r")
-			if f.mode == 'r':
-				try:
-					number = int(f.readline().strip())
-				except:
-					number = "Not an integer"
-				if isinstance(number, int) and count < 3: #to do: make sure number is an actual level
-					date = f.readline().strip()
-					if (number < 10):
-						save_text = "Level:   " + str(number) + " Time: " + date
-					else:
-						save_text = "Level: " + str(number) + " Time: " + date
-					self.textObjects.append(TextObject(save_text, 'image/CuteFont-Regular.ttf', 40, WHITE, 210, y+14, "left"))
-					self.all_buttons.append(MenuButton(self.game, "Load", [100, y], self.loadlevel, number))
-					y += 60
-					count += 1
-				f.close()
+				f = open(join(save_path, o), "r")
+				if f.mode == 'r' and count < 5:
+					try:
+						number = int(f.readline().strip())
+					except:
+						number = "Not an integer"
+					if isinstance(number, int) and count < 3: #to do: make sure number is an actual level
+						date = f.readline().strip()
+						if (number < 10):
+							save_text = "Level:   " + str(number) + " Time: " + date
+						else:
+							save_text = "Level: " + str(number) + " Time: " + date
+						self.textObjects.append(TextObject(save_text, 'image/CuteFont-Regular.ttf', 40, WHITE, 210, y+14, "left"))
+						self.all_buttons.append(MenuButton(self.game, "Save", [100, y], savelevel, count))
+						y += 60
+						count += 1
+						self.files.add(o) #add the file name to the files array
+					f.close()
+		if count < 5:
+			self.all_buttons.append(MenuButton(self.game, "Save", [100, y], savelevel, count))
+
+	def savelevel():
+		pass
 
 class PauseScene(MainMenuScene):
 	def __init__(self, game):

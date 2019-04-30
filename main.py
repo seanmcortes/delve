@@ -51,6 +51,28 @@ class Game:
             self.scene.render()
             pygame.display.flip()
 
+    def select_scene(self, level):
+        #Source: https://jaxenter.com/implement-switch-case-statement-python-138315.html
+        switcher = {
+            1: Level1Scene,
+            2: GameOverScene,
+            3: GameOverScene,
+            4: GameOverScene,
+            5: GameOverScene,
+            6: GameOverScene,
+            7: GameOverScene,
+            8: GameOverScene,
+            9: GameOverScene,
+            10: GameOverScene
+        }
+        # Get the function from switcher dictionary
+        func = switcher.get(level, lambda: "Invalid level")
+        # Execute the function
+        if level > 1: #this is just here until we implement the other levels, becuase GameOverScene requires the game be passed to it
+            self.go_to(func(self))
+        else:
+            self.go_to(func(self))
+
 
 def main():
     delve = Game()
