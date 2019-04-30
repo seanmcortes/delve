@@ -19,11 +19,12 @@ class Game:
         self.clock = pygame.time.Clock()
         pygame.key.set_repeat(500, 100)
         self.playing = True
-        self.load_data()
         self.dt = None # sub-initialization in run()
         self.scene = None # sub-initialization in go_to()
         self.title_font = None # sub-initialization in load_data()
+        self.map_folder = None # sub-init in load_data()
         self.debug = False
+        self.load_data()
 
         if "-debug" in sys.argv:
             self.debug = True
@@ -39,6 +40,7 @@ class Game:
         game_folder = path.dirname(__file__)
         image_folder = path.join(game_folder, 'image')
         self.title_font = path.join(image_folder, 'Cutefont')
+        self.map_folder = path.join(game_folder, 'maps')
 
     def go_to(self, scene):
         self.scene = scene

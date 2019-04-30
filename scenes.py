@@ -6,7 +6,7 @@ from settings import *
 from sprites import *
 from map import create_tiles
 from enemy import Enemy
-#
+
 
 """
 Parent class for game scene.
@@ -19,32 +19,11 @@ class GameScene(object):
         self.players = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
         self.blocks = pygame.sprite.Group()
+        self.enemies = pygame.sprite.Group()
         self.player = None
         self.block = None
         self.game = game
         self.tile_map = create_tiles("level1.map")
-        self.layout = [
-            "WWWWWWWWWWWWWWWWWWWW",
-            "WP.................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "W........B.........W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "WWWWWWWWWWWWWWWWWWWW"
-        ]
 
     def render(self):
         self.game.screen.fill(BGCOLOR)
@@ -98,8 +77,7 @@ class GameScene(object):
                         self.player.move(dx=1, dy=0)
                         self.block.move(dx=1,dy=0)
                         self.player.orientation = RIGHT
-                        
-        
+
     def collision_wall(self, dx, dy):
         for wall in self.walls:
             if wall.x == self.player.x + dx and wall.y == self.player.y + dy:
@@ -117,16 +95,19 @@ class GameScene(object):
         for y in range(0, HEIGHT, TILESIZE):
             pygame.draw.line(self.game.screen, LIGHTGREY, (0, y), (WIDTH, y))
 
-    def draw_layout(self):
-        for row, tiles in enumerate(self.layout):
-            for col, tile in enumerate(tiles):
-                if tile == 'W':
-                    Wall(self, col, row)
-                if tile == 'P':
-                    self.player = Player(self, col, row)
-                if tile == 'B':
-                    self.block = Block(self, col, row)
-    # https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2007/main.py
+    def draw_layout(self, map_file):
+        f = open(path.join(self.game.map_folder, map_file), "r")
+        if f.mode == 'r':
+            map = f.readlines()
+            map = [item.strip() for item in map]
+            for row, tiles in enumerate(map):
+                for col, tile in enumerate(tiles):
+                    if tile == 'W':
+                        Wall(self, col, row)
+                    if tile == 'P':
+                        self.player = Player(self, col, row)
+                    if tile == 'B':
+                        self.block = Block(self, col, row)
 
 
 """
@@ -137,7 +118,7 @@ Display Level 1
 class Level1Scene(GameScene):
     def __init__(self, game):
         super().__init__(game)
-        self.draw_layout()
+        self.draw_layout("level1object.map")
 
 
 """
@@ -146,31 +127,10 @@ Display tutorial level for enemies
 class TutorialEnemy(GameScene):
     def __init__(self, game):
         super().__init__(game)
+        self.draw_layout("tutorialenemyobject.map")
         self.enemy = Enemy(self, 18, 9, LEFT, [DOWN, LEFT])
         self.enemy = Enemy(self, 1, 18, RIGHT, [UP, LEFT, DOWN])
-        self.layout = [
-            "WWWWWWWWWWWWWWWWWWWW",
-            "W.P................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "W...........WWW....W",
-            "W...........W.W....W",
-            "W...........W.W....W",
-            "W...........W.WWWWWW",
-            "W...........W......W",
-            "W...........W.WWWWWW",
-            "W.......WWWWW.W....W",
-            "W.......W.....W....W",
-            "W.......WWWWWWW....W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "W..................W",
-            "WWWWWWWWWWWWWWWWWWWW"
-        ]
-        self.draw_layout()
+        print(type(self.enemy))
 
 
 # Sources:

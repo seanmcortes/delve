@@ -6,6 +6,8 @@ from settings import RED, TILESIZE, ENEMY_SPEED
 class Enemy(GameObject):
     def __init__(self, scene, x, y, direction, turns):
         super().__init__(scene, x, y)
+        self.groups = scene.all_sprites, scene.enemies
+        pygame.sprite.Sprite.__init__(self, self.groups)
         self.image.fill(RED)
         self.direction = direction
         self.directionX = direction[0]
@@ -82,6 +84,7 @@ class Enemy(GameObject):
         return [x * -1 for x in direction]
 
     def update(self):
+        print("Enemy is updating!")
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
 
@@ -93,8 +96,6 @@ class Enemy(GameObject):
                 self.move_algorithm()
             else:
                 self.move_algorithm_reverse()
-
-        # pygame.time.delay(100)
 
 
 # Sources:
