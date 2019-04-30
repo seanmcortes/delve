@@ -16,8 +16,10 @@ Contains initialization of sprites/player, and functions to draw the game grid.
 class GameScene(object):
     def __init__(self, game):
         self.all_sprites = pygame.sprite.Group()
-        self.player = None
+        self.players = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
+        self.blocks = pygame.sprite.Group()
+        self.player = None
         self.block = None
         self.game = game
         self.tile_map = create_tiles("level1.map")
@@ -136,6 +138,7 @@ class Level1Scene(GameScene):
     def __init__(self, game):
         super().__init__(game)
         self.draw_layout()
+        
 
 """
 Display tutorial level for enemies
@@ -167,6 +170,8 @@ class TutorialEnemy(GameScene):
             "W..................W",
             "WWWWWWWWWWWWWWWWWWWW"
         ]
+        self.draw_layout()
+
 
 """
 Sources:

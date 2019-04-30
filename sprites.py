@@ -3,8 +3,6 @@ from settings import *
 
 class GameObject(pygame.sprite.Sprite):
     def __init__(self, scene, x, y):
-        self.groups = scene.all_sprites
-        pygame.sprite.Sprite.__init__(self, self.groups)
         self.scene = scene
         self.image = pygame.Surface((TILESIZE, TILESIZE))
         self.rect = self.image.get_rect()
@@ -21,7 +19,8 @@ class GameObject(pygame.sprite.Sprite):
 class Player(GameObject):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
-        self.groups = scene.all_sprites, scene.player
+        self.groups = scene.all_sprites, scene.players
+        pygame.sprite.Sprite.__init__(self, self.groups)
         self.image.fill(ORANGE)
         self.orientation = RIGHT
 
@@ -32,7 +31,8 @@ class Player(GameObject):
 class Block(GameObject):
   def __init__(self, scene, x, y):
       super().__init__(scene, x, y)
-      self.groups = scene.all_sprites, scene.block
+      self.groups = scene.all_sprites, scene.blocks
+      pygame.sprite.Sprite.__init__(self, self.groups)
       self.image.fill(BLUE)
       self.interactable = True
 
@@ -46,8 +46,6 @@ class Wall(GameObject):
         self.groups = scene.all_sprites, scene.walls
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.image.fill(LIGHTGREY)
-        self.rect.x = x * TILESIZE
-        self.rect.y = y * TILESIZE
 
 
 """
