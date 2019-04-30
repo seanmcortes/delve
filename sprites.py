@@ -46,6 +46,8 @@ class Wall(GameObject):
         self.groups = scene.all_sprites, scene.walls
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.image.fill(LIGHTGREY)
+        self.interactable = False
+        self.collidable = True
 
 
 # Sources:

@@ -4,87 +4,143 @@ from settings import RED, TILESIZE, ENEMY_SPEED
 
 
 class Enemy(GameObject):
-    def __init__(self, scene, x, y, direction, turns):
+    def __init__(self, scene, x, y, orientation, moves):
         super().__init__(scene, x, y)
         self.groups = scene.all_sprites, scene.enemies
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.image.fill(RED)
-        self.direction = direction
-        self.directionX = direction[0]
-        self.directionY = direction[1]
-        self.turns = turns
-        self.turn_counter = 0
-        self.move_count = [0]
-        self.time_counter = 0
+        self.orientation = orientation
+        self.moves = moves
+        self.interactable = False
+        self.collidable = True
+        self.move_counter = 0
+        self.move_counter_increment = 1
         self.reverse = False
-        self.move_count_reverse = None
-        self.turns_reverse = None
+        self.direction = self.moves[self.move_counter]
+        # self.direction = direction
+        # self.directionX = moves[0]
+        # self.directionY = moves[1]
+        # self.turns = turns
+        # self.turn_counter = 0
+        # self.move_count = [0]
+        # self.time_counter = 0
+        # self.reverse = False
+        # self.move_count_reverse = None
+        # self.turns_reverse = None
 
         self.update_delay = ENEMY_SPEED
         self.last_update = pygame.time.get_ticks()
 
+    """
+    Move object a number of tiles
+    
+    Args:
+        dx (int): number of tiles moved in x-coordinate
+        dy (int): number of tiles moved in y-coordinate
+        
+    Returns:
+        bool: True if object can move, false if there is collision.
+    """
     def move(self, dx=0, dy=0):
-        if not self.collision_wall(dx, dy):
+        if not self.collision_object(dx, dy):
             self.x += dx
             self.y += dy
             return True
         else:
             return False
 
-    def collision_wall(self, dx, dy):
-        for wall in self.scene.walls:
-            if wall.x == self.x + dx and wall.y == self.y + dy:
+    """
+    Check if enemy has collided with a collidable object
+    
+    Args:
+        dx (int): x-coordinate for collision check
+        dy (int): y-coordinate for collision check
+    
+    Returns:
+        bool: True if collision with collidable object. False if not
+    """
+    def collision_object(self, dx, dy):
+        for game_object in self.scene.all_sprites:
+            if game_object.collidable and (game_object.x == self.x + dx and game_object.y == self.y + dy):
                 return True
         return False
 
+    """
+    Handle enemy patrol route. Reverses route if collision occurs.
+    """
     def move_algorithm(self):
-        if self.move(self.directionX, self.directionY):
-            self.move_count[self.turn_counter] += 1
-        else:
-            if self.reverse:
-                # unravel
-                self.directionX = self.opposite_direction(self.turns[self.turn_counter])[0]
-                self.directionY = self.opposite_direction(self.turns[self.turn_counter])[1]
-            else:
-                if self.turn_counter >= len(self.turns):
-                    self.reverse = True
-                    self.move_count_reverse = self.move_count[::-1]
-                    self.turns_reverse = [self.opposite_direction(x) for x in self.turns[::-1]]
-                    self.turns_reverse.append(self.opposite_direction(self.direction))
-                    self.turn_counter = 0
-                    self.directionX = self.turns_reverse[self.turn_counter][0]
-                    self.directionY = self.turns_reverse[self.turn_counter][1]
-                else:
-                    self.directionX = self.turns[self.turn_counter][0]
-                    self.directionY = self.turns[self.turn_counter][1]
-                    self.turn_counter += 1
-                    self.move_count.append(0)
+        if self.move_counter >= len(self.moves): # enemy finishes movement
+            self.reverse = not self.reverse
+            self.move_counter_increment *= -1
+        else: # enemy has not finished movement, check for collisions then move
+            self.direction = self.moves[self.move_counter]
+            if self.reverse: # reverse movement
+                self.direction = self.opposite_direction(self.moves[self.move_counter])
+            if not self.move(self.direction[0], self.direction[1]): # collision, reverse movement
+                self.reverse = not self.reverse
+                self.move_counter_increment *= -1
+        self.move_counter += self.move_counter_increment
 
-    def move_algorithm_reverse(self):
-        if self.move(self.directionX, self.directionY):
-            if self.move_count_reverse[self.turn_counter] <= 1:
-                self.turn_counter += 1
+    # def move_algorithm(self):
+    #     if self.move(self.directionX, self.directionY):
+    #         self.move_count[self.turn_counter] += 1
+    #     else:
+    #         if self.reverse:
+    #             # unravel
+    #             self.directionX = self.opposite_direction(self.turns[self.turn_counter])[0]
+    #             self.directionY = self.opposite_direction(self.turns[self.turn_counter])[1]
+    #         else:
+    #             if self.turn_counter >= len(self.turns):
+    #                 self.reverse = True
+    #                 self.move_count_reverse = self.move_count[::-1]
+    #                 self.turns_reverse = [self.opposite_direction(x) for x in self.turns[::-1]]
+    #                 self.turns_reverse.append(self.opposite_direction(self.direction))
+    #                 self.turn_counter = 0
+    #                 self.directionX = self.turns_reverse[self.turn_counter][0]
+    #                 self.directionY = self.turns_reverse[self.turn_counter][1]
+    #             else:
+    #                 self.directionX = self.turns[self.turn_counter][0]
+    #                 self.directionY = self.turns[self.turn_counter][1]
+    #                 self.turn_counter += 1
+    #                 self.move_count.append(0)
+    #
+    # def move_algorithm_reverse(self):
+    #     if self.move(self.directionX, self.directionY):
+    #         if self.move_count_reverse[self.turn_counter] <= 1:
+    #             self.turn_counter += 1
+    #
+    #             if self.turn_counter >= len(self.turns_reverse):
+    #                 self.reverse = False
+    #                 self.turn_counter = 0
+    #                 self.directionX = self.direction[0]
+    #                 self.directionY = self.direction[1]
+    #                 self.move_count_reverse = None
+    #                 self.turns_reverse = None
+    #                 self.move_count = [0]
+    #                 self.turn_counter = 0
+    #             else:
+    #                 self.directionX = self.turns_reverse[self.turn_counter][0]
+    #                 self.directionY = self.turns_reverse[self.turn_counter][1]
+    #         else:
+    #             self.move_count_reverse[self.turn_counter] -= 1
+    #
 
-                if self.turn_counter >= len(self.turns_reverse):
-                    self.reverse = False
-                    self.turn_counter = 0
-                    self.directionX = self.direction[0]
-                    self.directionY = self.direction[1]
-                    self.move_count_reverse = None
-                    self.turns_reverse = None
-                    self.move_count = [0]
-                    self.turn_counter = 0
-                else:
-                    self.directionX = self.turns_reverse[self.turn_counter][0]
-                    self.directionY = self.turns_reverse[self.turn_counter][1]
-            else:
-                self.move_count_reverse[self.turn_counter] -= 1
-
+    """
+    Reverses direction (e.g. LEFT -> RIGHT, UP -> DOWN, vice-versa)
+    
+    Args:
+        direction (tuple): (x, y) as represented by directions in settings.py
+        
+    Returns:
+        tuple: (x, y) as represented by direction in settings.py
+    """
     def opposite_direction(self, direction):
-        return [x * -1 for x in direction]
+        return tuple(x * -1 for x in direction)
 
+    """
+    Draw image. Handle movement
+    """
     def update(self):
-        print("Enemy is updating!")
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
 
@@ -92,10 +148,7 @@ class Enemy(GameObject):
 
         if now - self.last_update >= self.update_delay:
             self.last_update = now
-            if not self.reverse:
-                self.move_algorithm()
-            else:
-                self.move_algorithm_reverse()
+            self.move_algorithm()
 
 
 # Sources:

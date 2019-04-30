@@ -128,8 +128,10 @@ class TutorialEnemy(GameScene):
     def __init__(self, game):
         super().__init__(game)
         self.draw_layout("tutorialenemyobject.map")
-        self.enemy = Enemy(self, 18, 9, LEFT, [DOWN, LEFT])
-        self.enemy = Enemy(self, 1, 18, RIGHT, [UP, LEFT, DOWN])
+        self.enemy = Enemy(self, 18, 9, LEFT, [LEFT, LEFT, LEFT, LEFT, LEFT,
+                                               DOWN, DOWN, DOWN,
+                                               LEFT, LEFT, LEFT, LEFT])
+        # self.enemy = Enemy(self, 1, 18, RIGHT, [UP, LEFT, DOWN])
         print(type(self.enemy))
 
 

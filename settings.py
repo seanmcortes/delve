@@ -27,7 +27,7 @@ GRIDWIDTH = WIDTH / TILESIZE
 GRIDHEIGHT = HEIGHT / TILESIZE
 
 # object variables
-ENEMY_SPEED = 200 # delay in ms between enemy movement
+ENEMY_SPEED = 400 # delay in ms between enemy movement
 
 
 # Sources:
