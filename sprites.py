@@ -94,6 +94,28 @@ class Player(GameObject):
 
     def update(self):
         if self.sliding == True: #if the player is sliding on the Ice
+            self.rect.x += (self.orientation[0] * 8)
+            self.rect.y += (self.orientation[1] * 8)
+            self.x = (self.rect.x - (self.rect.x % TILESIZE)) / TILESIZE
+            self.y = (self.rect.y - (self.rect.y % TILESIZE)) / TILESIZE
+            #stop sliding if they collide into a collidable object
+            if self.collision_object(self.orientation[0], self.orientation[1]):
+                self.sliding = False
+            #stop sliding if they collide with a block
+            if self.collision_block(self.orientation[0], self.orientation[1]):
+                self.sliding = False
+            #stop sliding if they are not on an ice tile
+            elif self.rect.x % TILESIZE == 0 and self.rect.y % TILESIZE == 0 and not self.collision_ice():
+                self.sliding = False
+            #align the rectangle with a tile
+            if self.sliding == False:
+                self.rect.x = self.x * TILESIZE
+                self.rect.y = self.y * TILESIZE
+        else:
+            self.rect.x = self.x * TILESIZE
+            self.rect.y = self.y * TILESIZE
+        """version without sliding animations
+        if self.sliding == True: #if the player is sliding on the Ice
             #stop sliding if they collide into a collidable object
             if self.collision_object(self.orientation[0], self.orientation[1]):
                 self.sliding = False
@@ -108,6 +130,7 @@ class Player(GameObject):
 
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
+        """
 
         if self.collision_enemy():
             self.take_damage()
@@ -137,6 +160,24 @@ class Block(GameObject):
 
   def update(self):
     if self.sliding == True: #if the player is sliding on the Ice
+        self.rect.x += (self.scene.player.orientation[0] * 8)
+        self.rect.y += (self.scene.player.orientation[1] * 8)
+        self.x = (self.rect.x - (self.rect.x % TILESIZE)) / TILESIZE
+        self.y = (self.rect.y - (self.rect.y % TILESIZE)) / TILESIZE
+        #stop sliding if they collide into a collidable object
+        if self.collision_object(self.scene.player.orientation[0], self.scene.player.orientation[1]):
+            self.sliding = False
+        #stop sliding if they collide with a block
+        if self.collision_block(self.scene.player.orientation[0], self.scene.player.orientation[1]):
+            self.sliding = False
+        #stop sliding if they are not on an ice tile
+        elif self.rect.x % TILESIZE == 0 and self.rect.y % TILESIZE == 0 and not self.collision_ice():
+            self.sliding = False
+    else:
+        self.rect.x = self.x * TILESIZE
+        self.rect.y = self.y * TILESIZE
+    """ Version without sliding animations
+    if self.sliding == True: #if the player is sliding on the Ice
         #stop sliding if they collide into a collidable object
         if self.collision_object(self.scene.player.orientation[0], self.scene.player.orientation[1]):
             self.sliding = False
@@ -151,7 +192,7 @@ class Block(GameObject):
 
     self.rect.x = self.x * TILESIZE
     self.rect.y = self.y * TILESIZE
-
+    """
 class Wall(GameObject):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
