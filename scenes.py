@@ -22,7 +22,7 @@ class GameScene(object):
         self.enemies = pygame.sprite.Group()
         self.ice = pygame.sprite.Group()
         self.player = None
-        self.block = None
+        #self.block = None
         self.game = game
         self.tile_map = create_tiles("level1.map")
 
@@ -30,15 +30,19 @@ class GameScene(object):
         self.game.screen.fill(BGCOLOR)
         self.game.screen.blit(self.tile_map, [0,0])
         self.draw_grid()
-        self.all_sprites.draw(self.game.screen)
-        self.players.draw(self.game.screen) #adding this so player is drawn on top of the ice tiles
+        #self.all_sprites.draw(self.game.screen)
+        self.ice.draw(self.game.screen)#draw ice tiles on the bottom
+        self.walls.draw(self.game.screen)
+        self.blocks.draw(self.game.screen)
+        self.enemies.draw(self.game.screen)
+        self.players.draw(self.game.screen)
 
     def update(self):
         #self.all_sprites.update()
-        self.walls.update()
-        self.blocks.update()
-        self.enemies.update()
         self.ice.update()
+        self.walls.update()
+        self.blocks.update() #update blocks before player so blocks sliding on the ice stop before the player
+        self.enemies.update()
         self.players.update()
 
     def handle_events(self, events):
@@ -57,8 +61,12 @@ class GameScene(object):
                             self.player.move(dx=0, dy=-1)
                             self.player.orientation = UP
                         else:
-                            self.player.move(dx=0, dy=-1)
-                            self.block.move(dx=0, dy=-1)
+                            for block in self.blocks:
+                                if block.x == self.player.x+0 and block.y == self.player.y-1:
+                                    if block.move(dx=0, dy=-1):
+                                        self.player.move(dx=0, dy=-1)
+                            #self.player.move(dx=0, dy=-1)
+                            #self.block.move(dx=0, dy=-1)
                             self.player.orientation = UP
                 if keyState[pygame.K_s]:
                     if self.collision_ice(dx=0, dy=1):
@@ -68,8 +76,12 @@ class GameScene(object):
                             self.player.move(dx=0, dy=1)
                             self.player.orientation = DOWN
                         else:
-                            self.player.move(dx=0, dy=1)
-                            self.block.move(dx=0, dy=1)
+                            for block in self.blocks:
+                                if block.x == self.player.x+0 and block.y == self.player.y+1:
+                                    if block.move(dx=0, dy=1):
+                                        self.player.move(dx=0, dy=1)
+                            #self.player.move(dx=0, dy=1)
+                            #self.block.move(dx=0, dy=1)
                             self.player.orientation = DOWN
                 if keyState[pygame.K_a]:
                     if self.collision_ice(dx=-1, dy=0):
@@ -79,8 +91,12 @@ class GameScene(object):
                             self.player.move(dx=-1, dy=0)
                             self.player.orientation = LEFT
                         else:
-                            self.player.move(dx=-1, dy=0)
-                            self.block.move(dx=-1,dy=0)
+                            for block in self.blocks:
+                                if block.x == self.player.x-1 and block.y == self.player.y+0:
+                                    if block.move(dx=-1, dy=0):
+                                        self.player.move(dx=-1, dy=0)
+                            #self.player.move(dx=-1, dy=0)
+                            #self.block.move(dx=-1,dy=0)
                             self.player.orientation = LEFT
                 if keyState[pygame.K_d]:
                     if self.collision_ice(dx=1, dy=0):
@@ -90,8 +106,12 @@ class GameScene(object):
                             self.player.move(dx=1, dy=0)
                             self.player.orientation = RIGHT
                         else:
-                            self.player.move(dx=1, dy=0)
-                            self.block.move(dx=1,dy=0)
+                            for block in self.blocks:
+                                if block.x == self.player.x+1 and block.y == self.player.y+0:
+                                    if block.move(dx=1, dy=0):
+                                        self.player.move(dx=1, dy=0)
+                            #self.player.move(dx=1, dy=0)
+                            #self.block.move(dx=1,dy=0)
                             self.player.orientation = RIGHT
 
     def collision_wall(self, dx, dy):
@@ -107,8 +127,10 @@ class GameScene(object):
         return False
 
     def collision_block(self, dx, dy):
-        if self.block.x == self.player.x + dx and self.block.y == self.player.y +dy:
-            return True
+        #if self.block.x == self.player.x + dx and self.block.y == self.player.y +dy:
+        for block in self.blocks:
+            if block.x == self.player.x +dx and block.y == self.player.y + dy:
+                return True
         return False
 
     def draw_grid(self):
@@ -129,7 +151,7 @@ class GameScene(object):
                     if tile == 'P':
                         self.player = Player(self, col, row)
                     if tile == 'B':
-                        self.block = Block(self, col, row)
+                        Block(self, col, row)
                     if tile == 'i':
                         Ice(self, col, row)
 
@@ -165,7 +187,7 @@ class TutorialEnemy(GameScene):
                                    DOWN, DOWN, DOWN, DOWN])
 
         Enemy(self, 3, 3, UP, [RIGHT, RIGHT, RIGHT])
-        self.block = Block(self, 10, 10)
+        Block(self, 10, 10)
 
 """
 Display tutorial level for ice
@@ -174,7 +196,7 @@ class TutorialIce(GameScene):
     def __init__(self, game):
         super().__init__(game)
         self.draw_layout("tutorialIceObjects.map")
-        self.block = Block(self, 2, 10)
+        Block(self, 2, 10)
 
 
 

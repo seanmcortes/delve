@@ -124,12 +124,16 @@ class Block(GameObject):
       self.sliding = False
 
   def move(self, dx=0, dy=0):
+        #Test if this block is going to collide with anything
         if not self.collision_object(dx, dy) and not self.collision_block(dx, dy):
             self.x += dx
             self.y += dy
-            if self.collision_ice():
+            if self.collision_ice(): #if the box has just been pused onto ice
                 self.sliding = True
-            
+            return True
+
+        return False
+
 
   def update(self):
     if self.sliding == True: #if the player is sliding on the Ice
