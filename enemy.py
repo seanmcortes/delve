@@ -143,6 +143,8 @@ class Enemy(GameObject):
 
         now = pygame.time.get_ticks()
 
+        self.check_health()
+
         if self.hit and not self.hit_detected: # player first hits enemy, starts recovery timer for enemy
             self.last_update = now
             self.hit_detected = True
