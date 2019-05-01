@@ -12,6 +12,7 @@ class GameObject(pygame.sprite.Sprite):
         self.collidable = False
         self.orientation = None
         self.enemy = None
+        self.sliding = False #tells if the object is sliding on the ice
 
     def update(self):
         self.rect.x = self.x * TILESIZE
@@ -34,6 +35,12 @@ class GameObject(pygame.sprite.Sprite):
                 return True
         return False
 
+    def collision_ice(self):
+        for ice in self.scene.ice:
+            if ice.x == self.x and ice.y == self.y:
+                return True
+        return False
+
 class Player(GameObject):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
@@ -44,6 +51,7 @@ class Player(GameObject):
         self.health = 3
         self.prev_orientation = self.orientation # might not need this
         self.prev_location = (x, y)
+        self.sliding = False #tells if the player is sliding on the ice
 
     def move(self, dx=0, dy=0):
         if not self.collision_object(dx, dy):
@@ -79,6 +87,13 @@ class Player(GameObject):
             print("You have died!") # place-holder
 
     def update(self):
+        if self.sliding == True: #if
+            if self.collision_object(self.orientation[0], self.orientation[1]):
+                self.sliding = False
+            elif not self.collision_ice():
+                self.sliding = False
+            else:
+                self.move(self.orientation[0], self.orientation[1])
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
 

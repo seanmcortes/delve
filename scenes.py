@@ -43,56 +43,66 @@ class GameScene(object):
                 sys.exit()
 
             keyState = pygame.key.get_pressed()
-            if keyState[pygame.K_w]:
-                if not self.collision_wall(dx=0, dy=-1):
-                    if not self.collision_block(dx=0, dy=-1):
-                        self.player.move(dx=0, dy=-1)
-                        self.player.orientation = UP
-                    else:
-                        self.player.move(dx=0, dy=-1)
-                        self.block.move(dx=0, dy=-1)
-                        self.player.orientation = UP
-            if keyState[pygame.K_s]:
-                if not self.collision_wall(dx=0, dy=1):
-                    if not self.collision_block(dx=0, dy=1):
-                        self.player.move(dx=0, dy=1)
-                        self.player.orientation = DOWN
-                    else:
-                        self.player.move(dx=0, dy=1)
-                        self.block.move(dx=0, dy=1)
-                        self.player.orientation = DOWN
-            if keyState[pygame.K_a]:
-                if not self.collision_wall(dx=-1, dy=0):
-                    if not self.collision_block(dx=-1, dy=0):
-                        self.player.move(dx=-1, dy=0)
-                        self.player.orientation = LEFT
-                    else:
-                        self.player.move(dx=-1, dy=0)
-                        self.block.move(dx=-1,dy=0)
-                        self.player.orientation = LEFT
-            if keyState[pygame.K_d]:
-                if not self.collision_wall(dx=1, dy=0):
-                    if not self.collision_block(dx=1, dy=0):
-                        self.player.move(dx=1, dy=0)
-                        self.player.orientation = RIGHT
-                    else:
-                        self.player.move(dx=1, dy=0)
-                        self.block.move(dx=1,dy=0)
-                        self.player.orientation = RIGHT
+            if self.player.sliding == False: #Ignore the directional key key presses if player is sliding on ice
+                if keyState[pygame.K_w]:
+                    if self.collision_ice(dx=0, dy=-1):
+                        self.player.sliding = True
+                    if not self.collision_wall(dx=0, dy=-1):
+                        if not self.collision_block(dx=0, dy=-1):
+                            self.player.move(dx=0, dy=-1)
+                            self.player.orientation = UP
+                        else:
+                            self.player.move(dx=0, dy=-1)
+                            self.block.move(dx=0, dy=-1)
+                            self.player.orientation = UP
+                if keyState[pygame.K_s]:
+                    if self.collision_ice(dx=0, dy=1):
+                        self.player.sliding = True
+                    if not self.collision_wall(dx=0, dy=1):
+                        if not self.collision_block(dx=0, dy=1):
+                            self.player.move(dx=0, dy=1)
+                            self.player.orientation = DOWN
+                        else:
+                            self.player.move(dx=0, dy=1)
+                            self.block.move(dx=0, dy=1)
+                            self.player.orientation = DOWN
+                if keyState[pygame.K_a]:
+                    if self.collision_ice(dx=-1, dy=0):
+                        self.player.sliding = True
+                    if not self.collision_wall(dx=-1, dy=0):
+                        if not self.collision_block(dx=-1, dy=0):
+                            self.player.move(dx=-1, dy=0)
+                            self.player.orientation = LEFT
+                        else:
+                            self.player.move(dx=-1, dy=0)
+                            self.block.move(dx=-1,dy=0)
+                            self.player.orientation = LEFT
+                if keyState[pygame.K_d]:
+                    if self.collision_ice(dx=1, dy=0):
+                        self.player.sliding = True
+                    if not self.collision_wall(dx=1, dy=0):
+                        if not self.collision_block(dx=1, dy=0):
+                            self.player.move(dx=1, dy=0)
+                            self.player.orientation = RIGHT
+                        else:
+                            self.player.move(dx=1, dy=0)
+                            self.block.move(dx=1,dy=0)
+                            self.player.orientation = RIGHT
 
     def collision_wall(self, dx, dy):
         for wall in self.walls:
             if wall.x == self.player.x + dx and wall.y == self.player.y + dy:
+                self.player.sliding = False
                 return True
         return False
 
     def collision_ice(self, dx, dy):
         for ice in self.ice:
-            if ice.x == self.player.x and ice.y == self.player.y:
+            if ice.x == self.player.x +dx and ice.y == self.player.y + dy:
                 return True
         return False
 
-    def collision_block(self,dx, dy):
+    def collision_block(self, dx, dy):
         if self.block.x == self.player.x + dx and self.block.y == self.player.y +dy:
             return True
         return False
