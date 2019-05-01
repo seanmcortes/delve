@@ -87,13 +87,16 @@ class Player(GameObject):
             print("You have died!") # place-holder
 
     def update(self):
-        if self.sliding == True: #if
+        if self.sliding == True: #if the player is sliding on the Ice
+            #stop sliding if they collide into a collidable object
             if self.collision_object(self.orientation[0], self.orientation[1]):
                 self.sliding = False
+            #stop sliding if they are not on an ice tile
             elif not self.collision_ice():
                 self.sliding = False
-            else:
+            else: #else, move them to the next tile
                 self.move(self.orientation[0], self.orientation[1])
+                
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
 
