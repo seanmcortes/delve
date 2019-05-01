@@ -1,5 +1,6 @@
 import pygame
 from settings import *
+from menu import GameOverScene
 
 class GameObject(pygame.sprite.Sprite):
     def __init__(self, scene, x, y):
@@ -87,10 +88,31 @@ class Player(GameObject):
         else:
             self.move(self.enemy.direction[0], self.enemy.direction[1])
 
+    """
+    Kill self if health = 0, render game over scene
+    """
     def check_health(self):
         if self.health <= 0:
             self.kill()
-            print("You have died!") # place-holder
+            self.scene.game.go_to(GameOverScene(self.scene.game))
+
+    """
+    Have player interact with different objects:
+        box: push box one unit in the direction the player is facing
+        enemy: attack the enemy, deal one damage to health, have enemy enter invulnerable state
+
+    """
+    def interact(self):
+        for object in self.scene.all_sprites:
+            if object.x == self.x + self.orientation[0] and \
+                    object.y == self.y + self.orientation[1]:
+                if object in self.scene.enemies: # check if object is an enemy
+                    if object.hit_detected is False: # check if enemy is not invulnerable
+                        object.health -= 1
+                        object.hit = True
+
+                # TODO: implement interaction with box
+                # box code here
 
     def update(self):
         if self.sliding == True: #if the player is sliding on the Ice

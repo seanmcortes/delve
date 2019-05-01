@@ -113,6 +113,11 @@ class GameScene(object):
                             #self.player.move(dx=1, dy=0)
                             #self.block.move(dx=1,dy=0)
                             self.player.orientation = RIGHT
+                # if keyState[pygame.K_SPACE]: # player attacks empty space or interacts with object in front of them
+                #     self.player.interact()
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_SPACE:
+                    self.player.interact()
 
     def collision_wall(self, dx, dy):
         for wall in self.walls:

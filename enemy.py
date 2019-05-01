@@ -1,6 +1,6 @@
 import pygame
 from sprites import GameObject
-from settings import RED, TILESIZE, ENEMY_SPEED
+from settings import RED, GREEN, TILESIZE, ENEMY_SPEED, HIT_DELAY
 
 
 class Enemy(GameObject):
@@ -16,6 +16,9 @@ class Enemy(GameObject):
         self.move_counter = 0
         self.move_counter_increment = 1
         self.reverse = False
+        self.health = 3
+        self.hit = False
+        self.hit_detected = False
 
         if len(moves) > 0:
             self.direction = None
@@ -32,6 +35,7 @@ class Enemy(GameObject):
 
         self.update_delay = ENEMY_SPEED
         self.last_update = pygame.time.get_ticks()
+        self.hit_delay = HIT_DELAY
 
     """
     Move object a number of tiles
@@ -124,6 +128,13 @@ class Enemy(GameObject):
         return tuple(x * -1 for x in direction)
 
     """
+    Check health, kill if 0
+    """
+    def check_health(self):
+        if self.health <= 0:
+            self.kill()
+
+    """
     Draw image. Handle movement
     """
     def update(self):
@@ -132,11 +143,23 @@ class Enemy(GameObject):
 
         now = pygame.time.get_ticks()
 
-        if now - self.last_update >= self.update_delay:
+        if self.hit and not self.hit_detected: # player first hits enemy, starts recovery timer for enemy
             self.last_update = now
+            self.hit_detected = True
+        elif self.hit and self.hit_detected:
+            if now - self.last_update < self.hit_delay:
+                self.image.fill(GREEN)
+            else:
+                self.last_update = now
+                self.hit = False
+                self.hit_detected = False
+        else:
+            self.image.fill(RED)
+            if now - self.last_update >= self.update_delay:
+                self.last_update = now
 
-            if len(self.moves) > 0:
-                self.move_algorithm()
+                if len(self.moves) > 0:
+                    self.move_algorithm()
 
 
 # Sources:
