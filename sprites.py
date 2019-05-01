@@ -108,6 +108,15 @@ class Wall(GameObject):
         self.interactable = False
         self.collidable = True
 
+class Ice(GameObject):
+    def __init__(self, scene, x, y):
+        super().__init__(scene, x, y)
+        self.groups = scene.all_sprites, scene.ice
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.image.fill(WHITE)
+        self.interactable = False
+        self.collidable = False
+
 
 # Sources:
 # https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2002/sprites.py
