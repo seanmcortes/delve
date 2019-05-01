@@ -20,6 +20,7 @@ class GameScene(object):
         self.walls = pygame.sprite.Group()
         self.blocks = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
+        self.ice = pygame.sprite.Group()
         self.player = None
         self.block = None
         self.game = game
@@ -30,6 +31,7 @@ class GameScene(object):
         self.game.screen.blit(self.tile_map, [0,0])
         self.draw_grid()
         self.all_sprites.draw(self.game.screen)
+        self.players.draw(self.game.screen) #adding this so player is drawn on top of the ice tiles
 
     def update(self):
         self.all_sprites.update()
@@ -84,6 +86,12 @@ class GameScene(object):
                 return True
         return False
 
+    def collision_ice(self, dx, dy):
+        for ice in self.ice:
+            if ice.x == self.player.x and ice.y == self.player.y:
+                return True
+        return False
+
     def collision_block(self,dx, dy):
         if self.block.x == self.player.x + dx and self.block.y == self.player.y +dy:
             return True
@@ -108,6 +116,8 @@ class GameScene(object):
                         self.player = Player(self, col, row)
                     if tile == 'B':
                         self.block = Block(self, col, row)
+                    if tile == 'i':
+                        Ice(self, col, row)
 
 
 """
@@ -142,6 +152,16 @@ class TutorialEnemy(GameScene):
 
         Enemy(self, 3, 3, UP, [RIGHT, RIGHT, RIGHT])
         self.block = Block(self, 10, 10)
+
+"""
+Display tutorial level for ice
+"""
+class TutorialIce(GameScene):
+    def __init__(self, game):
+        super().__init__(game)
+        self.draw_layout("tutorialIceObjects.map")
+
+
 
 # Sources:
 # https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2007/main.py
