@@ -97,7 +97,7 @@ class Player(GameObject):
             #stop sliding if they collide into a collidable object
             if self.collision_object(self.orientation[0], self.orientation[1]):
                 self.sliding = False
-            #stop sliding if they are not on an ice tile
+            #stop sliding if they collide with a block
             if self.collision_block(self.orientation[0], self.orientation[1]):
                 self.sliding = False
             #stop sliding if they are not on an ice tile
@@ -121,10 +121,32 @@ class Block(GameObject):
       pygame.sprite.Sprite.__init__(self, self.groups)
       self.image.fill(BLUE)
       self.interactable = True
+      self.collidable = True
+      self.sliding = False
 
   def move(self, dx=0, dy=0):
-        self.x += dx
-        self.y += dy
+        if not self.collision_object(dx, dy) and not self.collision_block(dx, dy):
+            self.x += dx
+            self.y += dy
+            if self.collision_ice():
+                self.sliding = True
+
+  def update(self):
+    if self.sliding == True: #if the player is sliding on the Ice
+        #stop sliding if they collide into a collidable object
+        if self.collision_object(self.scene.player.orientation[0], self.scene.player.orientation[1]):
+            self.sliding = False
+        #stop sliding if they collide with a block
+        if self.collision_block(self.scene.player.orientation[0], self.scene.player.orientation[1]):
+            self.sliding = False
+        #stop sliding if they are not on an ice tile
+        elif not self.collision_ice():
+            self.sliding = False
+        else: #else, move them to the next tile
+            self.move(self.scene.player.orientation[0], self.scene.player.orientation[1])
+
+    self.rect.x = self.x * TILESIZE
+    self.rect.y = self.y * TILESIZE
 
 class Wall(GameObject):
     def __init__(self, scene, x, y):
@@ -133,7 +155,7 @@ class Wall(GameObject):
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.image.fill(LIGHTGREY)
         self.interactable = False
-        self.collidable = True
+        #self.collidable = True
 
 class Ice(GameObject):
     def __init__(self, scene, x, y):
