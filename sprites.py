@@ -43,7 +43,7 @@ class GameObject(pygame.sprite.Sprite):
 
     def collision_block(self, dx, dy):
         for block in self.scene.blocks:
-            if block.x == self.x + dx and block.y == self.y + dy:
+            if block.x == self.x + dx and block.y == self.y + dy and block.sliding == False:
                 return True
         return False
 
@@ -121,7 +121,6 @@ class Block(GameObject):
       pygame.sprite.Sprite.__init__(self, self.groups)
       self.image.fill(BLUE)
       self.interactable = True
-      self.collidable = True
       self.sliding = False
 
   def move(self, dx=0, dy=0):
@@ -130,6 +129,7 @@ class Block(GameObject):
             self.y += dy
             if self.collision_ice():
                 self.sliding = True
+            
 
   def update(self):
     if self.sliding == True: #if the player is sliding on the Ice
@@ -155,7 +155,7 @@ class Wall(GameObject):
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.image.fill(LIGHTGREY)
         self.interactable = False
-        #self.collidable = True
+        self.collidable = True
 
 class Ice(GameObject):
     def __init__(self, scene, x, y):

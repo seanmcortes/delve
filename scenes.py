@@ -34,7 +34,12 @@ class GameScene(object):
         self.players.draw(self.game.screen) #adding this so player is drawn on top of the ice tiles
 
     def update(self):
-        self.all_sprites.update()
+        #self.all_sprites.update()
+        self.walls.update()
+        self.blocks.update()
+        self.enemies.update()
+        self.ice.update()
+        self.players.update()
 
     def handle_events(self, events):
         for event in events:
