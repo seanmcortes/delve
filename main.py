@@ -35,6 +35,7 @@ class Game:
             self.go_to(eval(sys.argv[function_index])(self))
         else:
             self.go_to(TutorialIce(self))
+            #self.go_to(MainMenuScene(self))
 
     def load_data(self):
         game_folder = path.dirname(__file__)

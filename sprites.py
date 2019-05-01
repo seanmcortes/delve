@@ -41,6 +41,12 @@ class GameObject(pygame.sprite.Sprite):
                 return True
         return False
 
+    def collision_block(self, dx, dy):
+        for block in self.scene.blocks:
+            if block.x == self.x + dx and block.y == self.y + dy:
+                return True
+        return False
+
 class Player(GameObject):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
@@ -92,11 +98,14 @@ class Player(GameObject):
             if self.collision_object(self.orientation[0], self.orientation[1]):
                 self.sliding = False
             #stop sliding if they are not on an ice tile
+            if self.collision_block(self.orientation[0], self.orientation[1]):
+                self.sliding = False
+            #stop sliding if they are not on an ice tile
             elif not self.collision_ice():
                 self.sliding = False
             else: #else, move them to the next tile
                 self.move(self.orientation[0], self.orientation[1])
-                
+
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
 

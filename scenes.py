@@ -92,7 +92,6 @@ class GameScene(object):
     def collision_wall(self, dx, dy):
         for wall in self.walls:
             if wall.x == self.player.x + dx and wall.y == self.player.y + dy:
-                self.player.sliding = False
                 return True
         return False
 
@@ -170,6 +169,7 @@ class TutorialIce(GameScene):
     def __init__(self, game):
         super().__init__(game)
         self.draw_layout("tutorialIceObjects.map")
+        self.block = Block(self, 2, 10)
 
 
 
