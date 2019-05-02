@@ -17,7 +17,7 @@ RIGHT = (1, 0)
 # game parameters
 WIDTH = 640 # 32 * 20
 HEIGHT = 640 # 32 * 20
-FPS = 60
+FPS = 12
 TITLE = "Delve"
 BGCOLOR = DARKGREY
 

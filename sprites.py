@@ -1,11 +1,15 @@
+import os
 import pygame
 from settings import *
 from menu import GameOverScene
+
 
 class GameObject(pygame.sprite.Sprite):
     def __init__(self, scene, x, y):
         self.scene = scene
         self.image = pygame.Surface((TILESIZE, TILESIZE))
+        sheet = pygame.image.load(self.scene.game.player_sprite_sheet)
+        self.image = pygame.transform.scale(sheet, (32, 32))
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -48,17 +52,33 @@ class GameObject(pygame.sprite.Sprite):
                 return True
         return False
 
+
 class Player(GameObject):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
         self.groups = scene.all_sprites, scene.players
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image.fill(ORANGE)
         self.orientation = RIGHT
         self.health = 3
         self.prev_orientation = self.orientation # might not need this
         self.prev_location = (x, y)
         self.sliding = False #tells if the player is sliding on the ice
+        self.walking_up = []
+        self.walking_down = []
+        self.walking_left = []
+        self.walking_right = []
+
+        sprite_sheet = SpriteSheet(self.scene.game.player_sprite_sheet)
+        self.image = sprite_sheet.get_image(0, 0, 32, 32)
+
+        for x in range(0, 65, 32):
+            self.walking_right.append(sprite_sheet.get_image(x, 0, 32, 32))
+        for x in range(0, 65, 32):
+            self.walking_left.append(sprite_sheet.get_image(x, 32, 32, 32))
+        for x in range(0, 65, 32):
+            self.walking_down.append(sprite_sheet.get_image(x, 64, 32, 32))
+        for x in range(0, 65, 32):
+            self.walking_up.append(sprite_sheet.get_image(x, 96, 32, 32))
 
     def move(self, dx=0, dy=0):
         if not self.collision_object(dx, dy):
@@ -115,6 +135,17 @@ class Player(GameObject):
                 # box code here
 
     def update(self):
+        if self.orientation == UP:
+            self.image = self.walking_up[0]
+        elif self.orientation == DOWN:
+            self.image = self.walking_down[0]
+        elif self.orientation == LEFT:
+            self.image = self.walking_left[0]
+        else:
+            self.image = self.walking_right[0]
+
+
+
         if self.sliding == True: #if the player is sliding on the Ice
             self.rect.x += (self.orientation[0] * 8)
             self.rect.y += (self.orientation[1] * 8)
@@ -159,14 +190,18 @@ class Player(GameObject):
 
         self.check_health()
 
+
 class Block(GameObject):
   def __init__(self, scene, x, y):
-      super().__init__(scene, x, y)
-      self.groups = scene.all_sprites, scene.blocks
-      pygame.sprite.Sprite.__init__(self, self.groups)
-      self.image.fill(BLUE)
-      self.interactable = True
-      self.sliding = False
+        super().__init__(scene, x, y)
+        self.groups = scene.all_sprites, scene.blocks
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.image.fill(BLUE)
+        self.interactable = True
+        self.sliding = False
+
+        sprite_sheet = SpriteSheet(self.scene.game.box_sprite_sheet)
+        self.image = sprite_sheet.get_image(0, 0, 32, 32)
 
   def move(self, dx=0, dy=0):
         #Test if this block is going to collide with anything
@@ -178,7 +213,6 @@ class Block(GameObject):
             return True
 
         return False
-
 
   def update(self):
     if self.sliding == True: #if the player is sliding on the Ice
@@ -215,6 +249,8 @@ class Block(GameObject):
     self.rect.x = self.x * TILESIZE
     self.rect.y = self.y * TILESIZE
     """
+
+
 class Wall(GameObject):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
@@ -223,6 +259,7 @@ class Wall(GameObject):
         self.image.fill(LIGHTGREY)
         self.interactable = False
         self.collidable = True
+
 
 class Ice(GameObject):
     def __init__(self, scene, x, y):
@@ -233,6 +270,19 @@ class Ice(GameObject):
         self.interactable = False
         self.collidable = False
 
+class SpriteSheet(object):
+    def __init__(self, file_name):
+        # You have to call `convert_alpha`, so that the background of
+        # the surface is transparent.
+        self.sprite_sheet = pygame.image.load(file_name).convert_alpha()
+
+    def get_image(self, x, y, width, height):
+        # Use a transparent surface as the base image (pass pygame.SRCALPHA).
+        image = pygame.Surface([width, height], pygame.SRCALPHA)
+        image.blit(self.sprite_sheet, (0,0), (x, y, width, height))
+        return image
+# https://stackoverflow.com/questions/48055291/spritesheet-help-in-pygame
 
 # Sources:
 # https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2002/sprites.py
+# https://stackoverflow.com/questions/48055291/spritesheet-help-in-pygame
