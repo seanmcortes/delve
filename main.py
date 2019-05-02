@@ -44,6 +44,7 @@ class Game:
         self.map_folder = path.join(game_folder, 'maps')
         self.player_sprite_sheet = path.join(image_folder, 'Player.png')
         self.box_sprite_sheet = path.join(image_folder, 'Box.png')
+        self.bat_sprite_sheet = path.join(image_folder, 'Bat.png')
 
     def go_to(self, scene):
         self.scene = scene

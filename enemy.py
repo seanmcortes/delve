@@ -1,6 +1,6 @@
 import pygame
-from sprites import GameObject
-from settings import RED, GREEN, TILESIZE, ENEMY_SPEED, HIT_DELAY
+from sprites import GameObject, SpriteSheet
+from settings import RED, GREEN, TILESIZE, ENEMY_SPEED, HIT_DELAY, UP, DOWN, LEFT, RIGHT
 
 
 class Enemy(GameObject):
@@ -8,7 +8,7 @@ class Enemy(GameObject):
         super().__init__(scene, x, y)
         self.groups = scene.all_sprites, scene.enemies
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image.fill(RED)
+        # self.image.fill(RED)
         self.orientation = orientation
         self.moves = moves
         self.interactable = False
@@ -19,6 +19,10 @@ class Enemy(GameObject):
         self.health = 3
         self.hit = False
         self.hit_detected = False
+        self.walking_up = []
+        self.walking_down = []
+        self.walking_left = []
+        self.walking_right = []
 
         if len(moves) > 0:
             self.direction = None
@@ -36,6 +40,19 @@ class Enemy(GameObject):
         self.update_delay = ENEMY_SPEED
         self.last_update = pygame.time.get_ticks()
         self.hit_delay = HIT_DELAY
+
+        self.sprite_sheet_file = self.scene.game.bat_sprite_sheet
+        sprite_sheet = SpriteSheet(self.sprite_sheet_file)
+        self.image = sprite_sheet.get_image(0, 0, 32, 32)
+
+        for x in range(0, 65, 32):
+            self.walking_right.append(sprite_sheet.get_image(x, 0, 32, 32))
+        for x in range(0, 65, 32):
+            self.walking_left.append(sprite_sheet.get_image(x, 32, 32, 32))
+        for x in range(0, 65, 32):
+            self.walking_down.append(sprite_sheet.get_image(x, 64, 32, 32))
+        for x in range(0, 65, 32):
+            self.walking_up.append(sprite_sheet.get_image(x, 96, 32, 32))
 
     """
     Move object a number of tiles
@@ -134,6 +151,15 @@ class Enemy(GameObject):
         if self.health <= 0:
             self.kill()
 
+    def render_orientation(self):
+        if self.orientation == UP:
+            self.image = self.walking_up[0]
+        elif self.orientation == DOWN:
+            self.image = self.walking_down[0]
+        elif self.orientation == LEFT:
+            self.image = self.walking_left[0]
+        else:
+            self.image = self.walking_right[0]
     """
     Draw image. Handle movement
     """
@@ -150,13 +176,13 @@ class Enemy(GameObject):
             self.hit_detected = True
         elif self.hit and self.hit_detected:
             if now - self.last_update < self.hit_delay:
-                self.image.fill(GREEN)
+                self.image = self.walking_left[0]
             else:
                 self.last_update = now
                 self.hit = False
                 self.hit_detected = False
         else:
-            self.image.fill(RED)
+            self.render_orientation()
             if now - self.last_update >= self.update_delay:
                 self.last_update = now
 
