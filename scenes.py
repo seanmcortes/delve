@@ -65,6 +65,8 @@ class GameScene(object):
                                 if block.x == self.player.x+0 and block.y == self.player.y-1:
                                     if block.move(dx=0, dy=-1):
                                         self.player.move(dx=0, dy=-1)
+                                    else:
+                                        self.player.sliding = False
                             #self.player.move(dx=0, dy=-1)
                             #self.block.move(dx=0, dy=-1)
                             self.player.orientation = UP
@@ -80,6 +82,8 @@ class GameScene(object):
                                 if block.x == self.player.x+0 and block.y == self.player.y+1:
                                     if block.move(dx=0, dy=1):
                                         self.player.move(dx=0, dy=1)
+                                    else:
+                                        self.player.sliding = False
                             #self.player.move(dx=0, dy=1)
                             #self.block.move(dx=0, dy=1)
                             self.player.orientation = DOWN
@@ -95,6 +99,8 @@ class GameScene(object):
                                 if block.x == self.player.x-1 and block.y == self.player.y+0:
                                     if block.move(dx=-1, dy=0):
                                         self.player.move(dx=-1, dy=0)
+                                    else:
+                                        self.player.sliding = False
                             #self.player.move(dx=-1, dy=0)
                             #self.block.move(dx=-1,dy=0)
                             self.player.orientation = LEFT
@@ -110,6 +116,8 @@ class GameScene(object):
                                 if block.x == self.player.x+1 and block.y == self.player.y+0:
                                     if block.move(dx=1, dy=0):
                                         self.player.move(dx=1, dy=0)
+                                    else:
+                                        self.player.sliding = False
                             #self.player.move(dx=1, dy=0)
                             #self.block.move(dx=1,dy=0)
                             self.player.orientation = RIGHT
