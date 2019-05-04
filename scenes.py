@@ -64,6 +64,7 @@ class GameScene(object):
                                 for block in self.blocks:
                                     if block.x == self.player.x+0 and block.y == self.player.y-1:
                                         if block.move(dx=0, dy=-1):
+                                            block.orientation = self.player.orientation
                                             self.player.move(dx=0, dy=-1)
                                         else:
                                             self.player.sliding = False
@@ -82,6 +83,7 @@ class GameScene(object):
                                 for block in self.blocks:
                                     if block.x == self.player.x+0 and block.y == self.player.y+1:
                                         if block.move(dx=0, dy=1):
+                                            block.orientation = self.player.orientation
                                             self.player.move(dx=0, dy=1)
                                         else:
                                             self.player.sliding = False
@@ -100,6 +102,7 @@ class GameScene(object):
                                 for block in self.blocks:
                                     if block.x == self.player.x-1 and block.y == self.player.y+0:
                                         if block.move(dx=-1, dy=0):
+                                            block.orientation = self.player.orientation
                                             self.player.move(dx=-1, dy=0)
                                         else:
                                             self.player.sliding = False
@@ -118,6 +121,7 @@ class GameScene(object):
                                 for block in self.blocks:
                                     if block.x == self.player.x+1 and block.y == self.player.y+0:
                                         if block.move(dx=1, dy=0):
+                                            block.orientation = self.player.orientation
                                             self.player.move(dx=1, dy=0)
                                         else:
                                             self.player.sliding = False
@@ -207,7 +211,6 @@ class TutorialIce(GameScene):
     def __init__(self, game):
         super().__init__(game)
         self.draw_layout("tutorialIceObjects.map")
-        Block(self, 2, 10)
 
 
 

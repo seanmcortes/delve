@@ -199,6 +199,7 @@ class Block(GameObject):
         self.image.fill(BLUE)
         self.interactable = True
         self.sliding = False
+        self.orientation = None
 
         sprite_sheet = SpriteSheet(self.scene.game.box_sprite_sheet)
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
@@ -215,16 +216,16 @@ class Block(GameObject):
         return False
 
   def update(self):
-    if self.sliding == True: #if the player is sliding on the Ice
-        self.rect.x += (self.scene.player.orientation[0] * 32)
-        self.rect.y += (self.scene.player.orientation[1] * 32)
+    if self.sliding == True: #if the block is sliding on the Ice
+        self.rect.x += (self.orientation[0] * 32)
+        self.rect.y += (self.orientation[1] * 32)
         self.x = (self.rect.x - (self.rect.x % TILESIZE)) / TILESIZE
         self.y = (self.rect.y - (self.rect.y % TILESIZE)) / TILESIZE
         #stop sliding if they collide into a collidable object
-        if self.collision_object(self.scene.player.orientation[0], self.scene.player.orientation[1]):
+        if self.collision_object(self.orientation[0], self.orientation[1]):
             self.sliding = False
         #stop sliding if they collide with a block
-        if self.collision_block(self.scene.player.orientation[0], self.scene.player.orientation[1]):
+        if self.collision_block(self.orientation[0], self.orientation[1]):
             self.sliding = False
         #stop sliding if they are not on an ice tile
         elif self.rect.x % TILESIZE == 0 and self.rect.y % TILESIZE == 0 and not self.collision_ice():
