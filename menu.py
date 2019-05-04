@@ -21,6 +21,8 @@ class Background(pygame.sprite.Sprite):
 class MenuButton():
 	def __init__(self, game, msg, location, action=None, optional_argument=None):
 		pygame.sprite.Sprite.__init__(self)  #call Sprite initializer
+		self.game_folder = path.dirname(__file__)
+		self.image_folder = path.join(self.game_folder, "image")
 		self.msg = msg
 		self.img = self.img_holder()
 		self.image = self.img.normal
@@ -32,16 +34,18 @@ class MenuButton():
 		self.w = 100
 		self.screen = game.screen
 		self.action = action
-		self.text = TextObject(self.msg, 'image/CuteFont-Regular.ttf',20, BLACK, (self.x+(self.w/2)), (self.y+(self.h/2)) )
+		self.text = TextObject(self.msg, path.join(self.image_folder, 'CuteFont-Regular.ttf'),20, BLACK, (self.x+(self.w/2)), (self.y+(self.h/2)) )
 		self.NORMAL = True
 		self.CLICKED = False
 		self.optional_argument = optional_argument
 
 	class img_holder():
 		def __init__(self):
-			self.normal = pygame.image.load('image/button_normal.png')
-			self.hover = pygame.image.load('image/button_hover.png')
-			self.click = pygame.image.load('image/button_click.png')
+			game_folder = path.dirname(__file__)
+			image_folder = path.join(game_folder, "image")
+			self.normal = pygame.image.load(path.join(image_folder,'button_normal.png'))
+			self.hover = pygame.image.load(path.join(image_folder,'button_hover.png'))
+			self.click = pygame.image.load(path.join(image_folder,'button_click.png'))
 
 	def handle_events(self):
 		mouse = pygame.mouse.get_pos()
@@ -87,10 +91,12 @@ class MainMenuScene():
 	def __init__(self, game):
 		#self.show_main_menu = True
 		self.game = game
-		self.text_logo = TextObject("DELVE", 'image/CuteFont-Regular.ttf', 175, WHITE, WIDTH / 2, HEIGHT / 4)
+		self.game_folder = path.dirname(__file__)
+		self.image_folder = path.join(self.game_folder, "image")
+		self.text_logo = TextObject("DELVE", path.join(self.image_folder, 'CuteFont-Regular.ttf'), 175, WHITE, WIDTH / 2, HEIGHT / 4)
 		self.textObjects = [self.text_logo]
 		self.all_buttons = []
-		self.background = Background('image/menuback.jpg', [0,0])
+		self.background = Background(path.join(self.image_folder, 'menuback.jpg'), [0,0])
 		self.button1 = MenuButton(self.game, "Play", [140,400], self.playgame)
 		self.button2 = MenuButton(self.game, "Load", [270,400], self.loadgame)
 		self.button3 = MenuButton(self.game, "Quit", [400,400], self.quitgame)
