@@ -22,7 +22,6 @@ class GameScene(object):
         self.enemies = pygame.sprite.Group()
         self.ice = pygame.sprite.Group()
         self.player = None
-        #self.block = None
         self.game = game
         self.tile_map = create_tiles("level1.map")
 
@@ -30,7 +29,6 @@ class GameScene(object):
         self.game.screen.fill(BGCOLOR)
         self.game.screen.blit(self.tile_map, [0,0])
         self.draw_grid()
-        #self.all_sprites.draw(self.game.screen)
         self.ice.draw(self.game.screen)#draw ice tiles on the bottom
         self.walls.draw(self.game.screen)
         self.blocks.draw(self.game.screen)
@@ -38,7 +36,6 @@ class GameScene(object):
         self.players.draw(self.game.screen)
 
     def update(self):
-        #self.all_sprites.update()
         self.ice.update()
         self.walls.update()
         self.blocks.update() #update blocks before player so blocks sliding on the ice stop before the player
@@ -54,75 +51,77 @@ class GameScene(object):
             keyState = pygame.key.get_pressed()
             if self.player.sliding == False: #Ignore the directional key key presses if player is sliding on ice
                 if keyState[pygame.K_w]:
-                    if self.collision_ice(dx=0, dy=-1):
-                        self.player.sliding = True
-                    if not self.collision_wall(dx=0, dy=-1):
-                        if not self.collision_block(dx=0, dy=-1):
-                            self.player.move(dx=0, dy=-1)
-                            self.player.orientation = UP
-                        else:
-                            for block in self.blocks:
-                                if block.x == self.player.x+0 and block.y == self.player.y-1:
-                                    if block.move(dx=0, dy=-1):
-                                        self.player.move(dx=0, dy=-1)
-                                    else:
-                                        self.player.sliding = False
-                            #self.player.move(dx=0, dy=-1)
-                            #self.block.move(dx=0, dy=-1)
-                            self.player.orientation = UP
+                    if self.player.orientation != UP:
+                        self.player.orientation = UP
+                    else:
+                        if self.collision_ice(dx=0, dy=-1):
+                            self.player.sliding = True
+                        if not self.collision_wall(dx=0, dy=-1):
+                            if not self.collision_block(dx=0, dy=-1):
+                                self.player.move(dx=0, dy=-1)
+                                self.player.orientation = UP
+                            else:
+                                for block in self.blocks:
+                                    if block.x == self.player.x+0 and block.y == self.player.y-1:
+                                        if block.move(dx=0, dy=-1):
+                                            self.player.move(dx=0, dy=-1)
+                                        else:
+                                            self.player.sliding = False
+                                self.player.orientation = UP
                 if keyState[pygame.K_s]:
-                    if self.collision_ice(dx=0, dy=1):
-                        self.player.sliding = True
-                    if not self.collision_wall(dx=0, dy=1):
-                        if not self.collision_block(dx=0, dy=1):
-                            self.player.move(dx=0, dy=1)
-                            self.player.orientation = DOWN
-                        else:
-                            for block in self.blocks:
-                                if block.x == self.player.x+0 and block.y == self.player.y+1:
-                                    if block.move(dx=0, dy=1):
-                                        self.player.move(dx=0, dy=1)
-                                    else:
-                                        self.player.sliding = False
-                            #self.player.move(dx=0, dy=1)
-                            #self.block.move(dx=0, dy=1)
-                            self.player.orientation = DOWN
+                    if self.player.orientation != DOWN:
+                        self.player.orientation = DOWN
+                    else:
+                        if self.collision_ice(dx=0, dy=1):
+                            self.player.sliding = True
+                        if not self.collision_wall(dx=0, dy=1):
+                            if not self.collision_block(dx=0, dy=1):
+                                self.player.move(dx=0, dy=1)
+                                self.player.orientation = DOWN
+                            else:
+                                for block in self.blocks:
+                                    if block.x == self.player.x+0 and block.y == self.player.y+1:
+                                        if block.move(dx=0, dy=1):
+                                            self.player.move(dx=0, dy=1)
+                                        else:
+                                            self.player.sliding = False
+                                self.player.orientation = DOWN
                 if keyState[pygame.K_a]:
-                    if self.collision_ice(dx=-1, dy=0):
-                        self.player.sliding = True
-                    if not self.collision_wall(dx=-1, dy=0):
-                        if not self.collision_block(dx=-1, dy=0):
-                            self.player.move(dx=-1, dy=0)
-                            self.player.orientation = LEFT
-                        else:
-                            for block in self.blocks:
-                                if block.x == self.player.x-1 and block.y == self.player.y+0:
-                                    if block.move(dx=-1, dy=0):
-                                        self.player.move(dx=-1, dy=0)
-                                    else:
-                                        self.player.sliding = False
-                            #self.player.move(dx=-1, dy=0)
-                            #self.block.move(dx=-1,dy=0)
-                            self.player.orientation = LEFT
+                    if self.player.orientation != LEFT:
+                        self.player.orientation = LEFT
+                    else:
+                        if self.collision_ice(dx=-1, dy=0):
+                            self.player.sliding = True
+                        if not self.collision_wall(dx=-1, dy=0):
+                            if not self.collision_block(dx=-1, dy=0):
+                                self.player.move(dx=-1, dy=0)
+                                self.player.orientation = LEFT
+                            else:
+                                for block in self.blocks:
+                                    if block.x == self.player.x-1 and block.y == self.player.y+0:
+                                        if block.move(dx=-1, dy=0):
+                                            self.player.move(dx=-1, dy=0)
+                                        else:
+                                            self.player.sliding = False
+                                self.player.orientation = LEFT
                 if keyState[pygame.K_d]:
-                    if self.collision_ice(dx=1, dy=0):
-                        self.player.sliding = True
-                    if not self.collision_wall(dx=1, dy=0):
-                        if not self.collision_block(dx=1, dy=0):
-                            self.player.move(dx=1, dy=0)
-                            self.player.orientation = RIGHT
-                        else:
-                            for block in self.blocks:
-                                if block.x == self.player.x+1 and block.y == self.player.y+0:
-                                    if block.move(dx=1, dy=0):
-                                        self.player.move(dx=1, dy=0)
-                                    else:
-                                        self.player.sliding = False
-                            #self.player.move(dx=1, dy=0)
-                            #self.block.move(dx=1,dy=0)
-                            self.player.orientation = RIGHT
-                # if keyState[pygame.K_SPACE]: # player attacks empty space or interacts with object in front of them
-                #     self.player.interact()
+                    if self.player.orientation != RIGHT:
+                        self.player.orientation = RIGHT
+                    else:
+                        if self.collision_ice(dx=1, dy=0):
+                            self.player.sliding = True
+                        if not self.collision_wall(dx=1, dy=0):
+                            if not self.collision_block(dx=1, dy=0):
+                                self.player.move(dx=1, dy=0)
+                                self.player.orientation = RIGHT
+                            else:
+                                for block in self.blocks:
+                                    if block.x == self.player.x+1 and block.y == self.player.y+0:
+                                        if block.move(dx=1, dy=0):
+                                            self.player.move(dx=1, dy=0)
+                                        else:
+                                            self.player.sliding = False
+                                self.player.orientation = RIGHT
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_SPACE:
                     self.player.interact()
@@ -140,7 +139,6 @@ class GameScene(object):
         return False
 
     def collision_block(self, dx, dy):
-        #if self.block.x == self.player.x + dx and self.block.y == self.player.y +dy:
         for block in self.blocks:
             if block.x == self.player.x +dx and block.y == self.player.y + dy:
                 return True
