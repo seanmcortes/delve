@@ -6,8 +6,8 @@ tile_dict =	{
   ".": "pebble_brown0.png",
   "t": "tomb0.png"
 }
-map_folder = "maps"
-tile_folder = "image/tiles"
+#map_folder = "maps"
+#tile_folder = "image/tiles"
 
 """
     This function generates the background tiles. It does this by reading
@@ -19,6 +19,10 @@ tile_folder = "image/tiles"
     map_file: the name of the .map file (has to be saved in the maps folder)
 """
 def create_tiles(map_file):
+    game_folder = path.dirname(__file__)
+    map_folder = path.join(game_folder, "maps")
+    image_folder = path.join(game_folder, "image")
+    tiles_folder = path.join(image_folder, "tiles")
     surface = pygame.Surface((WIDTH, HEIGHT)) #surface that will serve as the tiled background
     f = open(path.join(map_folder, map_file), "r") #open the map file
     if f.mode == 'r':
@@ -29,7 +33,7 @@ def create_tiles(map_file):
         for map_y, line in enumerate(map):
             for map_x, t in enumerate(line):
                 #retrieve the tile image from the image/tiles folder
-                tile = pygame.image.load(path.join(tile_folder, tile_dict[t]))
+                tile = pygame.image.load(path.join(tiles_folder, tile_dict[t]))
                 surface.blit(tile, (map_x*32, map_y*32)) #draw the tile to the surface
     f.close()
     return surface
