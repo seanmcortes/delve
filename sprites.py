@@ -1,7 +1,7 @@
 import os
 import pygame
 from settings import *
-from menu import GameOverScene
+#from menu import GameOverScene
 
 
 class GameObject(pygame.sprite.Sprite):
@@ -147,8 +147,8 @@ class Player(GameObject):
 
 
         if self.sliding == True: #if the player is sliding on the Ice
-            self.rect.x += (self.orientation[0] * 8)
-            self.rect.y += (self.orientation[1] * 8)
+            self.rect.x += (self.orientation[0] * 32)
+            self.rect.y += (self.orientation[1] * 32)
             self.x = (self.rect.x - (self.rect.x % TILESIZE)) / TILESIZE
             self.y = (self.rect.y - (self.rect.y % TILESIZE)) / TILESIZE
             #stop sliding if they collide into a collidable object
@@ -216,8 +216,8 @@ class Block(GameObject):
 
   def update(self):
     if self.sliding == True: #if the player is sliding on the Ice
-        self.rect.x += (self.scene.player.orientation[0] * 8)
-        self.rect.y += (self.scene.player.orientation[1] * 8)
+        self.rect.x += (self.scene.player.orientation[0] * 32)
+        self.rect.y += (self.scene.player.orientation[1] * 32)
         self.x = (self.rect.x - (self.rect.x % TILESIZE)) / TILESIZE
         self.y = (self.rect.y - (self.rect.y % TILESIZE)) / TILESIZE
         #stop sliding if they collide into a collidable object
