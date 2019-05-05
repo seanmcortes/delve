@@ -1,3 +1,6 @@
+from os import path
+from os.path import join #for file handling
+
 # colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -30,6 +33,12 @@ GRIDHEIGHT = HEIGHT / TILESIZE
 ENEMY_SPEED = 1000 # delay in ms between enemy movement
 HIT_DELAY = 3000
 
+#file folders
+GAME_FOLDER = path.dirname(__file__)
+MAP_FOLDER = path.join(GAME_FOLDER, "maps")
+SAVE_FOLDER = path.join(GAME_FOLDER, "save")
+IMAGE_FOLDER = path.join(GAME_FOLDER, "image")
+TILE_FOLDER = path.join(IMAGE_FOLDER, "tiles")
 
 # Sources:
 # https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2022/settings.py
