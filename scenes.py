@@ -6,6 +6,7 @@ from settings import *
 from sprites import *
 from map import create_tiles
 from enemy import Enemy
+from menu import PauseScene
 
 
 """
@@ -49,6 +50,9 @@ class GameScene(object):
                 sys.exit()
 
             keyState = pygame.key.get_pressed()
+            if keyState[pygame.K_p]: #Pause the game
+                pauseScene = PauseScene(self.game) #create a pause scene
+                pauseScene.paused() #loop until the player exits the pause screen
             if self.player.sliding == False: #Ignore the directional key key presses if player is sliding on ice
                 if keyState[pygame.K_w]:
                     if self.player.orientation != UP:
