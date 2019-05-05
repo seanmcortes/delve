@@ -48,8 +48,8 @@ class Game:
             function_index = sys.argv.index("-debug") + 1
             self.go_to(eval(sys.argv[function_index])(self))
         else:
-            self.go_to(TutorialIce(self))
-            #self.go_to(MainMenuScene(self))
+            #self.go_to(TutorialIce(self))
+            self.go_to(MainMenuScene(self))
 
     def load_data(self):
         game_folder = path.dirname(__file__)
@@ -95,11 +95,12 @@ class Game:
     ###############################################################################
     def get_scene_number(self, scene_name):
         #create a reverse dictionary to look up scene number by scene name
-        inverse_scene_dictionary = {v: k for k, v in self.scene_dictionary.items()}
+        inverse_scene_dictionary= {v: k for k, v in self.scene_dictionary.items()} #Python 3 version
         #Source: https://stackoverflow.com/questions/483666/python-reverse-invert-a-mapping
         # Get the function from switcher dictionary
         #Source: https://jaxenter.com/implement-switch-case-statement-python-138315.html
-        return inverse_scene_dictionary.get(scene_name, lambda: 0)
+        scene_number = inverse_scene_dictionary.get(scene_name, lambda: 0)
+        return scene_number
 
 
 def main():

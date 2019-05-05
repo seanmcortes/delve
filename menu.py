@@ -2,6 +2,7 @@ import pygame
 import pygame.freetype
 import sys
 from os import path
+from os import remove # to delete corrupted save files
 from settings import *
 from sprites import *
 #import scenes
@@ -9,6 +10,7 @@ from sprites import *
 from helper import *
 from os import listdir #for file handling
 from os.path import isfile, join #for file handling
+import datetime #for getting the time for the save files
 
 #Source: https://stackoverflow.com/questions/28005641/how-to-add-a-background-image-into-pygame
 class Background(pygame.sprite.Sprite):
@@ -204,7 +206,7 @@ class LoadGameScene(MainMenuScene):
 							save_text = "Level:   " + str(number) + " Time: " + date
 						else:
 							save_text = "Level: " + str(number) + " Time: " + date
-						self.textObjects.append(TextObject(save_text, path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 40, WHITE, 210, y+14, "left"))
+						self.textObjects.append(TextObject(save_text, path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 30, WHITE, 210, y+14, "left"))
 						self.all_buttons.append(MenuButton(self.game, "Load", [100, y], self.loadlevel, number))
 						y += 60
 						count += 1
@@ -220,17 +222,17 @@ class SaveGameScene(MainMenuScene):
 		self.background = Background(path.join(IMAGE_FOLDER, 'menuback.jpg'), [0,0])
 		self.text_logo = TextObject("Pause Menu", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, WHITE, WIDTH / 2, HEIGHT / 4)
 		self.textObjects = [self.text_logo]
-		self.button1 = MenuButton(self.game, "Back", [270,450], self.mainmenu)
+		self.button1 = MenuButton(self.game, "Back", [270,550], self.stopwaiting)
 		self.all_buttons = [self.button1]
-		self.files = [] #holds the file names as a string
-		self.save_path = 'save'
+		self.WAITING = False #wait for the player to save or quit the save game screen
+		#self.files = [] #holds the file names as a string
 		#Source: https://stackoverflow.com/questions/3207219/how-do-i-list-all-files-of-a-directory
 		#gets only files not any directories
 		y = 250
 		count = 0
-		files = [f for f in listdir(self.save_path) if isfile(join(self.save_path, f))]
-		for o in files:
-				f = open(join(save_path, o), "r")
+		files = [f for f in listdir(SAVE_FOLDER) if isfile(join(SAVE_FOLDER, f))]
+		for file_name in files:
+				f = open(join(SAVE_FOLDER, file_name), "r")
 				if f.mode == 'r' and count < 5:
 					try:
 						number = int(f.readline().strip())
@@ -242,17 +244,52 @@ class SaveGameScene(MainMenuScene):
 							save_text = "Level:   " + str(number) + " Time: " + date
 						else:
 							save_text = "Level: " + str(number) + " Time: " + date
-						self.textObjects.append(TextObject(save_text, path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 40, WHITE, 210, y+14, "left"))
-						self.all_buttons.append(MenuButton(self.game, "Save", [100, y], savelevel, count))
+						self.textObjects.append(TextObject(save_text, path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 30, WHITE, 210, y+14, "left"))
+						self.all_buttons.append(MenuButton(self.game, "Save", [100, y], self.savelevel, file_name))
 						y += 60
 						count += 1
-						self.files.add(o) #add the file name to the files array
-					f.close()
-		if count < 5:
-			self.all_buttons.append(MenuButton(self.game, "Save", [100, y], savelevel, count))
+						#self.files.add(file_name) #add the file name to the files array
+						f.close()
+					#delete corrupted files
+					elif not isinstance(number, int):
+						f.close()
+						remove(join(SAVE_FOLDER, file_name))
+		while count < 3: #create more save files if there are some that do no exist
+			file_num = 1
+			temp_name = str(file_num) + ".sav"
+			while isfile(join(SAVE_FOLDER, temp_name)): #loop until finding a filename that does not exist
+				file_num += 1
+				temp_name = str(file_num) + ".sav"
+			self.all_buttons.append(MenuButton(self.game, "Save", [100, y], self.savelevel, temp_name))
+			y += 60
+			count += 1
 
-	def savelevel():
-		pass
+	def savelevel(self, file_name):
+		f = open(path.join(SAVE_FOLDER, file_name),"w+")
+		f.write(str(self.game.scene.scene_number) + "\n")
+		#get current Time
+		#source: https://stackoverflow.com/questions/415511/how-to-get-the-current-time-in-python
+		current_time = datetime.datetime.now()
+		#convert time to a string
+		#Source: https://stackoverflow.com/questions/311627/how-to-print-a-date-in-a-regular-format
+		time_str = current_time.strftime('%m/%d/%Y, %H:%M:%S')
+		f.write(time_str)
+		f.close()
+		self.WAITING = False #exit the save screen
+
+	def loop(self):
+		self.WAITING = True
+		while self.WAITING:
+			self.dt = self.game.clock.tick(FPS) / 1000
+			self.handle_events(pygame.event.get())
+			self.update()
+			self.render()
+			pygame.display.flip()
+
+	def stopwaiting(self):
+		self.WAITING = False
+
+
 
 class PauseScene(MainMenuScene):
 	def __init__(self, game):
@@ -286,3 +323,4 @@ class PauseScene(MainMenuScene):
 
 	def savegame(self):
 			saveScreen = SaveGameScene(self.game)
+			saveScreen.loop()
