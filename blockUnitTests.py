@@ -6,11 +6,9 @@ from settings import *
 from sprites import *
 from scenes import Level1Scene, TutorialEnemy, TutorialIce, BlockUnitTest
 from menu import *
+import unittest
 
-#
-"""
-Manages games scenes
-"""
+#block unit tests
 class Game:
     def __init__(self):
         pygame.init()
@@ -49,7 +47,7 @@ class Game:
             function_index = sys.argv.index("-debug") + 1
             self.go_to(eval(sys.argv[function_index])(self))
         else:
-            self.go_to(TutorialIce(self))
+            self.go_to(BlockUnitTest(self))
             #self.go_to(MainMenuScene(self))
 
     def load_data(self):
@@ -103,18 +101,29 @@ class Game:
         scene_number = inverse_scene_dictionary.get(scene_name, lambda: 0)
         return scene_number
 
+delve = Game()
 
-def main():
-    delve = Game()
+delve.dt = delve.clock.tick(FPS) / 1000
 
-    while True:
-        delve.run()
+#delve.scene.player = Player(delve.scene, 0, 0)
+Block(delve.scene, 5, 5)
 
+blockCount = 0
+for block in delve.scene.blocks:
 
-if __name__ == "__main__":
-    main()
+    blockCount += 1
+   
+    success = block.move(dx=1, dy=0)
 
+    testFailed = False
+    if block.x != 6:
+        print('TEST FAILURE, EXPECTED BLOCK.X VALUE of 2 | Actual value: {}'.format(block.x))
+        testFailed = True
+    if block.y != 5:
+        print('TEST FAILURE, EXPECTED BLOCK.y VALUE of 0 | Actual value: {}'.format(block.y))
+        testFailed = True
 
-# Sources:
-# https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2007/main.py
-# https://stackoverflow.com/questions/14700889/pygame-level-menu-states
+    if not testFailed:
+        print("TEST PASSED")
+    
+

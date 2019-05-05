@@ -220,6 +220,12 @@ class TutorialIce(GameScene):
         self.scene_number = self.game.get_scene_number(TutorialIce)
         self.draw_layout("tutorialIceObjects.map")
 
+class BlockUnitTest(GameScene):
+    def __init__(self, game):
+        super().__init__(game)
+        self.scene_number = self.game.get_scene_number(BlockUnitTest)
+        self.draw_layout("blockUnitTest.map")
+
 
 
 # Sources:
