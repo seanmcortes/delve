@@ -212,28 +212,6 @@ class LoadGameScene(MainMenuScene):
 
 	def loadlevel(self, level):
 		self.game.select_scene(level)
-		"""
-		#Source: https://jaxenter.com/implement-switch-case-statement-python-138315.html
-		switcher = {
-	        1: Level1Scene,
-	        2: GameOverScene,
-	        3: GameOverScene,
-	        4: GameOverScene,
-	        5: GameOverScene,
-	        6: GameOverScene,
-	        7: GameOverScene,
-	        8: GameOverScene,
-	        9: GameOverScene,
-	        10: GameOverScene,
-		}
-	    # Get the function from switcher dictionary
-		func = switcher.get(level, lambda: "Invalid level")
-		# Execute the function
-		if level > 1: #this is just here until we implement the other levels, becuase GameOverScene requires the game be passed to it
-			self.game.go_to(func(self.game))
-		else:
-			self.game.go_to(func())
-		"""
 
 class SaveGameScene(MainMenuScene):
 	def __init__(self, game):
@@ -245,7 +223,7 @@ class SaveGameScene(MainMenuScene):
 		self.button1 = MenuButton(self.game, "Back", [270,450], self.mainmenu)
 		self.all_buttons = [self.button1]
 		self.files = [] #holds the file names as a string
-		sself.save_path = 'save'
+		self.save_path = 'save'
 		#Source: https://stackoverflow.com/questions/3207219/how-do-i-list-all-files-of-a-directory
 		#gets only files not any directories
 		y = 250

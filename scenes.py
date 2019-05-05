@@ -25,6 +25,7 @@ class GameScene(object):
         self.player = None
         self.game = game
         self.tile_map = create_tiles("level1.map")
+        self.scene_number = 0
 
     def render(self):
         self.game.screen.fill(BGCOLOR)
@@ -183,6 +184,7 @@ Display Level 1
 class Level1Scene(GameScene):
     def __init__(self, game):
         super().__init__(game)
+        self.scene_number = self.game.get_scene_number("Level1Scene")
         self.draw_layout("level1object.map")
 
 
@@ -192,6 +194,7 @@ Display tutorial level for enemies
 class TutorialEnemy(GameScene):
     def __init__(self, game):
         super().__init__(game)
+        self.scene_number = self.game.get_scene_number("TutorialEnemy")
         self.draw_layout("tutorialenemyobject.map")
         self.spawn_enemies()
 
@@ -214,6 +217,7 @@ Display tutorial level for ice
 class TutorialIce(GameScene):
     def __init__(self, game):
         super().__init__(game)
+        self.scene_number = self.game.get_scene_number("TutorialIce")
         self.draw_layout("tutorialIceObjects.map")
 
 
