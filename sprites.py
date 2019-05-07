@@ -253,11 +253,12 @@ class Block(GameObject):
 
 
 class Wall(GameObject):
-    def __init__(self, scene, x, y):
+    def __init__(self, scene, x, y, sprite):
         super().__init__(scene, x, y)
         self.groups = scene.all_sprites, scene.walls
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image.fill(LIGHTGREY)
+        # self.image.fill(LIGHTGREY)
+        self.image = sprite
         self.interactable = False
         self.collidable = True
 

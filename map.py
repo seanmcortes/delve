@@ -3,7 +3,8 @@ from os import path
 from settings import WIDTH, HEIGHT
 
 tile_dict =	{
-  ".": "pebble_brown0.png",
+  # ".": "pebble_brown0.png",
+    ".": "dirt0.png",
   "t": "tomb0.png"
 }
 #map_folder = "maps"

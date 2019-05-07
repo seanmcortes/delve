@@ -30,7 +30,7 @@ class GameScene(object):
     def render(self):
         self.game.screen.fill(BGCOLOR)
         self.game.screen.blit(self.tile_map, [0,0])
-        self.draw_grid()
+        # self.draw_grid()
         self.ice.draw(self.game.screen)#draw ice tiles on the bottom
         self.walls.draw(self.game.screen)
         self.blocks.draw(self.game.screen)
@@ -160,14 +160,32 @@ class GameScene(object):
             pygame.draw.line(self.game.screen, LIGHTGREY, (0, y), (WIDTH, y))
 
     def draw_layout(self, map_file):
+        sprite_sheet = SpriteSheet(self.game.wall_sprite_sheet)
+
         f = open(path.join(self.game.map_folder, map_file), "r")
         if f.mode == 'r':
             map = f.readlines()
             map = [item.strip() for item in map]
             for row, tiles in enumerate(map):
                 for col, tile in enumerate(tiles):
+                    if tile == 'Q':
+                        Wall(self, col, row, sprite_sheet.get_image(0, 0, 32, 32))
                     if tile == 'W':
-                        Wall(self, col, row)
+                        Wall(self, col, row, sprite_sheet.get_image(32, 0, 32, 32))
+                    if tile == 'E':
+                        Wall(self, col, row, sprite_sheet.get_image(64, 0, 32, 32))
+                    if tile == 'A':
+                        Wall(self, col, row, sprite_sheet.get_image(0, 32, 32, 32))
+                    if tile == 'X':
+                        Wall(self, col, row, sprite_sheet.get_image(32, 32, 32, 32))
+                    if tile == 'D':
+                        Wall(self, col, row, sprite_sheet.get_image(64, 32, 32, 32))
+                    if tile == 'Z':
+                        Wall(self, col, row, sprite_sheet.get_image(0, 64, 32, 32))
+                    if tile == 'S':
+                        Wall(self, col, row, sprite_sheet.get_image(32, 64, 32, 32))
+                    if tile == 'C':
+                        Wall(self, col, row, sprite_sheet.get_image(64, 64, 32, 32))
                     if tile == 'P':
                         self.player = Player(self, col, row)
                     if tile == 'B':
