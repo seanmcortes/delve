@@ -1,6 +1,6 @@
 import pygame
 from sprites import GameObject, SpriteSheet
-from settings import RED, GREEN, TILESIZE, ENEMY_SPEED, HIT_DELAY, UP, DOWN, LEFT, RIGHT
+from settings import RED, GREEN, TILESIZE, ENEMY_SPEED, HIT_DELAY, UP, DOWN, LEFT, RIGHT, BAT_SPRITE_SHEET
 
 
 class Enemy(GameObject):
@@ -41,8 +41,7 @@ class Enemy(GameObject):
         self.last_update = pygame.time.get_ticks()
         self.hit_delay = HIT_DELAY
 
-        self.sprite_sheet_file = self.scene.game.bat_sprite_sheet
-        sprite_sheet = SpriteSheet(self.sprite_sheet_file)
+        sprite_sheet = SpriteSheet(BAT_SPRITE_SHEET)
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
 
         for x in range(0, 65, 32):

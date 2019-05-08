@@ -8,8 +8,8 @@ class GameObject(pygame.sprite.Sprite):
     def __init__(self, scene, x, y):
         self.scene = scene
         self.image = pygame.Surface((TILESIZE, TILESIZE))
-        sheet = pygame.image.load(self.scene.game.player_sprite_sheet)
-        self.image = pygame.transform.scale(sheet, (32, 32))
+        # sheet = pygame.image.load(self.scene.game.player_sprite_sheet)
+        # self.image = pygame.transform.scale(sheet, (32, 32))
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -68,7 +68,7 @@ class Player(GameObject):
         self.walking_left = []
         self.walking_right = []
 
-        sprite_sheet = SpriteSheet(self.scene.game.player_sprite_sheet)
+        sprite_sheet = SpriteSheet(PLAYER_SPRITE_SHEET)
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
 
         for x in range(0, 65, 32):
@@ -201,7 +201,7 @@ class Block(GameObject):
         self.sliding = False
         self.orientation = None
 
-        sprite_sheet = SpriteSheet(self.scene.game.box_sprite_sheet)
+        sprite_sheet = SpriteSheet(BOX_SPRITE_SHEET)
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
 
   def move(self, dx=0, dy=0):

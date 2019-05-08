@@ -160,9 +160,10 @@ class GameScene(object):
             pygame.draw.line(self.game.screen, LIGHTGREY, (0, y), (WIDTH, y))
 
     def draw_layout(self, map_file):
-        sprite_sheet = SpriteSheet(self.game.wall_sprite_sheet)
+        sprite_sheet = SpriteSheet(WALL_SPRITESHEET)
 
-        f = open(path.join(self.game.map_folder, map_file), "r")
+        f = open(path.join(MAP_FOLDER, map_file), "r")
+
         if f.mode == 'r':
             map = f.readlines()
             map = [item.strip() for item in map]

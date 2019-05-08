@@ -21,8 +21,6 @@ class Game:
         self.playing = True
         self.dt = None # sub-initialization in run()
         self.scene = None # sub-initialization in go_to()
-        self.title_font = None # sub-initialization in load_data()
-        self.map_folder = None # sub-init in load_data()
         self.debug = False
         self.scene_dictionary = {
                     1: Level1Scene,
@@ -39,7 +37,7 @@ class Game:
                     12: TutorialIce,
                     13: BlockUnitTest
                 }
-        self.load_data()
+        # self.load_data()
 
         if "-debug" in sys.argv:
             self.debug = True
@@ -49,18 +47,8 @@ class Game:
             function_index = sys.argv.index("-debug") + 1
             self.go_to(eval(sys.argv[function_index])(self))
         else:
-            self.go_to(TutorialIce(self))
-            #self.go_to(MainMenuScene(self))
-
-    def load_data(self):
-        game_folder = path.dirname(__file__)
-        image_folder = path.join(game_folder, 'image')
-        self.title_font = path.join(image_folder, 'Cutefont')
-        self.map_folder = path.join(game_folder, 'maps')
-        self.player_sprite_sheet = path.join(image_folder, 'Player.png')
-        self.box_sprite_sheet = path.join(image_folder, 'Box.png')
-        self.bat_sprite_sheet = path.join(image_folder, 'Bat.png')
-        self.wall_sprite_sheet = path.join(image_folder, 'Walls.png')
+            # self.go_to(TutorialIce(self))
+            self.go_to(MainMenuScene(self))
 
     def go_to(self, scene):
         self.scene = scene
@@ -88,6 +76,7 @@ class Game:
             self.go_to(func(self))
         else:
             self.go_to(func(self))
+
     ################################################################################
     # Description: Returns a scene number based on a scene name
     # Args:
@@ -119,3 +108,4 @@ if __name__ == "__main__":
 # Sources:
 # https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2007/main.py
 # https://stackoverflow.com/questions/14700889/pygame-level-menu-states
+# https://stackoverflow.com/questions/21937695/python-cx-freeze-name-file-is-not-defined
