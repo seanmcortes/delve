@@ -4,5 +4,6 @@ __pycache__/
 .vscode/
 .vs/
 .venv/
+build/
 
 
