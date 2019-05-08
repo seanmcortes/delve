@@ -21,7 +21,7 @@ RIGHT = (1, 0)
 
 # game parameters
 WIDTH = 640 # 32 * 20
-HEIGHT = 640 # 32 * 20
+HEIGHT = 672 # 32 * 20
 FPS = 12
 TITLE = "Delve"
 BGCOLOR = DARKGREY
@@ -50,6 +50,9 @@ PLAYER_SPRITE_SHEET = path.join(IMAGE_FOLDER, 'Player.png')
 BOX_SPRITE_SHEET = path.join(IMAGE_FOLDER, 'Box.png')
 BAT_SPRITE_SHEET = path.join(IMAGE_FOLDER, 'Bat.png')
 WALL_SPRITESHEET = path.join(IMAGE_FOLDER, 'Walls.png')
+KEY_SPRITESHEET = path.join(IMAGE_FOLDER, 'Key.png')
+LIFE_SPRITESHEET = path.join(IMAGE_FOLDER, 'Heart.png')
+INVENTORY_SPRITESHEET = path.join(IMAGE_FOLDER, 'Inventory.png')
 
 # Sources:
 # https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2022/settings.py

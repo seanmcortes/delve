@@ -1,7 +1,7 @@
 import os
 import pygame
 from settings import *
-#from menu import GameOverScene
+from menu import GameOverScene
 
 
 class GameObject(pygame.sprite.Sprite):
@@ -133,6 +133,12 @@ class Player(GameObject):
 
                 # TODO: implement interaction with box
                 # box code here
+        for item in self.scene.all_sprites:
+            if item.x == self.x + self.orientation[0] and \
+                    item.y == self.y + self.orientation[1]:
+                if item in self.scene.items: # check if object is an item
+                    self.scene.inventory.item_list.append(item)
+                    item.kill()
 
     def update(self):
         if self.orientation == UP:
@@ -271,6 +277,27 @@ class Ice(GameObject):
         self.image.fill(WHITE)
         self.interactable = False
         self.collidable = False
+
+class LifeHUD(GameObject):
+    def __init__(self, scene, x, y):
+        super().__init__(scene, x, y)
+        self.image = pygame.Surface((TILESIZE * 3, TILESIZE))
+        self.groups = scene.all_sprites, scene.hud
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.heart_state = []
+
+        sprite_sheet = SpriteSheet(LIFE_SPRITESHEET)
+        # sprite_sheet = SpriteSheet(PLAYER_SPRITE_SHEET)
+        self.image = sprite_sheet.get_image(0, 0, 96, 32)
+
+        for x in range(0, 97, 32):
+            self.heart_state.append(sprite_sheet.get_image(0, x, 96, 32))
+
+    def update(self):
+        heart_state_index = self.scene.player.health - 1
+        self.image = self.heart_state[heart_state_index]
+        self.rect.x = self.x * TILESIZE
+        self.rect.y = self.y * TILESIZE
 
 class SpriteSheet(object):
     def __init__(self, file_name):

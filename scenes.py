@@ -7,6 +7,7 @@ from sprites import *
 from map import create_tiles
 from enemy import Enemy
 from menu import PauseScene
+from item import Key, Inventory
 
 
 """
@@ -22,6 +23,9 @@ class GameScene(object):
         self.blocks = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
         self.ice = pygame.sprite.Group()
+        self.items = pygame.sprite.Group()
+        self.keys = pygame.sprite.Group()
+        self.hud = pygame.sprite.Group()
         self.player = None
         self.game = game
         self.tile_map = create_tiles("level1.map")
@@ -36,6 +40,9 @@ class GameScene(object):
         self.blocks.draw(self.game.screen)
         self.enemies.draw(self.game.screen)
         self.players.draw(self.game.screen)
+        self.hud.draw(self.game.screen)
+        self.items.draw(self.game.screen)
+        self.draw_HUD(self.game.screen)
 
     def update(self):
         self.ice.update()
@@ -43,6 +50,8 @@ class GameScene(object):
         self.blocks.update() #update blocks before player so blocks sliding on the ice stop before the player
         self.enemies.update()
         self.players.update()
+        self.items.update()
+        self.hud.update()
 
     def handle_events(self, events):
         for event in events:
@@ -193,6 +202,20 @@ class GameScene(object):
                         Block(self, col, row)
                     if tile == 'i':
                         Ice(self, col, row)
+                    if tile == 'H':
+                        LifeHUD(self, col, row)
+                    if tile == 'I':
+                        self.inventory = Inventory(self, col, row)
+                    if tile == 'K':
+                        Key(self, col, row)
+
+    def draw_HUD(self, screen):
+
+        life_text = TextObject("LIFE:", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 40, WHITE, WIDTH/11,
+                                        HEIGHT/32)
+        life_text.render(screen)
+
+
 
 
 """
