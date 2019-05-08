@@ -1,3 +1,5 @@
+import os
+import sys
 from os import path
 from os.path import join #for file handling
 
@@ -34,11 +36,20 @@ ENEMY_SPEED = 1000 # delay in ms between enemy movement
 HIT_DELAY = 3000
 
 #file folders
-GAME_FOLDER = path.dirname(__file__)
+if getattr(sys, 'frozen', False):
+    GAME_FOLDER = os.path.dirname(sys.executable)
+else:
+    GAME_FOLDER = os.path.dirname(os.path.realpath(__file__))
+
+# GAME_FOLDER = path.dirname(__file__)
 MAP_FOLDER = path.join(GAME_FOLDER, "maps")
 SAVE_FOLDER = path.join(GAME_FOLDER, "save")
 IMAGE_FOLDER = path.join(GAME_FOLDER, "image")
 TILE_FOLDER = path.join(IMAGE_FOLDER, "tiles")
+PLAYER_SPRITE_SHEET = path.join(IMAGE_FOLDER, 'Player.png')
+BOX_SPRITE_SHEET = path.join(IMAGE_FOLDER, 'Box.png')
+BAT_SPRITE_SHEET = path.join(IMAGE_FOLDER, 'Bat.png')
+WALL_SPRITESHEET = path.join(IMAGE_FOLDER, 'Walls.png')
 
 # Sources:
 # https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2022/settings.py
