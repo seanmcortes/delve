@@ -4,7 +4,11 @@ import pygame
 import pygame.freetype
 from settings import *
 from sprites import *
+<<<<<<< HEAD
 from scenes import TutorialMovement, TutorialEnemy, TutorialIce, BlockUnitTest
+=======
+from scenes import Level1Scene, TutorialEnemy, TutorialIce, BlockUnitTest, TutorialBlocks
+>>>>>>> 46c4a0b709d798f8c7caed3daee9dd2cdc85daf7
 from menu import *
 
 #
@@ -35,7 +39,8 @@ class Game:
                     10: GameOverScene,
                     11: TutorialEnemy,
                     12: TutorialIce,
-                    13: BlockUnitTest
+                    12: TutorialBlocks,
+                    14: BlockUnitTest
                 }
         # self.load_data()
 

@@ -100,25 +100,11 @@ class MainMenuScene():
 		self.all_buttons = []
 		self.background = Background(path.join(IMAGE_FOLDER, 'menuback.jpg'), [0,0])
 		self.button1 = MenuButton(self.game, "Play", [140,400], self.playgame)
-		self.button2 = MenuButton(self.game, "Load", [270,400], self.loadgame)
+		self.button2 = MenuButton(self.game, "Load", [270,400], self.loadgamescreen)
 		self.button3 = MenuButton(self.game, "Quit", [400,400], self.quitgame)
 		self.all_buttons.append(self.button1)
 		self.all_buttons.append(self.button2)
 		self.all_buttons.append(self.button3)
-
-	def quitgame(self):
-		pygame.quit()
-		quit()
-
-	def playgame(self):
-		#self.show_main_menu = False
-		self.game.select_scene(1)
-
-	def loadgame(self):
-		self.game.go_to(LoadGameScene(self.game))
-
-	def mainmenu(self):
-		self.game.go_to(MainMenuScene(self.game))
 
 	def render(self):
 		self.dt = self.game.clock.tick(FPS) / 1000
@@ -142,6 +128,39 @@ class MainMenuScene():
 					p.action()
 				else: #this is used to load a level
 					p.action(p.optional_argument)
+
+	########################################################################
+	# These are the functions that are executed by the button presses
+	#######################################################################
+	def quitgame(self):
+		pygame.quit()
+		quit()
+
+	def playgame(self):
+		#self.show_main_menu = False
+		self.game.select_scene(1)
+
+	def loadgamescreen(self):
+		self.game.go_to(LoadGameScene(self.game))
+
+	def mainmenu(self):
+		self.game.go_to(MainMenuScene(self.game))
+
+	def loadlevel(self, level):
+		self.game.select_scene(level)
+
+	def savelevel(self, file_name):
+		f = open(path.join(SAVE_FOLDER, file_name),"w+")
+		f.write(str(self.game.scene.scene_number) + "\n")
+		#get current Time
+		#source: https://stackoverflow.com/questions/415511/how-to-get-the-current-time-in-python
+		current_time = datetime.datetime.now()
+		#convert time to a string
+		#Source: https://stackoverflow.com/questions/311627/how-to-print-a-date-in-a-regular-format
+		time_str = current_time.strftime('%m/%d/%Y, %H:%M:%S')
+		f.write(time_str)
+		f.close()
+		self.WAITING = False #exit the save screen
 
 	"""
 	Event listener for main menu.
@@ -212,9 +231,6 @@ class LoadGameScene(MainMenuScene):
 						count += 1
 					f.close()
 
-	def loadlevel(self, level):
-		self.game.select_scene(level)
-
 class SaveGameScene(MainMenuScene):
 	def __init__(self, game):
 		#super().__init__(game)
@@ -264,18 +280,7 @@ class SaveGameScene(MainMenuScene):
 			y += 60
 			count += 1
 
-	def savelevel(self, file_name):
-		f = open(path.join(SAVE_FOLDER, file_name),"w+")
-		f.write(str(self.game.scene.scene_number) + "\n")
-		#get current Time
-		#source: https://stackoverflow.com/questions/415511/how-to-get-the-current-time-in-python
-		current_time = datetime.datetime.now()
-		#convert time to a string
-		#Source: https://stackoverflow.com/questions/311627/how-to-print-a-date-in-a-regular-format
-		time_str = current_time.strftime('%m/%d/%Y, %H:%M:%S')
-		f.write(time_str)
-		f.close()
-		self.WAITING = False #exit the save screen
+
 
 	def loop(self):
 		self.WAITING = True
@@ -298,10 +303,11 @@ class PauseScene(MainMenuScene):
 		self.background = Background(path.join(IMAGE_FOLDER, 'menuback.jpg'), [0,0])
 		self.text_logo = TextObject("Pause Menu", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, WHITE, WIDTH / 2, HEIGHT / 4)
 		self.textObjects = [self.text_logo]
-		self.button1 = MenuButton(self.game, "Save Game", [270,300], self.savegame)
-		self.button2 = MenuButton(self.game, "Main Menu", [270,375], self.mainmenu)
-		self.button3 = MenuButton(self.game, "Back", [270,450], self.unpause)
-		self.all_buttons = [self.button1, self.button2, self.button3]
+		self.button1 = MenuButton(self.game, "Save Game", [270,250], self.savegame)
+		self.button2 = MenuButton(self.game, "Main Menu", [270,325], self.mainmenu)
+		self.button3 = MenuButton(self.game, "Restart Level", [270,400], self.restartlevel)
+		self.button4 = MenuButton(self.game, "Back to Game", [270,475], self.unpause)
+		self.all_buttons = [self.button1, self.button2, self.button3, self.button4]
 		save_path = 'save'
 
 	def paused(self):
@@ -324,3 +330,7 @@ class PauseScene(MainMenuScene):
 	def savegame(self):
 			saveScreen = SaveGameScene(self.game)
 			saveScreen.loop()
+
+	def restartlevel(self):
+		self.loadlevel(self.game.scene.scene_number)
+		self.unpause()
