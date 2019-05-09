@@ -28,7 +28,7 @@ class GameScene(object):
         self.hud = pygame.sprite.Group()
         self.player = None
         self.game = game
-        self.tile_map = create_tiles("level1.map")
+        self.tile_map = create_tiles("defaultTile.map")
         self.scene_number = 0
 
     def render(self):
@@ -202,12 +202,10 @@ class GameScene(object):
                         Block(self, col, row)
                     if tile == 'i':
                         Ice(self, col, row)
-                    if tile == 'H':
-                        LifeHUD(self, col, row)
-                    if tile == 'I':
-                        self.inventory = Inventory(self, col, row)
                     if tile == 'K':
                         Key(self, col, row)
+            LifeHUD(self, 3, 0)
+            self.inventory = Inventory(self, 17, 0)
 
     def draw_HUD(self, screen):
 
@@ -223,11 +221,12 @@ Display Level 1
 
 - Simple tutorial, show player how to move character and what the objectives of the game are.
 """
-class Level1Scene(GameScene):
+class TutorialMovement(GameScene):
     def __init__(self, game):
         super().__init__(game)
-        self.scene_number = self.game.get_scene_number(Level1Scene)
-        self.draw_layout("level1object.map")
+        self.scene_number = self.game.get_scene_number(TutorialMovement)
+        self.tile_map = create_tiles("tutorialMovementTile.map")
+        self.draw_layout("tutorialMovementObject.map")
 
 
 """
@@ -237,21 +236,15 @@ class TutorialEnemy(GameScene):
     def __init__(self, game):
         super().__init__(game)
         self.scene_number = self.game.get_scene_number(TutorialEnemy)
-        self.draw_layout("tutorialenemyobject.map")
+        self.tile_map = create_tiles("tutorialEnemyTile.map")
+        self.draw_layout("tutorialEnemyObject.map")
         self.spawn_enemies()
 
     def spawn_enemies(self):
-        Enemy(self, 18, 9, LEFT, [LEFT, LEFT, LEFT, LEFT, LEFT,
-                                  DOWN, DOWN, DOWN,
-                                  LEFT, LEFT, LEFT, LEFT])
+        Enemy(self, 10, 5, LEFT, [])
 
-        Enemy(self, 1, 18, RIGHT, [RIGHT, RIGHT, RIGHT, RIGHT, RIGHT,
-                                   UP, UP, UP, UP,
-                                   LEFT, LEFT, LEFT, LEFT,
-                                   DOWN, DOWN, DOWN, DOWN])
-
-        Enemy(self, 3, 3, UP, [RIGHT, RIGHT, RIGHT])
-        Block(self, 10, 10)
+        Enemy(self, 10, 15, RIGHT, [UP, UP, UP, UP, UP,
+                                   UP, UP, UP, UP])
 
 """
 Display tutorial level for ice

@@ -32,8 +32,8 @@ GRIDWIDTH = WIDTH / TILESIZE
 GRIDHEIGHT = HEIGHT / TILESIZE
 
 # object variables
-ENEMY_SPEED = 1000 # delay in ms between enemy movement
-HIT_DELAY = 3000
+ENEMY_SPEED = 500 # delay in ms between enemy movement
+HIT_DELAY = 60
 
 #file folders
 if getattr(sys, 'frozen', False):

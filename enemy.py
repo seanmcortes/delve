@@ -8,7 +8,6 @@ class Enemy(GameObject):
         super().__init__(scene, x, y)
         self.groups = scene.all_sprites, scene.enemies
         pygame.sprite.Sprite.__init__(self, self.groups)
-        # self.image.fill(RED)
         self.orientation = orientation
         self.moves = moves
         self.interactable = False
@@ -16,7 +15,7 @@ class Enemy(GameObject):
         self.move_counter = 0
         self.move_counter_increment = 1
         self.reverse = False
-        self.health = 3
+        self.health = 1
         self.hit = False
         self.hit_detected = False
         self.walking_up = []
@@ -26,16 +25,6 @@ class Enemy(GameObject):
 
         if len(moves) > 0:
             self.direction = None
-        # self.direction = direction
-        # self.directionX = moves[0]
-        # self.directionY = moves[1]
-        # self.turns = turns
-        # self.turn_counter = 0
-        # self.move_count = [0]
-        # self.time_counter = 0
-        # self.reverse = False
-        # self.move_count_reverse = None
-        # self.turns_reverse = None
 
         self.update_delay = ENEMY_SPEED
         self.last_update = pygame.time.get_ticks()
@@ -67,6 +56,7 @@ class Enemy(GameObject):
         if not self.collision_object(dx, dy):
             self.x += dx
             self.y += dy
+            self.orientation = (dx, dy)
             return True
         else:
             return False
@@ -86,50 +76,6 @@ class Enemy(GameObject):
                 self.reverse = not self.reverse
                 self.move_counter_increment *= -1
         self.move_counter += self.move_counter_increment
-
-    # def move_algorithm(self):
-    #     if self.move(self.directionX, self.directionY):
-    #         self.move_count[self.turn_counter] += 1
-    #     else:
-    #         if self.reverse:
-    #             # unravel
-    #             self.directionX = self.opposite_direction(self.turns[self.turn_counter])[0]
-    #             self.directionY = self.opposite_direction(self.turns[self.turn_counter])[1]
-    #         else:
-    #             if self.turn_counter >= len(self.turns):
-    #                 self.reverse = True
-    #                 self.move_count_reverse = self.move_count[::-1]
-    #                 self.turns_reverse = [self.opposite_direction(x) for x in self.turns[::-1]]
-    #                 self.turns_reverse.append(self.opposite_direction(self.direction))
-    #                 self.turn_counter = 0
-    #                 self.directionX = self.turns_reverse[self.turn_counter][0]
-    #                 self.directionY = self.turns_reverse[self.turn_counter][1]
-    #             else:
-    #                 self.directionX = self.turns[self.turn_counter][0]
-    #                 self.directionY = self.turns[self.turn_counter][1]
-    #                 self.turn_counter += 1
-    #                 self.move_count.append(0)
-    #
-    # def move_algorithm_reverse(self):
-    #     if self.move(self.directionX, self.directionY):
-    #         if self.move_count_reverse[self.turn_counter] <= 1:
-    #             self.turn_counter += 1
-    #
-    #             if self.turn_counter >= len(self.turns_reverse):
-    #                 self.reverse = False
-    #                 self.turn_counter = 0
-    #                 self.directionX = self.direction[0]
-    #                 self.directionY = self.direction[1]
-    #                 self.move_count_reverse = None
-    #                 self.turns_reverse = None
-    #                 self.move_count = [0]
-    #                 self.turn_counter = 0
-    #             else:
-    #                 self.directionX = self.turns_reverse[self.turn_counter][0]
-    #                 self.directionY = self.turns_reverse[self.turn_counter][1]
-    #         else:
-    #             self.move_count_reverse[self.turn_counter] -= 1
-    #
 
     """
     Reverses direction (e.g. LEFT -> RIGHT, UP -> DOWN, vice-versa)

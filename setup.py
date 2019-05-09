@@ -7,6 +7,7 @@ buildOptions = dict(include_files = ['enemy.py',
                                      'scenes.py',
                                      'settings.py',
                                      'sprites.py',
+                                     'item.py',
                                      'image/',
                                      'maps/',
                                      'save/'])
