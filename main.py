@@ -4,14 +4,9 @@ import pygame
 import pygame.freetype
 from settings import *
 from sprites import *
-<<<<<<< HEAD
-from scenes import TutorialMovement, TutorialEnemy, TutorialIce, BlockUnitTest
-=======
-from scenes import Level1Scene, TutorialEnemy, TutorialIce, BlockUnitTest, TutorialBlocks
->>>>>>> 46c4a0b709d798f8c7caed3daee9dd2cdc85daf7
+from scenes import TutorialMovement, TutorialEnemy, TutorialIce, TutorialBlocks, BlockUnitTest
 from menu import *
 
-#
 """
 Manages games scenes
 """
