@@ -274,7 +274,7 @@ class Ice(GameObject):
         super().__init__(scene, x, y)
         self.groups = scene.all_sprites, scene.ice
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image.fill(WHITE)
+        self.image = pygame.image.load(path.join(TILE_FOLDER, 'ice.png'))
         self.interactable = False
         self.collidable = False
 

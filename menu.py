@@ -4,7 +4,7 @@ import sys
 from os import path
 from os import remove # to delete corrupted save files
 from settings import *
-from sprites import *
+#from sprites import *
 #import scenes
 #from scenes import *
 from helper import *
