@@ -23,19 +23,19 @@ class Game:
         self.debug = False
         self.scene_dictionary = {
                     1: TutorialMovement,
-                    2: GameOverScene,
+                    2: TutorialBlocks,
                     3: TutorialEnemy,
-                    4: GameOverScene,
+                    4: TutorialIce,
                     5: GameOverScene,
                     6: GameOverScene,
                     7: GameOverScene,
                     8: GameOverScene,
                     9: GameOverScene,
                     10: GameOverScene,
-                    11: TutorialEnemy,
-                    12: TutorialIce,
-                    13: TutorialBlocks,
-                    14: BlockUnitTest
+                    11: GameOverScene,
+                    12: GameOverScene,
+                    13: GameOverScene,
+                    14: GameOverScene
                 }
         # self.load_data()
 

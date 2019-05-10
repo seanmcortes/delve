@@ -131,15 +131,6 @@ class Player(GameObject):
                         object.health -= 1
                         object.hit = True
 
-                # TODO: implement interaction with box
-                # box code here
-        for item in self.scene.all_sprites:
-            if item.x == self.x + self.orientation[0] and \
-                    item.y == self.y + self.orientation[1]:
-                if item in self.scene.items: # check if object is an item
-                    self.scene.inventory.item_list.append(item)
-                    item.kill()
-
     def update(self):
         if self.orientation == UP:
             self.image = self.walking_up[0]

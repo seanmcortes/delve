@@ -33,8 +33,6 @@ class Key(Item):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
         self.groups = scene.all_sprites, scene.items, scene.keys
-        self.interactable = True
-        self.collidable = True
         self.animation = []
 
         sprite_sheet = SpriteSheet(KEY_SPRITESHEET)
@@ -42,3 +40,11 @@ class Key(Item):
 
         for x in range(0, 97, 32):
             self.animation.append(sprite_sheet.get_image(x, 0, 32, 32))
+
+    def update(self):
+    	self.rect.x = self.x * TILESIZE
+    	self.rect.y = self.y * TILESIZE
+
+    	if self.scene.player.x == self.x and self.scene.player.y == self.y:
+    		self.scene.inventory.item_list.append(self)
+    		self.kill()
