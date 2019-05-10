@@ -34,7 +34,7 @@ class Game:
                     10: GameOverScene,
                     11: TutorialEnemy,
                     12: TutorialIce,
-                    12: TutorialBlocks,
+                    13: TutorialBlocks,
                     14: BlockUnitTest
                 }
         # self.load_data()
@@ -47,7 +47,8 @@ class Game:
             function_index = sys.argv.index("-debug") + 1
             self.go_to(eval(sys.argv[function_index])(self))
         else:
-            # self.go_to(TutorialIce(self))
+            #self.go_to(TutorialIce(self))
+            #self.go_to(TutorialEnemy(self))
             self.go_to(MainMenuScene(self))
 
     def go_to(self, scene):
@@ -70,12 +71,10 @@ class Game:
     def select_scene(self, level):
         # Get the function from switcher dictionary
         #Source: https://jaxenter.com/implement-switch-case-statement-python-138315.html
-        func = self.scene_dictionary.get(level, lambda: 0)
+        func = self.scene_dictionary.get(level)
         # Execute the function
-        if level > 1: #this is just here until we implement the other levels, becuase GameOverScene requires the game be passed to it
-            self.go_to(func(self))
-        else:
-            self.go_to(func(self))
+        self.go_to(func(self))
+
 
     ################################################################################
     # Description: Returns a scene number based on a scene name

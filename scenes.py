@@ -254,6 +254,9 @@ class TutorialIce(GameScene):
         super().__init__(game)
         self.scene_number = self.game.get_scene_number(TutorialIce)
         self.draw_layout("tutorialIceObjects.map")
+        Block(self, 2, 10)
+        Block(self, 16, 11)
+        Key(self, 16, 17)
 
 """
 Unit test scene for blocks
