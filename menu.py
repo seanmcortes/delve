@@ -102,9 +102,11 @@ class MainMenuScene():
 		self.button1 = MenuButton(self.game, "Play", [140,400], self.playgame)
 		self.button2 = MenuButton(self.game, "Load", [270,400], self.loadgamescreen)
 		self.button3 = MenuButton(self.game, "Quit", [400,400], self.quitgame)
+		self.button4 = MenuButton(self.game, "Credits", [270,460], self.show_credits)
 		self.all_buttons.append(self.button1)
 		self.all_buttons.append(self.button2)
 		self.all_buttons.append(self.button3)
+		self.all_buttons.append(self.button4)
 
 	def render(self):
 		self.dt = self.game.clock.tick(FPS) / 1000
@@ -165,6 +167,10 @@ class MainMenuScene():
 	def restartlevel(self):
 		self.loadlevel(self.game.scene.scene_number)
 		self.unpause()
+
+	def show_credits(self):
+		credits_screen = CreditScene(self.game)
+		credits_screen.show_credits()
 
 	"""
 	Event listener for main menu.
@@ -335,3 +341,41 @@ class PauseScene(MainMenuScene):
 	def savegame(self):
 			saveScreen = SaveGameScene(self.game)
 			saveScreen.loop()
+
+class CreditScene():
+	def __init__(self, game):
+		self.game = game
+		self.background = Background(path.join(IMAGE_FOLDER, 'menuback.jpg'), [0,0])
+		self.instructions = Instructions(30, WHITE)
+		self.instructions.add("Developers:", 100)
+		self.instructions.add("Sir Sean Cortes", 140)
+		self.instructions.add("Jason Anderson, Esq.", 180)
+		self.instructions.add("Mr. Joshua Nutt", 220)
+		self.instructions.add("Ice tiles by Phyromatical: https://www.deviantart.com/phyromatical", 300)
+		self.instructions.increment = 10
+
+	def show_credits(self):
+		while self.instructions.opacity > 0:
+			self.dt = self.game.clock.tick(FPS) / 1000
+			self.handle_events(pygame.event.get())
+			self.instructions.update()
+			#keep the text at maximum opaqueness for longer
+			if self.instructions.opacity > 250:
+				start_ticks=pygame.time.get_ticks() #starter tick
+				seconds = 0
+				while seconds < 5:
+					seconds=(pygame.time.get_ticks()-start_ticks)/1000 #calculate how many seconds
+					self.instructions.opacity = 250
+			#speed up the fade away increment for the text
+			if self.instructions.increment < 0:
+				self.instructions.increment = -10
+			#draw background and text to screen
+			self.game.screen.blit(self.background.image, self.background.rect)
+			self.instructions.draw(self.game.screen)
+			pygame.display.flip()
+
+	def handle_events(self, events):
+	    for event in events:
+	        if event.type == pygame.QUIT:
+	            pygame.quit()
+	            sys.exit()
