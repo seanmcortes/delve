@@ -303,26 +303,6 @@ class SpriteSheet(object):
         return image
 # https://stackoverflow.com/questions/48055291/spritesheet-help-in-pygame
 
-class Instructions():
-    def __init__(self, scene, text, path, size, color, x=0, y=0, align="center"):
-        #self.groups = scene.all_sprites, scene.instructions
-        #pygame.sprite.Sprite.__init__(self, self.groups)
-        font = pygame.freetype.Font(path, size)
-        self.surface, self.rect = font.render(text, color)
-
-        if align == "center":
-            self.rect.center = (x, y)
-        else:
-            self.rect.left = x
-            self.rect.top = y
-
-        self.start_ticks=pygame.time.get_ticks()
-
-    def draw(self, screen):
-        seconds=(pygame.time.get_ticks()-self.start_ticks)/1000 #calculate how many seconds
-        if seconds < 5:
-            screen.blit(self.surface, self.rect)
-
 # Sources:
 # https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2002/sprites.py
 # https://stackoverflow.com/questions/48055291/spritesheet-help-in-pygame

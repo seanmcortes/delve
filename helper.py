@@ -52,3 +52,47 @@ class TextObject():
     """
     def render(self, screen):
     	 screen.blit(self.surface, self.rect)
+
+    """
+    Draw transparent pbject to screen
+    """
+    def blit_alpha(self, screen, opacity):
+        x = self.rect.x
+        y = self.rect.y
+        temp = pygame.Surface((self.surface.get_width(), self.surface.get_height())).convert()
+        temp.blit(screen, (-x, -y))
+        temp.blit(self.surface, (0, 0))
+        temp.set_alpha(opacity)
+        screen.blit(temp, [x, y])
+
+"""
+This class is used to draw instructions to the screen using text objects
+Args:
+    screen: the display the object will be rendered to
+"""
+class Instructions():
+    def __init__(self, size, color):
+        self.path = CUTEFONT
+        self.size = size
+        self.color = color
+        self.x = WIDTH/2
+        self.start_ticks=pygame.time.get_ticks() #get the time to only display the instructions on screen for a few second
+        self.rows = [] #Holds the instruction text objects
+        self.opacity = 255
+
+    def add(self, text, y=0):
+        self.rows.append(TextObject(text, self.path, self.size, BLACK, self.x+1, y+1, "center")) #add a shadow to make text easier to read
+        self.rows.append(TextObject(text, self.path, self.size, self.color, self.x, y, "center")) # add text on top of shadow
+
+    def draw(self, screen):
+        if self.opacity > 0: #only execute these instructions if the object has not disappered
+            seconds=(pygame.time.get_ticks()-self.start_ticks)/1000 #calculate how many seconds
+            if seconds > 1:
+                for text in self.rows:
+                    text.blit_alpha(screen, self.opacity)
+
+    def update(self):
+        if self.opacity > 0:
+            seconds=(pygame.time.get_ticks()-self.start_ticks)/1000 #calculate how many seconds
+            if seconds > 3:
+                self.opacity -= 5

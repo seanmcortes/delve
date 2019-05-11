@@ -26,7 +26,7 @@ class GameScene(object):
         self.items = pygame.sprite.Group()
         self.keys = pygame.sprite.Group()
         self.hud = pygame.sprite.Group()
-        self.instructions = pygame.sprite.Group()
+        self.instructions = Instructions(30, BLUE)
         self.player = None
         self.game = game
         self.tile_map = create_tiles("defaultTile.map")
@@ -44,7 +44,6 @@ class GameScene(object):
         self.hud.draw(self.game.screen)
         self.items.draw(self.game.screen)
         self.instructions.draw(self.game.screen)
-        self.instruct.draw(self.game.screen)
         self.draw_HUD(self.game.screen)
 
     def update(self):
@@ -54,6 +53,7 @@ class GameScene(object):
         self.enemies.update()
         self.players.update()
         self.items.update()
+        self.instructions.update()
         self.hud.update()
 
     def handle_events(self, events):
@@ -260,7 +260,8 @@ class TutorialIce(GameScene):
         Block(self, 2, 10)
         Block(self, 16, 11)
         Key(self, 16, 17)
-        self.instruct=Instructions(self, "Be careful on the ice! You will slide until you collide with an object.", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 30, BLUE, WIDTH/2, 100, "center")
+        self.instructions.add("Be careful on the ice!", 100)
+        self.instructions.add("You will slide until you collide with an object.", 140)
 
 """
 Unit test scene for blocks

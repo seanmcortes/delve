@@ -53,6 +53,7 @@ WALL_SPRITESHEET = path.join(IMAGE_FOLDER, 'Walls.png')
 KEY_SPRITESHEET = path.join(IMAGE_FOLDER, 'Key.png')
 LIFE_SPRITESHEET = path.join(IMAGE_FOLDER, 'Heart.png')
 INVENTORY_SPRITESHEET = path.join(IMAGE_FOLDER, 'Inventory.png')
+CUTEFONT = path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf')
 
 # Sources:
 # https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2022/settings.py
