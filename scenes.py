@@ -26,7 +26,7 @@ class GameScene(object):
         self.items = pygame.sprite.Group()
         self.keys = pygame.sprite.Group()
         self.hud = pygame.sprite.Group()
-        self.instructions = Instructions(30, BLUE)
+        self.instructions = Instructions(30, WHITE)
         self.player = None
         self.game = game
         self.tile_map = create_tiles("defaultTile.map")
@@ -230,6 +230,9 @@ class TutorialMovement(GameScene):
         self.scene_number = self.game.get_scene_number(TutorialMovement)
         self.tile_map = create_tiles("tutorialMovementTile.map")
         self.draw_layout("tutorialMovementObject.map")
+        self.instructions.add("Get the key to unlock the door and proceed to the next level.", 100)
+        self.instructions.add("Use the WASD keys to move around.", 140)
+        self.instructions.add("Press P to pause the game.", 180)
 
 
 """
@@ -242,6 +245,8 @@ class TutorialEnemy(GameScene):
         self.tile_map = create_tiles("tutorialEnemyTile.map")
         self.draw_layout("tutorialEnemyObject.map")
         self.spawn_enemies()
+        self.instructions.add("Press the Spacebar while standing next to an enemy to attack it.", 100)
+        self.instructions.add("MAke sure you don't run out of Hearts!.", 140)
 
     def spawn_enemies(self):
         Enemy(self, 10, 5, LEFT, [])
@@ -260,6 +265,7 @@ class TutorialIce(GameScene):
         Block(self, 2, 10)
         Block(self, 16, 11)
         Key(self, 16, 17)
+        self.instructions = Instructions(30, BLUE)
         self.instructions.add("Be careful on the ice!", 100)
         self.instructions.add("You will slide until you collide with an object.", 140)
 
@@ -278,6 +284,8 @@ class TutorialBlocks(GameScene):
         super().__init__(game)
         self.scene_number = self.game.get_scene_number(TutorialBlocks)
         self.draw_layout("tutorialBlocks.map")
+        self.instructions.add("You can move the blocks by standing next to them", 100)
+        self.instructions.add("and pushing the directional buttons.", 140)
 
 
 

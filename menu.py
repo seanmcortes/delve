@@ -162,6 +162,10 @@ class MainMenuScene():
 		f.close()
 		self.WAITING = False #exit the save screen
 
+	def restartlevel(self):
+		self.loadlevel(self.game.scene.scene_number)
+		self.unpause()
+
 	"""
 	Event listener for main menu.
 	"""
@@ -189,12 +193,13 @@ Ask the user if they would like to continue and prompt with "yes" or "no"
 class GameOverScene(MainMenuScene):
 	def __init__(self, game):
 		#super().__init__(game)
+		current_scene = game.scene.scene_number
 		self.game = game
 		self.background = Background(path.join(IMAGE_FOLDER,'gameoverback.jpg'), [0,0])
 		self.text_logo = TextObject("GAME OVER", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, WHITE, WIDTH / 2, HEIGHT / 4)
 		self.text_message = TextObject("Would you like to continue?", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 50, WHITE, WIDTH / 2, (HEIGHT / 3)+50)
 		self.textObjects = [self.text_logo, self.text_message]
-		self.button1 = MenuButton(self.game, "Yes", [270,350], self.playgame)
+		self.button1 = MenuButton(self.game, "Yes", [270,350], self.loadlevel, current_scene)
 		self.button2 = MenuButton(self.game, "No", [270,425], self.mainmenu)
 		self.all_buttons = [self.button1, self.button2]
 
@@ -330,7 +335,3 @@ class PauseScene(MainMenuScene):
 	def savegame(self):
 			saveScreen = SaveGameScene(self.game)
 			saveScreen.loop()
-
-	def restartlevel(self):
-		self.loadlevel(self.game.scene.scene_number)
-		self.unpause()

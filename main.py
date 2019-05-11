@@ -49,6 +49,7 @@ class Game:
         else:
             #self.go_to(TutorialIce(self))
             #self.go_to(TutorialEnemy(self))
+            #self.go_to(TutorialBlocks(self))
             self.go_to(MainMenuScene(self))
 
     def go_to(self, scene):

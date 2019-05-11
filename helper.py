@@ -72,27 +72,25 @@ Args:
 """
 class Instructions():
     def __init__(self, size, color):
-        self.path = CUTEFONT
+        self.path = CUTEFONT #the font path
         self.size = size
         self.color = color
-        self.x = WIDTH/2
-        self.start_ticks=pygame.time.get_ticks() #get the time to only display the instructions on screen for a few second
+        self.x = WIDTH/2 #center row on screen screen
         self.rows = [] #Holds the instruction text objects
-        self.opacity = 255
+        self.opacity = 5
+        self.increment = 5
 
     def add(self, text, y=0):
         self.rows.append(TextObject(text, self.path, self.size, BLACK, self.x+1, y+1, "center")) #add a shadow to make text easier to read
         self.rows.append(TextObject(text, self.path, self.size, self.color, self.x, y, "center")) # add text on top of shadow
 
     def draw(self, screen):
-        if self.opacity > 0: #only execute these instructions if the object has not disappered
-            seconds=(pygame.time.get_ticks()-self.start_ticks)/1000 #calculate how many seconds
-            if seconds > 1:
-                for text in self.rows:
-                    text.blit_alpha(screen, self.opacity)
+        if self.opacity > 0: #only draw when the text has not become completely transparent
+            for text in self.rows:
+                text.blit_alpha(screen, self.opacity)
 
     def update(self):
-        if self.opacity > 0:
-            seconds=(pygame.time.get_ticks()-self.start_ticks)/1000 #calculate how many seconds
-            if seconds > 3:
-                self.opacity -= 5
+        if self.opacity > 0: #only update when the text has not become completely transparent
+            self.opacity += self.increment #increment the opacity
+            if self.opacity > 250: #when the opacity has reached near maximum, start to decrement it
+                self.increment = -5
