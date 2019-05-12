@@ -253,8 +253,7 @@ class GameScene(object):
                     if tile == 'F':
                         Switch(self,col,row)
                     if tile == 'G':
-                        entrance = Door(self,col,row, "entrance")
-                        entrance.openDoor()
+                        Door(self,col,row, "entrance")
                     if tile == 'H':
                         exit = Door(self,col,row, "exit")
                         exit.closeDoor()
