@@ -198,7 +198,7 @@ class Block(GameObject):
         self.sliding = False
         self.orientation = None
 
-        sprite_sheet = SpriteSheet(BOX_SPRITE_SHEET)
+        sprite_sheet = SpriteSheet(BLOCK_SPRITE_SHEET)
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
 
   def move(self, dx=0, dy=0):
