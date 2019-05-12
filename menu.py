@@ -170,7 +170,7 @@ class MainMenuScene():
 
 	def show_credits(self):
 		credits_screen = CreditScene(self.game)
-		credits_screen.show_credits()
+		credits_screen.render()
 
 	"""
 	Event listener for main menu.
@@ -342,32 +342,41 @@ class PauseScene(MainMenuScene):
 			saveScreen = SaveGameScene(self.game)
 			saveScreen.loop()
 
-class CreditScene():
+class CreditScene(MainMenuScene):
 	def __init__(self, game):
 		self.game = game
 		self.background = Background(path.join(IMAGE_FOLDER, 'menuback.jpg'), [0,0])
+		#self.textObjects = [TextObject("Credits", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 50, BLACK, WIDTH / 2 + 1, HEIGHT / 4 + 1),
+		#					TextObject("Credits", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 50, WHITE, WIDTH / 2, HEIGHT / 4)]
 		self.instructions = Instructions(30, WHITE)
-		self.instructions.add("Developers:", 100)
-		self.instructions.add("Sir Sean Cortes", 140)
-		self.instructions.add("Jason Anderson, Esq.", 180)
-		self.instructions.add("Mr. Joshua Nutt", 220)
-		self.instructions.add("Ice tiles by Phyromatical: https://www.deviantart.com/phyromatical", 300)
+		self.instructions.rows.append(TextObject("Credits", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 60, BLACK, WIDTH / 2 + 1, HEIGHT / 4 - 40 + 1))
+		self.instructions.rows.append(TextObject("Credits", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 60, WHITE, WIDTH / 2, HEIGHT / 4 - 40))
+		self.instructions.add("Developers:", 190)
+		self.instructions.add("Sir Sean Cortes", 230)
+		self.instructions.add("Jason Anderson, Esq.", 270)
+		self.instructions.add("Mr. Joshua Nutt", 310)
+		self.instructions.add("Ice tiles by Phyromatical: https://www.deviantart.com/phyromatical", 370)
 		self.instructions.increment = 10
+		self.start_ticks = None
 
-	def show_credits(self):
+	def render(self):
 		while self.instructions.opacity > 0:
 			self.dt = self.game.clock.tick(FPS) / 1000
 			self.handle_events(pygame.event.get())
 			self.instructions.update()
 			#keep the text at maximum opaqueness for longer
 			if self.instructions.opacity > 250:
-				start_ticks=pygame.time.get_ticks() #starter tick
-				seconds = 0
-				while seconds < 5:
-					seconds=(pygame.time.get_ticks()-start_ticks)/1000 #calculate how many seconds
+				if self.start_ticks == None:
+					self.start_ticks=pygame.time.get_ticks() #starter tick
+				seconds=(pygame.time.get_ticks()-self.start_ticks)/1000 #calculate how many seconds
+				if seconds < 5:
+					self.instructions.opacity = 255
+				else:
 					self.instructions.opacity = 250
+			if self.instructions.opacity > 250:
+				self.instructions.increment = 0;
 			#speed up the fade away increment for the text
-			if self.instructions.increment < 0:
+			elif self.instructions.increment < 0:
 				self.instructions.increment = -10
 			#draw background and text to screen
 			self.game.screen.blit(self.background.image, self.background.rect)
@@ -379,3 +388,8 @@ class CreditScene():
 	        if event.type == pygame.QUIT:
 	            pygame.quit()
 	            sys.exit()
+
+	def update(self):
+		if self.instructions.opacity == 0:
+			self.game.go_to(MainMenuScene(self.game))
+		pass
