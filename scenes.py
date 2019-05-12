@@ -161,16 +161,19 @@ class GameScene(object):
                                 if door.doorType == 'exit':
                                     door.isOpen = True
                                     door.collidable = False
-                                    door.image.fill(ORANGE)
+                                    # door.image.fill(ORANGE)
+                                    door.openDoor()
                             elif switch.x == self.player.x and switch.y == self.player.y:
                                 if door.doorType == 'exit':
                                     door.isOpen = True
                                     door.collidable = False
-                                    door.image.fill(ORANGE)
+                                    # door.image.fill(ORANGE)
+                                    door.openDoor()
                             else:
                                     door.isOpen = False
                                     door.collidable = True
-                                    door.image.fill(RED)
+                                    # door.image.fill(RED)
+                                    door.closeDoor()
                                     #switch.image.fill(BLUE)
             for door in self.doors:
                 if self.player.x == door.x and (self.player.y == door.y + 1 or self.player.y == door.y - 1):
@@ -179,14 +182,16 @@ class GameScene(object):
                                     if door.doorType == 'exit':
                                         door.isOpen = True
                                         door.collidable = False
-                                        door.image.fill(ORANGE)
+                                        # door.image.fill(ORANGE)
+                                        door.openDoor()
                 elif self.player.y == door.y and (self.player.x == door.x + 1 or self.player.x == door.x - 1):
                             if len(self.inventory.item_list) > 0:
                                 if type(self.inventory.item_list[0]) == Key:
                                     if door.doorType == 'exit':
                                         door.isOpen = True
                                         door.collidable = False
-                                        door.image.fill(ORANGE)
+                                        # door.image.fill(ORANGE)
+                                        door.openDoor()
                 if self.player.x == door.x and self.player.y == door.y:
                     if door.doorType == 'exit':
                         self.game.select_scene(self.scene_number + 1)
@@ -254,9 +259,11 @@ class GameScene(object):
                     if tile == 'F':
                         Switch(self,col,row)
                     if tile == 'G':
-                        Door(self,col,row, "entrance")
+                        entrance = Door(self,col,row, "entrance")
+                        entrance.openDoor()
                     if tile == 'H':
-                        Door(self,col,row, "exit")
+                        exit = Door(self,col,row, "exit")
+                        exit.closeDoor()
             LifeHUD(self, 3, 0)
             self.inventory = Inventory(self, 17, 0)
 

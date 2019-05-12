@@ -264,10 +264,13 @@ class Switch(GameObject):
         super().__init__(scene, x, y)
         self.groups = scene.all_sprites, scene.switches
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image.fill(BLUE)
+        # self.image.fill(BLUE)
         #self.image = sprite
         self.interactable = True
         self.collidable = False
+
+        sprite_sheet = SpriteSheet(SWITCH_SPRITESHEET)
+        self.image = sprite_sheet.get_image(0, 0, 32, 32)
 
 class Door(GameObject):
     def __init__(self, scene, x, y, doorType):
@@ -276,18 +279,21 @@ class Door(GameObject):
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.image.fill(RED)
         self.isOpen = False
-        # self.image = sprite
         self.interactable = False
         self.collidable = True
         self.doorType = doorType
 
+        self.sprite_sheet = SpriteSheet(DOOR_SPRITESHEET)
+        self.image = self.sprite_sheet.get_image(0, 0, 32, 32)
+
     def openDoor(self):
         self.isOpen = True
-        self.image.fill(ORANGE)
+        self.image = self.sprite_sheet.get_image(0, 0, 32, 32)
     
     def closeDoor(self):
         self.isOpen = False
-        self.image.fill(RED)
+        self.image = self.sprite_sheet.get_image(32, 0, 32, 32)
+        # self.image.fill(RED)
 
 class Ice(GameObject):
     def __init__(self, scene, x, y):

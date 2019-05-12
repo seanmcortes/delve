@@ -52,7 +52,9 @@ BAT_SPRITE_SHEET = path.join(IMAGE_FOLDER, 'Bat.png')
 WALL_SPRITESHEET = path.join(IMAGE_FOLDER, 'Walls.png')
 KEY_SPRITESHEET = path.join(IMAGE_FOLDER, 'Key.png')
 LIFE_SPRITESHEET = path.join(IMAGE_FOLDER, 'Heart.png')
+SWITCH_SPRITESHEET = path.join(IMAGE_FOLDER, 'Switch.png')
 INVENTORY_SPRITESHEET = path.join(IMAGE_FOLDER, 'Inventory.png')
+DOOR_SPRITESHEET = path.join(IMAGE_FOLDER, 'Door.png')
 CUTEFONT = path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf')
 
 # Sources:
