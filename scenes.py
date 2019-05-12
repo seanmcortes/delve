@@ -161,20 +161,16 @@ class GameScene(object):
                                 if door.doorType == 'exit':
                                     door.isOpen = True
                                     door.collidable = False
-                                    # door.image.fill(ORANGE)
                                     door.openDoor()
                             elif switch.x == self.player.x and switch.y == self.player.y:
                                 if door.doorType == 'exit':
                                     door.isOpen = True
                                     door.collidable = False
-                                    # door.image.fill(ORANGE)
                                     door.openDoor()
                             else:
                                     door.isOpen = False
                                     door.collidable = True
-                                    # door.image.fill(RED)
                                     door.closeDoor()
-                                    #switch.image.fill(BLUE)
             for door in self.doors:
                 if self.player.x == door.x and (self.player.y == door.y + 1 or self.player.y == door.y - 1):
                             if len(self.inventory.item_list) > 0:
@@ -182,7 +178,6 @@ class GameScene(object):
                                     if door.doorType == 'exit':
                                         door.isOpen = True
                                         door.collidable = False
-                                        # door.image.fill(ORANGE)
                                         door.openDoor()
                 elif self.player.y == door.y and (self.player.x == door.x + 1 or self.player.x == door.x - 1):
                             if len(self.inventory.item_list) > 0:
@@ -190,7 +185,6 @@ class GameScene(object):
                                     if door.doorType == 'exit':
                                         door.isOpen = True
                                         door.collidable = False
-                                        # door.image.fill(ORANGE)
                                         door.openDoor()
                 if self.player.x == door.x and self.player.y == door.y:
                     if door.doorType == 'exit':

@@ -254,7 +254,6 @@ class Wall(GameObject):
         super().__init__(scene, x, y)
         self.groups = scene.all_sprites, scene.walls
         pygame.sprite.Sprite.__init__(self, self.groups)
-        # self.image.fill(LIGHTGREY)
         self.image = sprite
         self.interactable = False
         self.collidable = True
@@ -264,8 +263,6 @@ class Switch(GameObject):
         super().__init__(scene, x, y)
         self.groups = scene.all_sprites, scene.switches
         pygame.sprite.Sprite.__init__(self, self.groups)
-        # self.image.fill(BLUE)
-        #self.image = sprite
         self.interactable = True
         self.collidable = False
 
@@ -287,13 +284,14 @@ class Door(GameObject):
         self.image = self.sprite_sheet.get_image(0, 0, 32, 32)
 
     def openDoor(self):
-        self.isOpen = True
-        self.image = self.sprite_sheet.get_image(0, 0, 32, 32)
+        if self.doorType == 'exit':
+            self.isOpen = True
+            self.image = self.sprite_sheet.get_image(64, 0, 32, 32)
     
     def closeDoor(self):
-        self.isOpen = False
-        self.image = self.sprite_sheet.get_image(32, 0, 32, 32)
-        # self.image.fill(RED)
+        if self.doorType == 'exit':
+            self.isOpen = False
+            self.image = self.sprite_sheet.get_image(32, 0, 32, 32)
 
 class Ice(GameObject):
     def __init__(self, scene, x, y):
@@ -313,7 +311,6 @@ class LifeHUD(GameObject):
         self.heart_state = []
 
         sprite_sheet = SpriteSheet(LIFE_SPRITESHEET)
-        # sprite_sheet = SpriteSheet(PLAYER_SPRITE_SHEET)
         self.image = sprite_sheet.get_image(0, 0, 96, 32)
 
         for x in range(0, 97, 32):
