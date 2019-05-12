@@ -176,15 +176,17 @@ class GameScene(object):
                 if self.player.x == door.x and (self.player.y == door.y + 1 or self.player.y == door.y - 1):
                             if len(self.inventory.item_list) > 0:
                                 if type(self.inventory.item_list[0]) == Key:
-                                    door.isOpen = True
-                                    door.collidable = False
-                                    door.image.fill(ORANGE)
+                                    if door.doorType == 'exit':
+                                        door.isOpen = True
+                                        door.collidable = False
+                                        door.image.fill(ORANGE)
                 elif self.player.y == door.y and (self.player.x == door.x + 1 or self.player.x == door.x - 1):
                             if len(self.inventory.item_list) > 0:
                                 if type(self.inventory.item_list[0]) == Key:
-                                    door.isOpen = True
-                                    door.collidable = False
-                                    door.image.fill(ORANGE)
+                                    if door.doorType == 'exit':
+                                        door.isOpen = True
+                                        door.collidable = False
+                                        door.image.fill(ORANGE)
                 if self.player.x == door.x and self.player.y == door.y:                     
                     if door.doorType == 'exit':
                         self.game.select_scene(self.scene_number + 1)
