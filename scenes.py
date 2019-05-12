@@ -8,6 +8,7 @@ from map import create_tiles
 from enemy import Enemy
 from menu import PauseScene
 from item import Key, Inventory
+#from main import select_scene
 
 
 """
@@ -40,8 +41,8 @@ class GameScene(object):
         # self.draw_grid()
         self.ice.draw(self.game.screen)#draw ice tiles on the bottom
         self.walls.draw(self.game.screen)
-        self.blocks.draw(self.game.screen)
         self.switches.draw(self.game.screen)
+        self.blocks.draw(self.game.screen)
         self.doors.draw(self.game.screen)
         self.enemies.draw(self.game.screen)
         self.players.draw(self.game.screen)
@@ -157,26 +158,36 @@ class GameScene(object):
                     for block in self.blocks:
                         for switch in self.switches:
                             if block.x == switch.x and block.y == switch.y:
-                                door.isOpen = True
-                                door.collidable = False
-                                door.image.fill(ORANGE)
-                                #switch.image = block.image
+                                if door.doorType == 'exit':
+                                    door.isOpen = True
+                                    door.collidable = False
+                                    door.image.fill(ORANGE)
                             elif switch.x == self.player.x and switch.y == self.player.y:
-                                door.isOpen = True
-                                door.collidable = False
-                                door.image.fill(ORANGE)
-                                #switch.image = self.player.image
+                                if door.doorType == 'exit':
+                                    door.isOpen = True
+                                    door.collidable = False
+                                    door.image.fill(ORANGE)
                             else:
-                              door.isOpen = False
-                              door.collidable = True
-                              door.image.fill(RED)
-                              switch.image.fill(BLUE)
+                                    door.isOpen = False
+                                    door.collidable = True
+                                    door.image.fill(RED)
+                                    #switch.image.fill(BLUE)
             for door in self.doors:
-                if self.player.x == door.x and self.player.y == door.y:
-                    if door.doorType == 'entrance':
-                        self.game.go_to(TutorialMovement(self.game))
-                    elif door.doorType == 'exit':
-                        self.game.go_to(TutorialEnemy(self.game))
+                if self.player.x == door.x and (self.player.y == door.y + 1 or self.player.y == door.y - 1):
+                            if len(self.inventory.item_list) > 0:
+                                if type(self.inventory.item_list[0]) == Key:
+                                    door.isOpen = True
+                                    door.collidable = False
+                                    door.image.fill(ORANGE)
+                elif self.player.y == door.y and (self.player.x == door.x + 1 or self.player.x == door.x - 1):
+                            if len(self.inventory.item_list) > 0:
+                                if type(self.inventory.item_list[0]) == Key:
+                                    door.isOpen = True
+                                    door.collidable = False
+                                    door.image.fill(ORANGE)
+                if self.player.x == door.x and self.player.y == door.y:                     
+                    if door.doorType == 'exit':
+                        self.game.select_scene(self.scene_number + 1)
                               
     def collision_wall(self, dx, dy):
         for wall in self.walls:
