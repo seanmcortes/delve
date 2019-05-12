@@ -26,7 +26,7 @@ class Game:
                     2: TutorialBlocks,
                     3: TutorialEnemy,
                     4: TutorialIce,
-                    5: GameOverScene,
+                    5: MainMenuScene,
                     6: GameOverScene,
                     7: GameOverScene,
                     8: GameOverScene,

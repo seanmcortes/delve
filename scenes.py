@@ -187,10 +187,10 @@ class GameScene(object):
                                         door.isOpen = True
                                         door.collidable = False
                                         door.image.fill(ORANGE)
-                if self.player.x == door.x and self.player.y == door.y:                     
+                if self.player.x == door.x and self.player.y == door.y:
                     if door.doorType == 'exit':
                         self.game.select_scene(self.scene_number + 1)
-                              
+
     def collision_wall(self, dx, dy):
         for wall in self.walls:
             if wall.x == self.player.x + dx and wall.y == self.player.y + dy:
@@ -280,9 +280,9 @@ class TutorialMovement(GameScene):
         self.scene_number = self.game.get_scene_number(TutorialMovement)
         self.tile_map = create_tiles("tutorialMovementTile.map")
         self.draw_layout("tutorialMovementObject.map")
-        self.instructions.add("Get the key to unlock the door and proceed to the next level.", 100)
-        self.instructions.add("Use the WASD keys to move around.", 140)
-        self.instructions.add("Press P to pause the game.", 180)
+        self.instructions.add("Use the WASD keys to move around.", 100)
+        self.instructions.add("Press P to pause the game.", 140)
+        self.instructions.add("Get the key to unlock the door and proceed to the next level.", 180)
 
 
 """
@@ -296,7 +296,7 @@ class TutorialEnemy(GameScene):
         self.draw_layout("tutorialEnemyObject.map")
         self.spawn_enemies()
         self.instructions.add("Press the Spacebar while standing next to an enemy to attack it.", 100)
-        self.instructions.add("MAke sure you don't run out of Hearts!.", 140)
+        self.instructions.add("Make sure you don't run out of Hearts!", 140)
 
     def spawn_enemies(self):
         Enemy(self, 10, 5, LEFT, [])
@@ -318,6 +318,8 @@ class TutorialIce(GameScene):
         self.instructions = Instructions(30, BLUE)
         self.instructions.add("Be careful on the ice!", 100)
         self.instructions.add("You will slide until you collide with an object.", 140)
+        self.instructions.add("Try to position the blocks to help you", 180)
+        self.instructions.add("reach the key and unlock the door.", 220)
 
 """
 Unit test scene for blocks
@@ -336,6 +338,7 @@ class TutorialBlocks(GameScene):
         self.draw_layout("tutorialBlocks.map")
         self.instructions.add("You can move the blocks by standing next to them", 100)
         self.instructions.add("and pushing the directional buttons.", 140)
+        self.instructions.add("Push the block on top of the switch to unlock the door.", 180)
 
 
 
