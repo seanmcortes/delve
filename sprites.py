@@ -259,6 +259,35 @@ class Wall(GameObject):
         self.interactable = False
         self.collidable = True
 
+class Switch(GameObject):
+    def __init__(self, scene, x, y):
+        super().__init__(scene, x, y)
+        self.groups = scene.all_sprites, scene.switches
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.image.fill(BLUE)
+        #self.image = sprite
+        self.interactable = True
+        self.collidable = False
+
+class Door(GameObject):
+    def __init__(self, scene, x, y, doorType):
+        super().__init__(scene, x, y)
+        self.groups = scene.all_sprites, scene.doors
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.image.fill(RED)
+        self.isOpen = False
+        # self.image = sprite
+        self.interactable = False
+        self.collidable = True
+        self.doorType = doorType
+
+    def openDoor(self):
+        self.isOpen = True
+        self.image.fill(ORANGE)
+    
+    def closeDoor(self):
+        self.isOpen = False
+        self.image.fill(RED)
 
 class Ice(GameObject):
     def __init__(self, scene, x, y):

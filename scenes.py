@@ -21,6 +21,8 @@ class GameScene(object):
         self.players = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
         self.blocks = pygame.sprite.Group()
+        self.doors = pygame.sprite.Group()
+        self.switches = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
         self.ice = pygame.sprite.Group()
         self.items = pygame.sprite.Group()
@@ -39,6 +41,8 @@ class GameScene(object):
         self.ice.draw(self.game.screen)#draw ice tiles on the bottom
         self.walls.draw(self.game.screen)
         self.blocks.draw(self.game.screen)
+        self.switches.draw(self.game.screen)
+        self.doors.draw(self.game.screen)
         self.enemies.draw(self.game.screen)
         self.players.draw(self.game.screen)
         self.hud.draw(self.game.screen)
@@ -50,6 +54,8 @@ class GameScene(object):
         self.ice.update()
         self.walls.update()
         self.blocks.update() #update blocks before player so blocks sliding on the ice stop before the player
+        self.switches.update()
+        self.doors.update()
         self.enemies.update()
         self.players.update()
         self.items.update()
@@ -146,7 +152,32 @@ class GameScene(object):
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_SPACE:
                     self.player.interact()
-
+            if len(self.switches) > 0:
+                for door in self.doors:
+                    for block in self.blocks:
+                        for switch in self.switches:
+                            if block.x == switch.x and block.y == switch.y:
+                                door.isOpen = True
+                                door.collidable = False
+                                door.image.fill(ORANGE)
+                                #switch.image = block.image
+                            elif switch.x == self.player.x and switch.y == self.player.y:
+                                door.isOpen = True
+                                door.collidable = False
+                                door.image.fill(ORANGE)
+                                #switch.image = self.player.image
+                            else:
+                              door.isOpen = False
+                              door.collidable = True
+                              door.image.fill(RED)
+                              switch.image.fill(BLUE)
+            for door in self.doors:
+                if self.player.x == door.x and self.player.y == door.y:
+                    if door.doorType == 'entrance':
+                        self.game.go_to(TutorialMovement(self.game))
+                    elif door.doorType == 'exit':
+                        self.game.go_to(TutorialEnemy(self.game))
+                              
     def collision_wall(self, dx, dy):
         for wall in self.walls:
             if wall.x == self.player.x + dx and wall.y == self.player.y + dy:
@@ -207,6 +238,12 @@ class GameScene(object):
                         Ice(self, col, row)
                     if tile == 'K':
                         Key(self, col, row)
+                    if tile == 'F':
+                        Switch(self,col,row)
+                    if tile == 'G':
+                        Door(self,col,row, "entrance")
+                    if tile == 'H':
+                        Door(self,col,row, "exit")
             LifeHUD(self, 3, 0)
             self.inventory = Inventory(self, 17, 0)
 
