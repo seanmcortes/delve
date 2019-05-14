@@ -1,6 +1,7 @@
 import pygame
 from sprites import GameObject, SpriteSheet
-from settings import KEY_SPRITESHEET, INVENTORY_SPRITESHEET, TILESIZE
+from settings import KEY_SPRITESHEET, INVENTORY_SPRITESHEET, TILESIZE, KEY_IDLE_DELAY
+from helper import Animate
 
 
 class Inventory(GameObject):
@@ -33,18 +34,29 @@ class Key(Item):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
         self.groups = scene.all_sprites, scene.items, scene.keys
-        self.animation = []
 
+
+        # Animation
+        self.animation_index = 0
+        self.last_update = pygame.time.get_ticks()
+        self.update_delay = KEY_IDLE_DELAY
+        self.animation = []
         sprite_sheet = SpriteSheet(KEY_SPRITESHEET)
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
 
-        for x in range(0, 97, 32):
+        for x in range(0, 65, 32):
             self.animation.append(sprite_sheet.get_image(x, 0, 32, 32))
 
     def update(self):
-    	self.rect.x = self.x * TILESIZE
-    	self.rect.y = self.y * TILESIZE
+        now = pygame.time.get_ticks()
 
-    	if self.scene.player.x == self.x and self.scene.player.y == self.y:
-    		self.scene.inventory.item_list.append(self)
-    		self.kill()
+        if now - self.last_update >= self.update_delay:
+            self.last_update = now
+            Animate(self, self.animation)
+
+        self.rect.x = self.x * TILESIZE
+        self.rect.y = self.y * TILESIZE
+
+        if self.scene.player.x == self.x and self.scene.player.y == self.y:
+            self.scene.inventory.item_list.append(self)
+            self.kill()

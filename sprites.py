@@ -66,7 +66,7 @@ class Player(GameObject):
         self.sliding = False #tells if the player is sliding on the ice
 
         # Animation
-        self.update_delay = PLAYER_SPEED
+        self.update_delay = PLAYER_IDLE_DELAY
         self.last_update = pygame.time.get_ticks()
         self.walking_up = []
         self.walking_down = []

@@ -32,8 +32,9 @@ GRIDWIDTH = WIDTH / TILESIZE
 GRIDHEIGHT = HEIGHT / TILESIZE
 
 # object variables
-PLAYER_SPEED = 200
 ENEMY_SPEED = 500 # delay in ms between enemy movement
+PLAYER_IDLE_DELAY = 200
+KEY_IDLE_DELAY = 300
 HIT_DELAY = 60
 
 #file folders
