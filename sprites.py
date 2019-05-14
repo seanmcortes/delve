@@ -1,6 +1,7 @@
 import os
 import pygame
 from settings import *
+from helper import Animate
 from menu import GameOverScene
 
 
@@ -8,8 +9,6 @@ class GameObject(pygame.sprite.Sprite):
     def __init__(self, scene, x, y):
         self.scene = scene
         self.image = pygame.Surface((TILESIZE, TILESIZE))
-        # sheet = pygame.image.load(self.scene.game.player_sprite_sheet)
-        # self.image = pygame.transform.scale(sheet, (32, 32))
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -62,22 +61,29 @@ class Player(GameObject):
         self.health = 3
         self.prev_orientation = self.orientation # might not need this
         self.prev_location = (x, y)
+
+        # State
         self.sliding = False #tells if the player is sliding on the ice
+
+        # Animation
+        self.update_delay = PLAYER_SPEED
+        self.last_update = pygame.time.get_ticks()
         self.walking_up = []
         self.walking_down = []
         self.walking_left = []
         self.walking_right = []
+        self.animation_index = 0
 
+        # Sprite sheet definition
         sprite_sheet = SpriteSheet(PLAYER_SPRITE_SHEET)
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
-
-        for x in range(0, 65, 32):
+        for x in range(0, 33, 32):
             self.walking_right.append(sprite_sheet.get_image(x, 0, 32, 32))
-        for x in range(0, 65, 32):
+        for x in range(0, 33, 32):
             self.walking_left.append(sprite_sheet.get_image(x, 32, 32, 32))
-        for x in range(0, 65, 32):
+        for x in range(0, 33, 32):
             self.walking_down.append(sprite_sheet.get_image(x, 64, 32, 32))
-        for x in range(0, 65, 32):
+        for x in range(0, 33, 32):
             self.walking_up.append(sprite_sheet.get_image(x, 96, 32, 32))
 
     def move(self, dx=0, dy=0):
@@ -87,6 +93,7 @@ class Player(GameObject):
             self.y += dy
             self.prev_orientation = self.orientation
             self.orientation = (dx, dy)
+
             return True
         else:
             return False
@@ -132,14 +139,18 @@ class Player(GameObject):
                         object.hit = True
 
     def update(self):
-        if self.orientation == UP:
-            self.image = self.walking_up[0]
-        elif self.orientation == DOWN:
-            self.image = self.walking_down[0]
-        elif self.orientation == LEFT:
-            self.image = self.walking_left[0]
-        else:
-            self.image = self.walking_right[0]
+        now = pygame.time.get_ticks()
+
+        if now - self.last_update >= self.update_delay:
+            self.last_update = now
+            if self.orientation == UP:
+                Animate(self, self.walking_up)
+            elif self.orientation == LEFT:
+                Animate(self, self.walking_left)
+            elif self.orientation == DOWN:
+                Animate(self, self.walking_down)
+            else:
+                Animate(self, self.walking_right)
 
 
 

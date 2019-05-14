@@ -94,3 +94,15 @@ class Instructions():
             self.opacity += self.increment #increment the opacity
             if self.opacity > 250: #when the opacity has reached near maximum, start to decrement it
                 self.increment = -5
+
+'''
+Animate sprite
+Args:
+    sprite: sprite class. Modify animation_index and iterate through frames.
+    frames: list of sprites.
+'''
+def Animate(sprite, frames):
+    sprite.animation_index += 1
+    if sprite.animation_index >= len(frames):
+        sprite.animation_index = 0
+    sprite.image = frames[sprite.animation_index]
