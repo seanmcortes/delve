@@ -301,7 +301,7 @@ class TutorialEnemy(GameScene):
     def spawn_enemies(self):
         Enemy(self, 10, 5, LEFT, [])
 
-        Enemy(self, 10, 15, RIGHT, [UP, UP, UP, UP, UP,
+        Enemy(self, 10, 15, UP, [UP, UP, UP, UP, UP,
                                    UP, UP, UP, UP])
 
 """

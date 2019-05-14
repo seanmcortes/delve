@@ -1,6 +1,8 @@
 import pygame
 from sprites import GameObject, SpriteSheet
-from settings import RED, GREEN, TILESIZE, ENEMY_SPEED, HIT_DELAY, UP, DOWN, LEFT, RIGHT, BAT_SPRITE_SHEET
+from settings import RED, GREEN, TILESIZE, ENEMY_SPEED, \
+    HIT_DELAY, UP, DOWN, LEFT, RIGHT, BAT_SPRITE_SHEET
+from helper import Animate
 
 
 class Enemy(GameObject):
@@ -18,28 +20,32 @@ class Enemy(GameObject):
         self.health = 1
         self.hit = False
         self.hit_detected = False
-        self.walking_up = []
-        self.walking_down = []
-        self.walking_left = []
-        self.walking_right = []
 
         if len(moves) > 0:
             self.direction = None
 
+        # Animation
+        self.animation_index = 0
         self.update_delay = ENEMY_SPEED
         self.last_update = pygame.time.get_ticks()
+        self.last_idle_update = pygame.time.get_ticks()
         self.hit_delay = HIT_DELAY
 
         sprite_sheet = SpriteSheet(BAT_SPRITE_SHEET)
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
 
-        for x in range(0, 65, 32):
+        self.walking_up = []
+        self.walking_down = []
+        self.walking_left = []
+        self.walking_right = []
+
+        for x in range(0, 33, 32):
             self.walking_right.append(sprite_sheet.get_image(x, 0, 32, 32))
-        for x in range(0, 65, 32):
+        for x in range(0, 33, 32):
             self.walking_left.append(sprite_sheet.get_image(x, 32, 32, 32))
-        for x in range(0, 65, 32):
+        for x in range(0, 33, 32):
             self.walking_down.append(sprite_sheet.get_image(x, 64, 32, 32))
-        for x in range(0, 65, 32):
+        for x in range(0, 33, 32):
             self.walking_up.append(sprite_sheet.get_image(x, 96, 32, 32))
 
     """
@@ -68,6 +74,7 @@ class Enemy(GameObject):
         if self.move_counter >= len(self.moves) or self.move_counter < 0: # enemy finishes movement
             self.reverse = not self.reverse
             self.move_counter_increment *= -1
+            self.orientation = self.opposite_direction(self.orientation)
         else: # enemy has not finished movement, check for collisions then move
             self.direction = self.moves[self.move_counter]
             if self.reverse: # reverse movement
@@ -105,6 +112,7 @@ class Enemy(GameObject):
             self.image = self.walking_left[0]
         else:
             self.image = self.walking_right[0]
+
     """
     Draw image. Handle movement
     """
@@ -113,6 +121,17 @@ class Enemy(GameObject):
         self.rect.y = self.y * TILESIZE
 
         now = pygame.time.get_ticks()
+
+        if now - self.last_idle_update >= self.update_delay:
+            self.last_idle_update = now
+            if self.orientation == UP:
+                Animate(self, self.walking_up)
+            elif self.orientation == LEFT:
+                Animate(self, self.walking_left)
+            elif self.orientation == DOWN:
+                Animate(self, self.walking_down)
+            else:
+                Animate(self, self.walking_right)
 
         self.check_health()
 
@@ -127,7 +146,7 @@ class Enemy(GameObject):
                 self.hit = False
                 self.hit_detected = False
         else:
-            self.render_orientation()
+            # self.render_orientation()
             if now - self.last_update >= self.update_delay:
                 self.last_update = now
 
