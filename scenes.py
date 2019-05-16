@@ -192,31 +192,70 @@ class GameScene(object):
                     if door.doorType == 'exit':
                         self.game.select_scene(self.scene_number + 1)
 
+    """
+    Check for collision with a wall.
+    Args:
+        dx (int): x direction that the player is planning on moving
+        dy (int): y direction that player is planning on moving
+    Return:
+        bool: True if player will hit a wall, false if not
+    """
     def collision_wall(self, dx, dy):
         for wall in self.walls:
             if wall.x == self.player.x + dx and wall.y == self.player.y + dy:
                 return True
         return False
 
+    """
+    Check for collision with an ice tile.
+    Args:
+        dx (int): x direction that the player is planning on moving
+        dy (int): y direction that player is planning on moving
+    Return:
+         bool: True if player will hit ice tile, false if not
+    """
     def collision_ice(self, dx, dy):
         for ice in self.ice:
             if ice.x == self.player.x +dx and ice.y == self.player.y + dy:
                 return True
         return False
 
+    """
+    Check for collision with a block.
+    Args:
+        dx (int): x direction that the player is planning on moving
+        dy (int): y direction that player is planning on moving
+    Return:
+        bool: True if player will hit block, false if not
+    """
     def collision_block(self, dx, dy):
         for block in self.blocks:
-            if block.x == self.player.x +dx and block.y == self.player.y + dy:
+            if block.x == self.player.x + dx and block.y == self.player.y + dy:
                 return True
         return False
 
+    """
+    Draw lines for map grid
+    """
+    # TODO: potentially remove, unecessary function
     def draw_grid(self):
         for x in range(0, WIDTH, TILESIZE):
             pygame.draw.line(self.game.screen, LIGHTGREY, (x, 0), (x, HEIGHT))
         for y in range(0, HEIGHT, TILESIZE):
             pygame.draw.line(self.game.screen, LIGHTGREY, (0, y), (WIDTH, y))
 
-    #def draw_layout(self, map_file):
+    """
+    Take in tmx file and render object layer:
+        Keywords:
+            Player
+            Wall
+            Block
+            Ice
+            Key
+            Switch
+            Entrance
+            Exit
+    """
     def draw_objects(self):
         for tile_object in self.map.tmxdata.objects:
             if tile_object.name == 'Player':

@@ -22,10 +22,10 @@ class Game:
         self.scene = None # sub-initialization in go_to()
         self.debug = False
         self.scene_dictionary = {
-                    1: Level1,
-                    2: Level2,
-                    3: Level3,
-                    4: Level4,
+                    1: Level1,  # Tutorial Movement
+                    2: Level2,  # Tutorial Blocks
+                    3: Level3,  # Tutorial Enemy
+                    4: Level4,  # Tutorial Ice Tiles
                     5: CreditScene,
                     6: GameOverScene,
                     7: GameOverScene,
