@@ -4,7 +4,8 @@ import pygame
 import pygame.freetype
 from settings import *
 from sprites import *
-from scenes import Level1, Level2, Level3, Level4, BlockUnitTest
+from scenes import TutorialMovement, TutorialBlock, TutorialEnemy, TutorialIce, \
+    BlockUnitTest
 from menu import *
 
 """
@@ -22,10 +23,10 @@ class Game:
         self.scene = None # sub-initialization in go_to()
         self.debug = False
         self.scene_dictionary = {
-                    1: Level1,  # Tutorial Movement
-                    2: Level2,  # Tutorial Blocks
-                    3: Level3,  # Tutorial Enemy
-                    4: Level4,  # Tutorial Ice Tiles
+                    1: TutorialMovement,
+                    2: TutorialBlock,
+                    3: TutorialEnemy,
+                    4: TutorialIce,
                     5: CreditScene,
                     6: GameOverScene,
                     7: GameOverScene,

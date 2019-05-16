@@ -333,14 +333,14 @@ Display Level 1: Tutorial Movement
 - Simple tutorial, show player how to move character and what the objectives 
     of the game are.
 """
-class Level1(GameScene):
+class TutorialMovement(GameScene):
     def __init__(self, game):
         super().__init__(game)
-        self.map = TiledMap(path.join(MAP_FOLDER, 'Level1.tmx'))
+        self.map = TiledMap(path.join(MAP_FOLDER, 'TutorialMovement.tmx'))
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()
         #self.player = Player(self, 1, 2)
-        self.scene_number = self.game.get_scene_number(Level1)
+        self.scene_number = self.game.get_scene_number(TutorialMovement)
         #self.tile_map = create_tiles("tutorialMovementTile.map")
         self.draw_objects()
         self.instructions.add("Use the WASD keys to move around.", 100)
@@ -353,10 +353,10 @@ Display Level 2: Tutorial Blocks
 - Simple tutorial, shows player how to push blocks and using a switch to unlock
     the door
 """
-class Level2(GameScene):
+class TutorialBlock(GameScene):
     def __init__(self, game):
         super().__init__(game)
-        self.scene_number = self.game.get_scene_number(Level2)
+        self.scene_number = self.game.get_scene_number(TutorialBlock)
         self.draw_layout("tutorialBlocks.map")
         self.instructions.add("You can move the blocks by standing next to them", 100)
         self.instructions.add("and pushing the directional buttons.", 140)
@@ -367,13 +367,13 @@ class Level2(GameScene):
 Display Level 3: Tutorial Enemy
 - Simple tutorial, shows player how to attack and avoid enemies.
 """
-class Level3(GameScene):
+class TutorialEnemy(GameScene):
     def __init__(self, game):
         super().__init__(game)
-        self.map = TiledMap(path.join(MAP_FOLDER, 'Level3.tmx'))
+        self.map = TiledMap(path.join(MAP_FOLDER, 'TutorialEnemy.tmx'))
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()
-        self.scene_number = self.game.get_scene_number(Level3)
+        self.scene_number = self.game.get_scene_number(TutorialEnemy)
         # self.tile_map = create_tiles("tutorialEnemyTile.map")
         self.draw_objects()
         self.spawn_enemies()
@@ -392,10 +392,10 @@ Display Level 4: Tutorial Ice
 - Simple tutorial, shows player interaction with ice tiles between the
     player character and boxes.
 """
-class Level4(GameScene):
+class TutorialIce(GameScene):
     def __init__(self, game):
         super().__init__(game)
-        self.scene_number = self.game.get_scene_number(Level4)
+        self.scene_number = self.game.get_scene_number(TutorialIce)
         self.draw_layout("tutorialIceObjects.map")
         Block(self, 2, 10)
         Block(self, 16, 11)
