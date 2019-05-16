@@ -288,21 +288,20 @@ class GameScene(object):
         life_text.render(screen)
 
 
-
-
 """
-Display Level 1
+Display Level 1: Tutorial Movement
 
-- Simple tutorial, show player how to move character and what the objectives of the game are.
+- Simple tutorial, show player how to move character and what the objectives 
+    of the game are.
 """
-class TutorialMovement(GameScene):
+class Level1(GameScene):
     def __init__(self, game):
         super().__init__(game)
-        self.map = TiledMap(path.join(MAP_FOLDER, 'level1.tmx'))
+        self.map = TiledMap(path.join(MAP_FOLDER, 'Level1.tmx'))
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()
         #self.player = Player(self, 1, 2)
-        self.scene_number = self.game.get_scene_number(TutorialMovement)
+        self.scene_number = self.game.get_scene_number(Level1)
         #self.tile_map = create_tiles("tutorialMovementTile.map")
         self.draw_objects()
         self.instructions.add("Use the WASD keys to move around.", 100)
@@ -311,14 +310,33 @@ class TutorialMovement(GameScene):
 
 
 """
-Display tutorial level for enemies
+Display Level 2: Tutorial Blocks
+- Simple tutorial, shows player how to push blocks and using a switch to unlock
+    the door
 """
-class TutorialEnemy(GameScene):
+class Level2(GameScene):
     def __init__(self, game):
         super().__init__(game)
-        self.scene_number = self.game.get_scene_number(TutorialEnemy)
-        self.tile_map = create_tiles("tutorialEnemyTile.map")
-        self.draw_layout("tutorialEnemyObject.map")
+        self.scene_number = self.game.get_scene_number(Level2)
+        self.draw_layout("tutorialBlocks.map")
+        self.instructions.add("You can move the blocks by standing next to them", 100)
+        self.instructions.add("and pushing the directional buttons.", 140)
+        self.instructions.add("Push the block on top of the switch to unlock the door.", 180)
+
+
+"""
+Display Level 3: Tutorial Enemy
+- Simple tutorial, shows player how to attack and avoid enemies.
+"""
+class Level3(GameScene):
+    def __init__(self, game):
+        super().__init__(game)
+        self.map = TiledMap(path.join(MAP_FOLDER, 'Level3.tmx'))
+        self.map_img = self.map.make_map()
+        self.map_rect = self.map_img.get_rect()
+        self.scene_number = self.game.get_scene_number(Level3)
+        # self.tile_map = create_tiles("tutorialEnemyTile.map")
+        self.draw_objects()
         self.spawn_enemies()
         self.instructions.add("Press the Spacebar while standing next to an enemy to attack it.", 100)
         self.instructions.add("Make sure you don't run out of Hearts!", 140)
@@ -327,15 +345,18 @@ class TutorialEnemy(GameScene):
         Enemy(self, 10, 5, LEFT, [])
 
         Enemy(self, 10, 15, UP, [UP, UP, UP, UP, UP,
-                                   UP, UP, UP, UP])
+                                 UP, UP, UP, UP])
+
 
 """
-Display tutorial level for ice
+Display Level 4: Tutorial Ice
+- Simple tutorial, shows player interaction with ice tiles between the
+    player character and boxes.
 """
-class TutorialIce(GameScene):
+class Level4(GameScene):
     def __init__(self, game):
         super().__init__(game)
-        self.scene_number = self.game.get_scene_number(TutorialIce)
+        self.scene_number = self.game.get_scene_number(Level4)
         self.draw_layout("tutorialIceObjects.map")
         Block(self, 2, 10)
         Block(self, 16, 11)
@@ -346,25 +367,15 @@ class TutorialIce(GameScene):
         self.instructions.add("Try to position the blocks to help you", 180)
         self.instructions.add("reach the key and unlock the door.", 220)
 
+
 """
 Unit test scene for blocks
 """
-
 class BlockUnitTest(GameScene):
     def __init__(self, game):
         super().__init__(game)
         self.scene_number = self.game.get_scene_number(BlockUnitTest)
         self.draw_layout("blockUnitTest.map")
-
-class TutorialBlocks(GameScene):
-    def __init__(self, game):
-        super().__init__(game)
-        self.scene_number = self.game.get_scene_number(TutorialBlocks)
-        self.draw_layout("tutorialBlocks.map")
-        self.instructions.add("You can move the blocks by standing next to them", 100)
-        self.instructions.add("and pushing the directional buttons.", 140)
-        self.instructions.add("Push the block on top of the switch to unlock the door.", 180)
-
 
 
 # Sources:
