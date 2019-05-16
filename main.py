@@ -5,7 +5,7 @@ import pygame.freetype
 from settings import *
 from sprites import *
 from scenes import TutorialMovement, TutorialBlock, TutorialEnemy, TutorialIce, \
-    BlockUnitTest
+    BlockUnitTest, Level6
 from menu import *
 
 """
@@ -28,7 +28,7 @@ class Game:
                     3: TutorialEnemy,
                     4: TutorialIce,
                     5: CreditScene,
-                    6: GameOverScene,
+                    6: Level6,
                     7: GameOverScene,
                     8: GameOverScene,
                     9: GameOverScene,
