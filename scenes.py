@@ -5,6 +5,7 @@ from helper import *
 from settings import *
 from sprites import *
 from map import create_tiles
+from map import TiledMap
 from enemy import Enemy
 from menu import PauseScene
 from item import Key, Inventory
@@ -37,10 +38,11 @@ class GameScene(object):
 
     def render(self):
         self.game.screen.fill(BGCOLOR)
-        self.game.screen.blit(self.tile_map, [0,0])
+        self.game.screen.blit(self.map_img, self.map_rect)
+        #self.game.screen.blit(self.tile_map, [0,0])
         # self.draw_grid()
         self.ice.draw(self.game.screen)#draw ice tiles on the bottom
-        self.walls.draw(self.game.screen)
+        #self.walls.draw(self.game.screen)
         self.switches.draw(self.game.screen)
         self.blocks.draw(self.game.screen)
         self.doors.draw(self.game.screen)
@@ -214,11 +216,31 @@ class GameScene(object):
         for y in range(0, HEIGHT, TILESIZE):
             pygame.draw.line(self.game.screen, LIGHTGREY, (0, y), (WIDTH, y))
 
-    def draw_layout(self, map_file):
-        sprite_sheet = SpriteSheet(WALL_SPRITESHEET)
+    #def draw_layout(self, map_file):
+    def draw_objects(self):
+        for tile_object in self.map.tmxdata.objects:
+            if tile_object.name == 'Player':
+                self.player = Player(self, tile_object.x/32, tile_object.y/32)
+            if tile_object.name == 'Wall':
+                Wall(self, tile_object.x/32, tile_object.y/32)
+            if tile_object.name == 'Block':
+                Block(self, tile_object.x/32, tile_object.y/32)
+            if tile_object.name == 'Ice':
+                Ice(self, tile_object.x/32, tile_object.y/32)
+            if tile_object.name == 'Key':
+                Key(self, tile_object.x/32, tile_object.y/32)
+            if tile_object.name == 'Switch':
+                Switch(self,tile_object.x/32,tile_object.y/32)
+            if tile_object.name == 'Entrance':
+                Door(self,tile_object.x/32,tile_object.y/32, "entrance")
+            if tile_object.name == 'Exit':
+                exit = Door(self,tile_object.x/32,tile_object.y/32, "exit")
+                exit.closeDoor()
 
-        f = open(path.join(MAP_FOLDER, map_file), "r")
 
+        LifeHUD(self, 3, 0)
+        self.inventory = Inventory(self, 17, 0)
+        """
         if f.mode == 'r':
             map = f.readlines()
             map = [item.strip() for item in map]
@@ -257,8 +279,7 @@ class GameScene(object):
                     if tile == 'H':
                         exit = Door(self,col,row, "exit")
                         exit.closeDoor()
-            LifeHUD(self, 3, 0)
-            self.inventory = Inventory(self, 17, 0)
+            """
 
     def draw_HUD(self, screen):
 
@@ -277,9 +298,13 @@ Display Level 1
 class TutorialMovement(GameScene):
     def __init__(self, game):
         super().__init__(game)
+        self.map = TiledMap(path.join(MAP_FOLDER, 'level1.tmx'))
+        self.map_img = self.map.make_map()
+        self.map_rect = self.map_img.get_rect()
+        #self.player = Player(self, 1, 2)
         self.scene_number = self.game.get_scene_number(TutorialMovement)
-        self.tile_map = create_tiles("tutorialMovementTile.map")
-        self.draw_layout("tutorialMovementObject.map")
+        #self.tile_map = create_tiles("tutorialMovementTile.map")
+        self.draw_objects()
         self.instructions.add("Use the WASD keys to move around.", 100)
         self.instructions.add("Press P to pause the game.", 140)
         self.instructions.add("Get the key to unlock the door and proceed to the next level.", 180)

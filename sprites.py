@@ -261,11 +261,11 @@ class Block(GameObject):
 
 
 class Wall(GameObject):
-    def __init__(self, scene, x, y, sprite):
+    def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
-        self.groups = scene.all_sprites, scene.walls
+        self.groups = scene.walls
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = sprite
+        #self.image = sprite
         self.interactable = False
         self.collidable = True
 
@@ -298,7 +298,7 @@ class Door(GameObject):
         if self.doorType == 'exit':
             self.isOpen = True
             self.image = self.sprite_sheet.get_image(64, 0, 32, 32)
-    
+
     def closeDoor(self):
         if self.doorType == 'exit':
             self.isOpen = False
