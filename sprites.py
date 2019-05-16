@@ -77,13 +77,13 @@ class Player(GameObject):
         # Sprite sheet definition
         sprite_sheet = SpriteSheet(PLAYER_SPRITE_SHEET)
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
-        for x in range(0, 33, 32):
+        for x in range(0, 97, 32):
             self.walking_right.append(sprite_sheet.get_image(x, 0, 32, 32))
-        for x in range(0, 33, 32):
+        for x in range(0, 97, 32):
             self.walking_left.append(sprite_sheet.get_image(x, 32, 32, 32))
-        for x in range(0, 33, 32):
+        for x in range(0, 97, 32):
             self.walking_down.append(sprite_sheet.get_image(x, 64, 32, 32))
-        for x in range(0, 33, 32):
+        for x in range(0, 97, 32):
             self.walking_up.append(sprite_sheet.get_image(x, 96, 32, 32))
 
     def move(self, dx=0, dy=0):
