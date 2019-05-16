@@ -298,7 +298,7 @@ class Door(GameObject):
         if self.doorType == 'exit':
             self.isOpen = True
             self.image = self.sprite_sheet.get_image(64, 0, 32, 32)
-    
+
     def closeDoor(self):
         if self.doorType == 'exit':
             self.isOpen = False

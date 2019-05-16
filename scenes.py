@@ -5,6 +5,7 @@ from helper import *
 from settings import *
 from sprites import *
 from map import create_tiles
+from map import TiledMap
 from enemy import Enemy
 from menu import PauseScene
 from item import Key, Inventory
@@ -37,7 +38,8 @@ class GameScene(object):
 
     def render(self):
         self.game.screen.fill(BGCOLOR)
-        self.game.screen.blit(self.tile_map, [0,0])
+        self.game.screen.blit(self.map_img, self.map_rect)
+        #self.game.screen.blit(self.tile_map, [0,0])
         # self.draw_grid()
         self.ice.draw(self.game.screen)#draw ice tiles on the bottom
         self.walls.draw(self.game.screen)
@@ -277,9 +279,13 @@ Display Level 1
 class TutorialMovement(GameScene):
     def __init__(self, game):
         super().__init__(game)
+        self.map = TiledMap(path.join(MAP_FOLDER, 'level1.tmx'))
+        self.map_img = self.map.make_map()
+        self.map_rect = self.map_img.get_rect()
+        self.player = Player(self, 1, 2)
         self.scene_number = self.game.get_scene_number(TutorialMovement)
-        self.tile_map = create_tiles("tutorialMovementTile.map")
-        self.draw_layout("tutorialMovementObject.map")
+        #self.tile_map = create_tiles("tutorialMovementTile.map")
+        #self.draw_layout("tutorialMovementObject.map")
         self.instructions.add("Use the WASD keys to move around.", 100)
         self.instructions.add("Press P to pause the game.", 140)
         self.instructions.add("Get the key to unlock the door and proceed to the next level.", 180)
