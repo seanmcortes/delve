@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="20" height="21" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="194">
+<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="20" height="21" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="201">
  <tileset firstgid="1" source="Tileset.tsx"/>
  <layer id="1" name="tiles" width="20" height="21">
   <data encoding="csv">
@@ -26,7 +26,7 @@
 7,7,7,7,7,7,7,7,7,7,7,7,7,11,12,12,12,12,12,13
 </data>
  </layer>
- <objectgroup id="2" name="objects">
+ <objectgroup id="2" name="objects" visible="0">
   <object id="1" name="Wall" x="608" y="32" width="32" height="32"/>
   <object id="2" name="Wall" x="32" y="32" width="32" height="32"/>
   <object id="3" name="Wall" x="96" y="32" width="32" height="32"/>
@@ -176,9 +176,5 @@
   <object id="186" name="Wall" x="512" y="256" width="32" height="32"/>
   <object id="187" name="Wall" x="544" y="256" width="32" height="32"/>
   <object id="188" x="64" y="192" width="32" height="32"/>
- </objectgroup>
- <objectgroup id="3" name="Object Layer 2">
-  <object id="190" x="64" y="192" width="32" height="32"/>
-  <object id="191" x="192" y="64" width="32" height="32"/>
  </objectgroup>
 </map>
