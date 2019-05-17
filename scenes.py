@@ -38,7 +38,7 @@ class GameScene(object):
 
     def render(self):
         self.game.screen.fill(BGCOLOR)
-        self.game.screen.blit(self.map_img, self.map_rect)
+        self.game.screen.blit(self.map.image, self.map.rect)
         #self.game.screen.blit(self.tile_map, [0,0])
         # self.draw_grid()
         self.ice.draw(self.game.screen)#draw ice tiles on the bottom
@@ -330,16 +330,13 @@ class GameScene(object):
 """
 Display Level 1: Tutorial Movement
 
-- Simple tutorial, show player how to move character and what the objectives 
+- Simple tutorial, show player how to move character and what the objectives
     of the game are.
 """
 class TutorialMovement(GameScene):
     def __init__(self, game):
         super().__init__(game)
         self.map = TiledMap(path.join(MAP_FOLDER, 'TutorialMovement.tmx'))
-        self.map_img = self.map.make_map()
-        self.map_rect = self.map_img.get_rect()
-        #self.player = Player(self, 1, 2)
         self.scene_number = self.game.get_scene_number(TutorialMovement)
         #self.tile_map = create_tiles("tutorialMovementTile.map")
         self.draw_objects()
@@ -356,8 +353,9 @@ Display Level 2: Tutorial Blocks
 class TutorialBlock(GameScene):
     def __init__(self, game):
         super().__init__(game)
+        self.map = TiledMap(path.join(MAP_FOLDER, 'TutorialBlock.tmx'))
         self.scene_number = self.game.get_scene_number(TutorialBlock)
-        self.draw_layout("tutorialBlocks.map")
+        self.draw_objects()
         self.instructions.add("You can move the blocks by standing next to them", 100)
         self.instructions.add("and pushing the directional buttons.", 140)
         self.instructions.add("Push the block on top of the switch to unlock the door.", 180)

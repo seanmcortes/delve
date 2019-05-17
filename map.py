@@ -62,6 +62,8 @@ class TiledMap:
         self.width = tm.width * tm.tilewidth
         self.height = tm.height * tm.tileheight
         self.tmxdata = tm
+        self.image = self.make_map()
+        self.rect = self.image.get_rect()
 
     def render(self, surface):
         ti = self.tmxdata.get_tile_image_by_gid
