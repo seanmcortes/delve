@@ -33,7 +33,7 @@ class GameScene(object):
         self.instructions = Instructions(30, WHITE)
         self.player = None
         self.game = game
-        self.tile_map = create_tiles("defaultTile.map")
+        #self.tile_map = create_tiles("defaultTile.map")
         self.scene_number = 0
 
     def render(self):
