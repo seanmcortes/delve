@@ -369,8 +369,6 @@ class TutorialEnemy(GameScene):
     def __init__(self, game):
         super().__init__(game)
         self.map = TiledMap(path.join(MAP_FOLDER, 'TutorialEnemy.tmx'))
-        self.map_img = self.map.make_map()
-        self.map_rect = self.map_img.get_rect()
         self.scene_number = self.game.get_scene_number(TutorialEnemy)
         # self.tile_map = create_tiles("tutorialEnemyTile.map")
         self.draw_objects()
@@ -393,11 +391,12 @@ Display Level 4: Tutorial Ice
 class TutorialIce(GameScene):
     def __init__(self, game):
         super().__init__(game)
+        self.map = TiledMap(path.join(MAP_FOLDER, 'TutorialIce.tmx'))
         self.scene_number = self.game.get_scene_number(TutorialIce)
-        self.draw_layout("tutorialIceObjects.map")
-        Block(self, 2, 10)
-        Block(self, 16, 11)
-        Key(self, 16, 17)
+        self.draw_objects()
+        #Block(self, 2, 10)
+        #Block(self, 16, 11)
+        #Key(self, 16, 17)
         self.instructions = Instructions(30, BLUE)
         self.instructions.add("Be careful on the ice!", 100)
         self.instructions.add("You will slide until you collide with an object.", 140)
@@ -413,8 +412,6 @@ class Level6(GameScene):
     def __init__(self, game):
         super().__init__(game)
         self.map = TiledMap(path.join(MAP_FOLDER, 'Level6.tmx'))
-        self.map_img = self.map.make_map()
-        self.map_rect = self.map_img.get_rect()
         self.scene_number = self.game.get_scene_number(TutorialEnemy)
         self.draw_objects()
         self.spawn_enemies()
