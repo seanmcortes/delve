@@ -41,7 +41,7 @@ class GameScene(object):
         self.game.screen.blit(self.map.image, self.map.rect)
         #self.game.screen.blit(self.tile_map, [0,0])
         # self.draw_grid()
-        self.ice.draw(self.game.screen)#draw ice tiles on the bottom
+        #self.ice.draw(self.game.screen)#draw ice tiles on the bottom
         #self.walls.draw(self.game.screen)
         self.switches.draw(self.game.screen)
         self.blocks.draw(self.game.screen)
@@ -264,7 +264,8 @@ class GameScene(object):
                 Wall(self, tile_object.x/32, tile_object.y/32)
             if tile_object.name == 'Block':
                 Block(self, tile_object.x/32, tile_object.y/32)
-            if tile_object.name == 'Ice':
+            #use tyoe unstead of name for ice
+            if tile_object.type == 'Ice':
                 Ice(self, tile_object.x/32, tile_object.y/32)
             if tile_object.name == 'Key':
                 Key(self, tile_object.x/32, tile_object.y/32)
@@ -274,6 +275,11 @@ class GameScene(object):
                 Door(self,tile_object.x/32,tile_object.y/32, "entrance")
             if tile_object.name == 'Exit':
                 exit = Door(self,tile_object.x/32,tile_object.y/32, "exit")
+                exit.closeDoor()
+            if tile_object.name == 'IceEntrance':
+                Door(self,tile_object.x/32,tile_object.y/32, "entrance", "ice")
+            if tile_object.name == 'IceExit':
+                exit = Door(self,tile_object.x/32,tile_object.y/32, "exit", "ice")
                 exit.closeDoor()
 
 

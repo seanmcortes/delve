@@ -263,7 +263,7 @@ class Block(GameObject):
 class Wall(GameObject):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
-        self.groups = scene.walls
+        self.groups = scene.all_sprites, scene.walls
         pygame.sprite.Sprite.__init__(self, self.groups)
         #self.image = sprite
         self.interactable = False
@@ -281,7 +281,7 @@ class Switch(GameObject):
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
 
 class Door(GameObject):
-    def __init__(self, scene, x, y, doorType):
+    def __init__(self, scene, x, y, doorType, type=None):
         super().__init__(scene, x, y)
         self.groups = scene.all_sprites, scene.doors
         pygame.sprite.Sprite.__init__(self, self.groups)
@@ -291,7 +291,10 @@ class Door(GameObject):
         self.collidable = True
         self.doorType = doorType
 
-        self.sprite_sheet = SpriteSheet(DOOR_SPRITESHEET)
+        if type == "ice":
+            self.sprite_sheet = SpriteSheet(ICEDOOR_SPRITESHEET)
+        else:
+            self.sprite_sheet = SpriteSheet(DOOR_SPRITESHEET)
         self.image = self.sprite_sheet.get_image(0, 0, 32, 32)
 
     def openDoor(self):
@@ -304,12 +307,12 @@ class Door(GameObject):
             self.isOpen = False
             self.image = self.sprite_sheet.get_image(32, 0, 32, 32)
 
+
 class Ice(GameObject):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
         self.groups = scene.all_sprites, scene.ice
         pygame.sprite.Sprite.__init__(self, self.groups)
-        self.image = SpriteSheet(path.join(TILE_FOLDER, 'icetiles.png')).get_image(32, 32, 32, 32)
         self.interactable = False
         self.collidable = False
 

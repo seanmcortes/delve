@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="20" height="21" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="92">
+<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="20" height="21" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="526">
  <tileset firstgid="1" source="Tileset.tsx"/>
  <tileset firstgid="26" source="icecave.tsx"/>
  <layer id="3" name="floor" width="20" height="21">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 263,263,263,263,263,263,263,263,263,263,263,263,263,263,263,263,263,263,263,263,
-263,304,305,305,305,305,305,305,305,305,305,305,305,305,305,305,305,305,306,263,
+263,263,263,304,305,305,305,305,305,305,305,305,305,305,305,305,305,305,306,263,
+263,304,305,329,326,326,326,326,326,326,326,326,326,326,326,326,326,326,327,263,
+263,325,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,307,348,263,
+263,325,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,327,263,263,
+263,325,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,328,306,263,
 263,325,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,327,263,
 263,325,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,327,263,
 263,325,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,327,263,
 263,325,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,327,263,
-263,325,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,327,263,
-263,325,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,327,263,
-263,325,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,327,263,
-263,325,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,327,263,
-263,325,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,327,263,
-263,325,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,327,263,
-263,325,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,327,263,
+263,346,347,308,326,326,326,326,326,326,326,326,326,326,326,326,326,307,348,263,
+263,263,263,325,326,326,326,326,326,326,326,326,326,326,326,326,326,327,263,263,
+263,304,305,329,326,326,326,326,326,326,326,326,326,326,326,326,326,328,306,263,
 263,325,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,327,263,
 263,325,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,327,263,
 263,325,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,326,327,263,
@@ -31,20 +31,20 @@
   <data encoding="csv">
 7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
 29,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,69,30,
-49,284,285,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,110,
+49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,110,
+49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,53,74,0,110,
+49,74,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,110,
+49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,33,110,
 49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,110,
 49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,110,
 49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,110,
 49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,110,
 49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,110,
 49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,110,
-49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,110,
-49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,110,
-49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,110,
-49,247,247,248,0,0,0,0,0,0,0,0,0,0,0,0,0,1610613026,348,110,
-49,268,268,269,0,0,0,0,0,0,0,0,0,0,0,0,0,327,1073741959,3221225564,
-112,289,289,290,0,0,0,0,0,0,0,0,0,0,0,0,0,327,135,2684354652,
-112,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2684354850,306,110,
+49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,53,110,
+49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,114,
+112,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,114,
+112,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,110,
 49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,110,
 49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,110,
 49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,110,
@@ -52,6 +52,323 @@
 1073741853,1073741893,1073741893,1073741893,1073741893,1073741893,1073741893,1073741893,1073741893,1073741893,1073741893,1073741893,1073741893,1073741893,1073741893,1073741893,1073741893,1073741893,1073741893,1073741854
 </data>
  </layer>
+ <objectgroup id="4" name="ice">
+  <object id="95" type="Ice" x="32" y="96" width="32" height="32"/>
+  <object id="96" type="Ice" x="64" y="96" width="32" height="32"/>
+  <object id="97" type="Ice" x="96" y="96" width="32" height="32"/>
+  <object id="98" type="Ice" x="128" y="96" width="32" height="32"/>
+  <object id="99" type="Ice" x="160" y="96" width="32" height="32"/>
+  <object id="100" type="Ice" x="192" y="96" width="32" height="32"/>
+  <object id="101" type="Ice" x="224" y="96" width="32" height="32"/>
+  <object id="102" type="Ice" x="256" y="96" width="32" height="32"/>
+  <object id="103" type="Ice" x="288" y="96" width="32" height="32"/>
+  <object id="104" type="Ice" x="320" y="96" width="32" height="32"/>
+  <object id="105" type="Ice" x="352" y="96" width="32" height="32"/>
+  <object id="106" type="Ice" x="384" y="96" width="32" height="32"/>
+  <object id="107" type="Ice" x="416" y="96" width="32" height="32"/>
+  <object id="108" type="Ice" x="448" y="96" width="32" height="32"/>
+  <object id="137" type="Ice" x="96" y="128" width="32" height="32"/>
+  <object id="138" type="Ice" x="128" y="128" width="32" height="32"/>
+  <object id="139" type="Ice" x="160" y="128" width="32" height="32"/>
+  <object id="140" type="Ice" x="192" y="128" width="32" height="32"/>
+  <object id="141" type="Ice" x="224" y="128" width="32" height="32"/>
+  <object id="142" type="Ice" x="256" y="128" width="32" height="32"/>
+  <object id="143" type="Ice" x="288" y="128" width="32" height="32"/>
+  <object id="144" type="Ice" x="320" y="128" width="32" height="32"/>
+  <object id="145" type="Ice" x="352" y="128" width="32" height="32"/>
+  <object id="146" type="Ice" x="384" y="128" width="32" height="32"/>
+  <object id="147" type="Ice" x="416" y="128" width="32" height="32"/>
+  <object id="148" type="Ice" x="448" y="128" width="32" height="32"/>
+  <object id="149" type="Ice" x="480" y="128" width="32" height="32"/>
+  <object id="150" type="Ice" x="512" y="128" width="32" height="32"/>
+  <object id="152" type="Ice" x="96" y="64" width="32" height="32"/>
+  <object id="153" type="Ice" x="128" y="64" width="32" height="32"/>
+  <object id="154" type="Ice" x="160" y="64" width="32" height="32"/>
+  <object id="155" type="Ice" x="192" y="64" width="32" height="32"/>
+  <object id="156" type="Ice" x="224" y="64" width="32" height="32"/>
+  <object id="157" type="Ice" x="256" y="64" width="32" height="32"/>
+  <object id="158" type="Ice" x="288" y="64" width="32" height="32"/>
+  <object id="159" type="Ice" x="320" y="64" width="32" height="32"/>
+  <object id="160" type="Ice" x="352" y="64" width="32" height="32"/>
+  <object id="161" type="Ice" x="384" y="64" width="32" height="32"/>
+  <object id="162" type="Ice" x="416" y="64" width="32" height="32"/>
+  <object id="163" type="Ice" x="448" y="64" width="32" height="32"/>
+  <object id="165" type="Ice" x="64" y="128" width="32" height="32"/>
+  <object id="166" type="Ice" x="544" y="128" width="32" height="32"/>
+  <object id="168" type="Ice" x="544" y="64" width="32" height="32"/>
+  <object id="169" type="Ice" x="576" y="64" width="32" height="32"/>
+  <object id="170" type="Ice" x="576" y="96" width="32" height="32"/>
+  <object id="171" type="Ice" x="576" y="128" width="32" height="32"/>
+  <object id="172" type="Ice" x="576" y="160" width="32" height="32"/>
+  <object id="173" type="Ice" x="544" y="160" width="32" height="32"/>
+  <object id="174" type="Ice" x="512" y="160" width="32" height="32"/>
+  <object id="175" type="Ice" x="64" y="160" width="32" height="32"/>
+  <object id="176" type="Ice" x="96" y="160" width="32" height="32"/>
+  <object id="177" type="Ice" x="128" y="160" width="32" height="32"/>
+  <object id="178" type="Ice" x="160" y="160" width="32" height="32"/>
+  <object id="179" type="Ice" x="192" y="160" width="32" height="32"/>
+  <object id="180" type="Ice" x="224" y="160" width="32" height="32"/>
+  <object id="181" type="Ice" x="256" y="160" width="32" height="32"/>
+  <object id="182" type="Ice" x="288" y="160" width="32" height="32"/>
+  <object id="183" type="Ice" x="320" y="160" width="32" height="32"/>
+  <object id="184" type="Ice" x="352" y="160" width="32" height="32"/>
+  <object id="185" type="Ice" x="384" y="160" width="32" height="32"/>
+  <object id="186" type="Ice" x="416" y="160" width="32" height="32"/>
+  <object id="187" type="Ice" x="448" y="160" width="32" height="32"/>
+  <object id="188" type="Ice" x="32" y="160" width="32" height="32"/>
+  <object id="190" type="Ice" x="480" y="160" width="32" height="32"/>
+  <object id="227" type="Ice" x="576" y="192" width="32" height="32"/>
+  <object id="228" type="Ice" x="544" y="192" width="32" height="32"/>
+  <object id="229" type="Ice" x="512" y="192" width="32" height="32"/>
+  <object id="230" type="Ice" x="64" y="192" width="32" height="32"/>
+  <object id="231" type="Ice" x="96" y="192" width="32" height="32"/>
+  <object id="232" type="Ice" x="128" y="192" width="32" height="32"/>
+  <object id="233" type="Ice" x="160" y="192" width="32" height="32"/>
+  <object id="234" type="Ice" x="192" y="192" width="32" height="32"/>
+  <object id="235" type="Ice" x="224" y="192" width="32" height="32"/>
+  <object id="236" type="Ice" x="256" y="192" width="32" height="32"/>
+  <object id="237" type="Ice" x="288" y="192" width="32" height="32"/>
+  <object id="238" type="Ice" x="320" y="192" width="32" height="32"/>
+  <object id="239" type="Ice" x="352" y="192" width="32" height="32"/>
+  <object id="240" type="Ice" x="384" y="192" width="32" height="32"/>
+  <object id="241" type="Ice" x="416" y="192" width="32" height="32"/>
+  <object id="242" type="Ice" x="448" y="192" width="32" height="32"/>
+  <object id="243" type="Ice" x="32" y="192" width="32" height="32"/>
+  <object id="244" type="Ice" x="480" y="192" width="32" height="32"/>
+  <object id="245" type="Ice" x="576" y="224" width="32" height="32"/>
+  <object id="246" type="Ice" x="544" y="224" width="32" height="32"/>
+  <object id="247" type="Ice" x="512" y="224" width="32" height="32"/>
+  <object id="248" type="Ice" x="64" y="224" width="32" height="32"/>
+  <object id="249" type="Ice" x="96" y="224" width="32" height="32"/>
+  <object id="250" type="Ice" x="128" y="224" width="32" height="32"/>
+  <object id="251" type="Ice" x="160" y="224" width="32" height="32"/>
+  <object id="252" type="Ice" x="192" y="224" width="32" height="32"/>
+  <object id="253" type="Ice" x="224" y="224" width="32" height="32"/>
+  <object id="254" type="Ice" x="256" y="224" width="32" height="32"/>
+  <object id="255" type="Ice" x="288" y="224" width="32" height="32"/>
+  <object id="256" type="Ice" x="320" y="224" width="32" height="32"/>
+  <object id="257" type="Ice" x="352" y="224" width="32" height="32"/>
+  <object id="258" type="Ice" x="384" y="224" width="32" height="32"/>
+  <object id="259" type="Ice" x="416" y="224" width="32" height="32"/>
+  <object id="260" type="Ice" x="448" y="224" width="32" height="32"/>
+  <object id="261" type="Ice" x="32" y="224" width="32" height="32"/>
+  <object id="262" type="Ice" x="480" y="224" width="32" height="32"/>
+  <object id="263" type="Ice" x="576" y="256" width="32" height="32"/>
+  <object id="264" type="Ice" x="544" y="256" width="32" height="32"/>
+  <object id="265" type="Ice" x="512" y="256" width="32" height="32"/>
+  <object id="266" type="Ice" x="64" y="256" width="32" height="32"/>
+  <object id="267" type="Ice" x="96" y="256" width="32" height="32"/>
+  <object id="268" type="Ice" x="128" y="256" width="32" height="32"/>
+  <object id="269" type="Ice" x="160" y="256" width="32" height="32"/>
+  <object id="270" type="Ice" x="192" y="256" width="32" height="32"/>
+  <object id="271" type="Ice" x="224" y="256" width="32" height="32"/>
+  <object id="272" type="Ice" x="256" y="256" width="32" height="32"/>
+  <object id="273" type="Ice" x="288" y="256" width="32" height="32"/>
+  <object id="274" type="Ice" x="320" y="256" width="32" height="32"/>
+  <object id="275" type="Ice" x="352" y="256" width="32" height="32"/>
+  <object id="276" type="Ice" x="384" y="256" width="32" height="32"/>
+  <object id="277" type="Ice" x="416" y="256" width="32" height="32"/>
+  <object id="278" type="Ice" x="448" y="256" width="32" height="32"/>
+  <object id="279" type="Ice" x="32" y="256" width="32" height="32"/>
+  <object id="280" type="Ice" x="480" y="256" width="32" height="32"/>
+  <object id="281" type="Ice" x="576" y="288" width="32" height="32"/>
+  <object id="282" type="Ice" x="544" y="288" width="32" height="32"/>
+  <object id="283" type="Ice" x="512" y="288" width="32" height="32"/>
+  <object id="284" type="Ice" x="64" y="288" width="32" height="32"/>
+  <object id="285" type="Ice" x="96" y="288" width="32" height="32"/>
+  <object id="286" type="Ice" x="128" y="288" width="32" height="32"/>
+  <object id="287" type="Ice" x="160" y="288" width="32" height="32"/>
+  <object id="288" type="Ice" x="192" y="288" width="32" height="32"/>
+  <object id="289" type="Ice" x="224" y="288" width="32" height="32"/>
+  <object id="290" type="Ice" x="256" y="288" width="32" height="32"/>
+  <object id="291" type="Ice" x="288" y="288" width="32" height="32"/>
+  <object id="292" type="Ice" x="320" y="288" width="32" height="32"/>
+  <object id="293" type="Ice" x="352" y="288" width="32" height="32"/>
+  <object id="294" type="Ice" x="384" y="288" width="32" height="32"/>
+  <object id="295" type="Ice" x="416" y="288" width="32" height="32"/>
+  <object id="296" type="Ice" x="448" y="288" width="32" height="32"/>
+  <object id="297" type="Ice" x="32" y="288" width="32" height="32"/>
+  <object id="298" type="Ice" x="480" y="288" width="32" height="32"/>
+  <object id="335" type="Ice" x="576" y="320" width="32" height="32"/>
+  <object id="336" type="Ice" x="544" y="320" width="32" height="32"/>
+  <object id="337" type="Ice" x="512" y="320" width="32" height="32"/>
+  <object id="338" type="Ice" x="64" y="320" width="32" height="32"/>
+  <object id="339" type="Ice" x="96" y="320" width="32" height="32"/>
+  <object id="340" type="Ice" x="128" y="320" width="32" height="32"/>
+  <object id="341" type="Ice" x="160" y="320" width="32" height="32"/>
+  <object id="342" type="Ice" x="192" y="320" width="32" height="32"/>
+  <object id="343" type="Ice" x="224" y="320" width="32" height="32"/>
+  <object id="344" type="Ice" x="256" y="320" width="32" height="32"/>
+  <object id="345" type="Ice" x="288" y="320" width="32" height="32"/>
+  <object id="346" type="Ice" x="320" y="320" width="32" height="32"/>
+  <object id="347" type="Ice" x="352" y="320" width="32" height="32"/>
+  <object id="348" type="Ice" x="384" y="320" width="32" height="32"/>
+  <object id="349" type="Ice" x="416" y="320" width="32" height="32"/>
+  <object id="350" type="Ice" x="448" y="320" width="32" height="32"/>
+  <object id="351" type="Ice" x="32" y="320" width="32" height="32"/>
+  <object id="352" type="Ice" x="480" y="320" width="32" height="32"/>
+  <object id="353" type="Ice" x="576" y="352" width="32" height="32"/>
+  <object id="354" type="Ice" x="544" y="352" width="32" height="32"/>
+  <object id="355" type="Ice" x="512" y="352" width="32" height="32"/>
+  <object id="356" type="Ice" x="64" y="352" width="32" height="32"/>
+  <object id="357" type="Ice" x="96" y="352" width="32" height="32"/>
+  <object id="358" type="Ice" x="128" y="352" width="32" height="32"/>
+  <object id="359" type="Ice" x="160" y="352" width="32" height="32"/>
+  <object id="360" type="Ice" x="192" y="352" width="32" height="32"/>
+  <object id="361" type="Ice" x="224" y="352" width="32" height="32"/>
+  <object id="362" type="Ice" x="256" y="352" width="32" height="32"/>
+  <object id="363" type="Ice" x="288" y="352" width="32" height="32"/>
+  <object id="364" type="Ice" x="320" y="352" width="32" height="32"/>
+  <object id="365" type="Ice" x="352" y="352" width="32" height="32"/>
+  <object id="366" type="Ice" x="384" y="352" width="32" height="32"/>
+  <object id="367" type="Ice" x="416" y="352" width="32" height="32"/>
+  <object id="368" type="Ice" x="448" y="352" width="32" height="32"/>
+  <object id="369" type="Ice" x="32" y="352" width="32" height="32"/>
+  <object id="370" type="Ice" x="480" y="352" width="32" height="32"/>
+  <object id="371" type="Ice" x="576" y="416" width="32" height="32"/>
+  <object id="372" type="Ice" x="544" y="384" width="32" height="32"/>
+  <object id="373" type="Ice" x="512" y="384" width="32" height="32"/>
+  <object id="374" type="Ice" x="64" y="416" width="32" height="32"/>
+  <object id="375" type="Ice" x="96" y="384" width="32" height="32"/>
+  <object id="376" type="Ice" x="128" y="384" width="32" height="32"/>
+  <object id="377" type="Ice" x="160" y="384" width="32" height="32"/>
+  <object id="378" type="Ice" x="192" y="384" width="32" height="32"/>
+  <object id="379" type="Ice" x="224" y="384" width="32" height="32"/>
+  <object id="380" type="Ice" x="256" y="384" width="32" height="32"/>
+  <object id="381" type="Ice" x="288" y="384" width="32" height="32"/>
+  <object id="382" type="Ice" x="320" y="384" width="32" height="32"/>
+  <object id="383" type="Ice" x="352" y="384" width="32" height="32"/>
+  <object id="384" type="Ice" x="384" y="384" width="32" height="32"/>
+  <object id="385" type="Ice" x="416" y="384" width="32" height="32"/>
+  <object id="386" type="Ice" x="448" y="384" width="32" height="32"/>
+  <object id="387" type="Ice" x="32" y="416" width="32" height="32"/>
+  <object id="388" type="Ice" x="480" y="384" width="32" height="32"/>
+  <object id="389" type="Ice" x="576" y="448" width="32" height="32"/>
+  <object id="390" type="Ice" x="544" y="448" width="32" height="32"/>
+  <object id="391" type="Ice" x="512" y="448" width="32" height="32"/>
+  <object id="392" type="Ice" x="64" y="448" width="32" height="32"/>
+  <object id="393" type="Ice" x="96" y="448" width="32" height="32"/>
+  <object id="394" type="Ice" x="128" y="448" width="32" height="32"/>
+  <object id="395" type="Ice" x="160" y="448" width="32" height="32"/>
+  <object id="396" type="Ice" x="192" y="448" width="32" height="32"/>
+  <object id="397" type="Ice" x="224" y="448" width="32" height="32"/>
+  <object id="398" type="Ice" x="256" y="448" width="32" height="32"/>
+  <object id="399" type="Ice" x="288" y="448" width="32" height="32"/>
+  <object id="400" type="Ice" x="320" y="448" width="32" height="32"/>
+  <object id="401" type="Ice" x="352" y="448" width="32" height="32"/>
+  <object id="402" type="Ice" x="384" y="448" width="32" height="32"/>
+  <object id="403" type="Ice" x="416" y="448" width="32" height="32"/>
+  <object id="404" type="Ice" x="448" y="448" width="32" height="32"/>
+  <object id="405" type="Ice" x="32" y="448" width="32" height="32"/>
+  <object id="406" type="Ice" x="480" y="448" width="32" height="32"/>
+  <object id="407" type="Ice" x="576" y="480" width="32" height="32"/>
+  <object id="408" type="Ice" x="544" y="480" width="32" height="32"/>
+  <object id="409" type="Ice" x="512" y="480" width="32" height="32"/>
+  <object id="410" type="Ice" x="64" y="480" width="32" height="32"/>
+  <object id="411" type="Ice" x="96" y="480" width="32" height="32"/>
+  <object id="412" type="Ice" x="128" y="480" width="32" height="32"/>
+  <object id="413" type="Ice" x="160" y="480" width="32" height="32"/>
+  <object id="414" type="Ice" x="192" y="480" width="32" height="32"/>
+  <object id="415" type="Ice" x="224" y="480" width="32" height="32"/>
+  <object id="416" type="Ice" x="256" y="480" width="32" height="32"/>
+  <object id="417" type="Ice" x="288" y="480" width="32" height="32"/>
+  <object id="418" type="Ice" x="320" y="480" width="32" height="32"/>
+  <object id="419" type="Ice" x="352" y="480" width="32" height="32"/>
+  <object id="420" type="Ice" x="384" y="480" width="32" height="32"/>
+  <object id="421" type="Ice" x="416" y="480" width="32" height="32"/>
+  <object id="422" type="Ice" x="448" y="480" width="32" height="32"/>
+  <object id="423" type="Ice" x="32" y="480" width="32" height="32"/>
+  <object id="424" type="Ice" x="480" y="480" width="32" height="32"/>
+  <object id="425" type="Ice" x="576" y="512" width="32" height="32"/>
+  <object id="426" type="Ice" x="544" y="512" width="32" height="32"/>
+  <object id="427" type="Ice" x="512" y="512" width="32" height="32"/>
+  <object id="428" type="Ice" x="64" y="512" width="32" height="32"/>
+  <object id="429" type="Ice" x="96" y="512" width="32" height="32"/>
+  <object id="430" type="Ice" x="128" y="512" width="32" height="32"/>
+  <object id="431" type="Ice" x="160" y="512" width="32" height="32"/>
+  <object id="432" type="Ice" x="192" y="512" width="32" height="32"/>
+  <object id="433" type="Ice" x="224" y="512" width="32" height="32"/>
+  <object id="434" type="Ice" x="256" y="512" width="32" height="32"/>
+  <object id="435" type="Ice" x="288" y="512" width="32" height="32"/>
+  <object id="436" type="Ice" x="320" y="512" width="32" height="32"/>
+  <object id="437" type="Ice" x="352" y="512" width="32" height="32"/>
+  <object id="438" type="Ice" x="384" y="512" width="32" height="32"/>
+  <object id="439" type="Ice" x="416" y="512" width="32" height="32"/>
+  <object id="440" type="Ice" x="448" y="512" width="32" height="32"/>
+  <object id="441" type="Ice" x="32" y="512" width="32" height="32"/>
+  <object id="443" type="Ice" x="576" y="544" width="32" height="32"/>
+  <object id="444" type="Ice" x="544" y="544" width="32" height="32"/>
+  <object id="445" type="Ice" x="512" y="544" width="32" height="32"/>
+  <object id="446" type="Ice" x="64" y="544" width="32" height="32"/>
+  <object id="447" type="Ice" x="96" y="544" width="32" height="32"/>
+  <object id="448" type="Ice" x="128" y="544" width="32" height="32"/>
+  <object id="449" type="Ice" x="160" y="544" width="32" height="32"/>
+  <object id="450" type="Ice" x="192" y="544" width="32" height="32"/>
+  <object id="451" type="Ice" x="224" y="544" width="32" height="32"/>
+  <object id="452" type="Ice" x="256" y="544" width="32" height="32"/>
+  <object id="453" type="Ice" x="288" y="544" width="32" height="32"/>
+  <object id="454" type="Ice" x="320" y="544" width="32" height="32"/>
+  <object id="455" type="Ice" x="352" y="544" width="32" height="32"/>
+  <object id="456" type="Ice" x="384" y="544" width="32" height="32"/>
+  <object id="457" type="Ice" x="416" y="544" width="32" height="32"/>
+  <object id="458" type="Ice" x="448" y="544" width="32" height="32"/>
+  <object id="459" type="Ice" x="32" y="544" width="32" height="32"/>
+  <object id="460" type="Ice" x="480" y="544" width="32" height="32"/>
+  <object id="461" type="Ice" x="576" y="576" width="32" height="32"/>
+  <object id="462" type="Ice" x="544" y="576" width="32" height="32"/>
+  <object id="463" type="Ice" x="512" y="576" width="32" height="32"/>
+  <object id="464" type="Ice" x="64" y="576" width="32" height="32"/>
+  <object id="465" type="Ice" x="96" y="576" width="32" height="32"/>
+  <object id="466" type="Ice" x="128" y="576" width="32" height="32"/>
+  <object id="467" type="Ice" x="160" y="576" width="32" height="32"/>
+  <object id="468" type="Ice" x="192" y="576" width="32" height="32"/>
+  <object id="469" type="Ice" x="224" y="576" width="32" height="32"/>
+  <object id="470" type="Ice" x="256" y="576" width="32" height="32"/>
+  <object id="471" type="Ice" x="288" y="576" width="32" height="32"/>
+  <object id="472" type="Ice" x="320" y="576" width="32" height="32"/>
+  <object id="473" type="Ice" x="352" y="576" width="32" height="32"/>
+  <object id="474" type="Ice" x="384" y="576" width="32" height="32"/>
+  <object id="475" type="Ice" x="416" y="576" width="32" height="32"/>
+  <object id="476" type="Ice" x="448" y="576" width="32" height="32"/>
+  <object id="477" type="Ice" x="32" y="576" width="32" height="32"/>
+  <object id="478" type="Ice" x="480" y="576" width="32" height="32"/>
+  <object id="479" type="Ice" x="576" y="608" width="32" height="32"/>
+  <object id="480" type="Ice" x="544" y="608" width="32" height="32"/>
+  <object id="481" type="Ice" x="512" y="608" width="32" height="32"/>
+  <object id="482" type="Ice" x="64" y="608" width="32" height="32"/>
+  <object id="483" type="Ice" x="96" y="608" width="32" height="32"/>
+  <object id="484" type="Ice" x="128" y="608" width="32" height="32"/>
+  <object id="485" type="Ice" x="160" y="608" width="32" height="32"/>
+  <object id="486" type="Ice" x="192" y="608" width="32" height="32"/>
+  <object id="487" type="Ice" x="224" y="608" width="32" height="32"/>
+  <object id="488" type="Ice" x="256" y="608" width="32" height="32"/>
+  <object id="489" type="Ice" x="288" y="608" width="32" height="32"/>
+  <object id="490" type="Ice" x="320" y="608" width="32" height="32"/>
+  <object id="491" type="Ice" x="352" y="608" width="32" height="32"/>
+  <object id="492" type="Ice" x="384" y="608" width="32" height="32"/>
+  <object id="493" type="Ice" x="416" y="608" width="32" height="32"/>
+  <object id="494" type="Ice" x="448" y="608" width="32" height="32"/>
+  <object id="495" type="Ice" x="32" y="608" width="32" height="32"/>
+  <object id="496" type="Ice" x="480" y="608" width="32" height="32"/>
+  <object id="498" type="Ice" x="544" y="416" width="32" height="32"/>
+  <object id="499" type="Ice" x="512" y="416" width="32" height="32"/>
+  <object id="501" type="Ice" x="96" y="416" width="32" height="32"/>
+  <object id="502" type="Ice" x="128" y="416" width="32" height="32"/>
+  <object id="503" type="Ice" x="160" y="416" width="32" height="32"/>
+  <object id="504" type="Ice" x="192" y="416" width="32" height="32"/>
+  <object id="505" type="Ice" x="224" y="416" width="32" height="32"/>
+  <object id="506" type="Ice" x="256" y="416" width="32" height="32"/>
+  <object id="507" type="Ice" x="288" y="416" width="32" height="32"/>
+  <object id="508" type="Ice" x="320" y="416" width="32" height="32"/>
+  <object id="509" type="Ice" x="352" y="416" width="32" height="32"/>
+  <object id="510" type="Ice" x="384" y="416" width="32" height="32"/>
+  <object id="511" type="Ice" x="416" y="416" width="32" height="32"/>
+  <object id="512" type="Ice" x="448" y="416" width="32" height="32"/>
+  <object id="514" type="Ice" x="480" y="416" width="32" height="32"/>
+  <object id="522" type="Ice" x="480" y="64" width="32" height="32"/>
+  <object id="523" type="Ice" x="512" y="64" width="32" height="32"/>
+  <object id="524" type="Ice" x="480" y="96" width="32" height="32"/>
+ </objectgroup>
  <objectgroup id="2" name="objects">
   <object id="1" name="Wall" x="608" y="32" width="32" height="32"/>
   <object id="2" name="Wall" x="32" y="32" width="32" height="32"/>
@@ -130,10 +447,15 @@
   <object id="82" name="Wall" x="608" y="384" width="32" height="32"/>
   <object id="83" name="Wall" x="608" y="416" width="32" height="32"/>
   <object id="85" name="Wall" x="608" y="448" width="32" height="32"/>
-  <object id="86" name="Entrance" x="32" y="64" width="32" height="32"/>
-  <object id="87" name="Exit" x="544" y="544" width="32" height="32"/>
-  <object id="88" name="Key" x="544" y="512" width="32" height="32"/>
-  <object id="89" name="Block" x="544" y="320" width="32" height="32"/>
+  <object id="86" name="IceEntrance" x="32" y="64" width="32" height="32"/>
+  <object id="87" name="IceExit" x="480" y="512" width="32" height="32"/>
+  <object id="88" name="Key" x="512" y="448" width="32" height="32"/>
+  <object id="89" name="Block" x="512" y="320" width="32" height="32"/>
   <object id="91" name="Block" x="64" y="320" width="32" height="32"/>
+  <object id="515" name="Wall" x="32" y="128" width="32" height="32"/>
+  <object id="518" name="Wall" x="512" y="96" width="32" height="32"/>
+  <object id="519" name="Wall" x="544" y="96" width="32" height="32"/>
+  <object id="521" name="Wall" x="576" y="384" width="32" height="32"/>
+  <object id="525" name="Wall" x="576" y="160" width="32" height="32"/>
  </objectgroup>
 </map>
