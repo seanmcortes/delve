@@ -104,8 +104,8 @@
   <object id="82" name="Wall" x="608" y="384" width="32" height="32"/>
   <object id="83" name="Wall" x="608" y="416" width="32" height="32"/>
   <object id="85" name="Wall" x="608" y="448" width="32" height="32"/>
-  <object id="86" name="Entrance" x="32" y="64" width="32" height="32"/>
-  <object id="87" name="Exit" x="576" y="352" width="32" height="32"/>
+  <object id="86" name="Entrance" type="Door" x="32" y="64" width="32" height="32"/>
+  <object id="87" name="Exit" type="Door" x="576" y="352" width="32" height="32"/>
   <object id="88" name="Key" x="288" y="320" width="32" height="32"/>
  </objectgroup>
 </map>

@@ -156,41 +156,43 @@ class GameScene(object):
                 if event.key == pygame.K_SPACE:
                     self.player.interact()
             if len(self.switches) > 0:
+                for door in self.doors: #set all the doors to closed by default
+                    door.isOpen = False
+                    door.collidable = True
+                    door.closeDoor()
                 for door in self.doors:
                     for block in self.blocks:
                         for switch in self.switches:
-                            if block.x == switch.x and block.y == switch.y:
-                                if door.doorType == 'exit':
+                            if door.doorType == switch.switchType:
+                                if block.x == switch.x and block.y == switch.y:
                                     door.isOpen = True
                                     door.collidable = False
                                     door.openDoor()
-                            elif switch.x == self.player.x and switch.y == self.player.y:
-                                if door.doorType == 'exit':
+                                elif switch.x == self.player.x and switch.y == self.player.y:
                                     door.isOpen = True
                                     door.collidable = False
                                     door.openDoor()
-                            else:
-                                    door.isOpen = False
-                                    door.collidable = True
-                                    door.closeDoor()
             for door in self.doors:
                 if self.player.x == door.x and (self.player.y == door.y + 1 or self.player.y == door.y - 1):
                             if len(self.inventory.item_list) > 0:
                                 if type(self.inventory.item_list[0]) == Key:
-                                    if door.doorType == 'exit':
+                                    if door.doorType == 'Exit':
                                         door.isOpen = True
                                         door.collidable = False
+                                        door.unlocked = True
                                         door.openDoor()
                 elif self.player.y == door.y and (self.player.x == door.x + 1 or self.player.x == door.x - 1):
                             if len(self.inventory.item_list) > 0:
                                 if type(self.inventory.item_list[0]) == Key:
-                                    if door.doorType == 'exit':
+                                    if door.doorType == 'Exit':
                                         door.isOpen = True
                                         door.collidable = False
+                                        door.unlocked = True
                                         door.openDoor()
                 if self.player.x == door.x and self.player.y == door.y:
-                    if door.doorType == 'exit':
+                    if door.doorType == 'Exit':
                         self.game.select_scene(self.scene_number + 1)
+
 
     """
     Check for collision with a wall.
@@ -270,17 +272,16 @@ class GameScene(object):
             if tile_object.name == 'Key':
                 Key(self, tile_object.x/32, tile_object.y/32)
             if tile_object.name == 'Switch':
-                Switch(self,tile_object.x/32,tile_object.y/32)
-            if tile_object.name == 'Entrance':
-                Door(self,tile_object.x/32,tile_object.y/32, "entrance")
-            if tile_object.name == 'Exit':
-                exit = Door(self,tile_object.x/32,tile_object.y/32, "exit")
-                exit.closeDoor()
-            if tile_object.name == 'IceEntrance':
-                Door(self,tile_object.x/32,tile_object.y/32, "entrance", "ice")
-            if tile_object.name == 'IceExit':
-                exit = Door(self,tile_object.x/32,tile_object.y/32, "exit", "ice")
-                exit.closeDoor()
+                Switch(self,tile_object.x/32,tile_object.y/32, tile_object.type)
+            if tile_object.type == "Door":
+                if tile_object.name == 'IceEntrance':
+                    door = Door(self,tile_object.x/32,tile_object.y/32, "Entrance", "Ice")
+                elif tile_object.name == 'IceExit':
+                    door = Door(self,tile_object.x/32,tile_object.y/32, "Exit", "Ice")
+                else:
+                    door = Door(self,tile_object.x/32,tile_object.y/32, tile_object.name)
+                if door.doorType != 'Entrance':
+                    door.closeDoor()
 
 
         LifeHUD(self, 3, 0)
@@ -418,7 +419,7 @@ class Level6(GameScene):
     def __init__(self, game):
         super().__init__(game)
         self.map = TiledMap(path.join(MAP_FOLDER, 'Level6.tmx'))
-        self.scene_number = self.game.get_scene_number(TutorialEnemy)
+        self.scene_number = self.game.get_scene_number(Level6)
         self.draw_objects()
         self.spawn_enemies()
 
@@ -451,6 +452,12 @@ class Level6(GameScene):
         Enemy(self, 12, 13, DOWN, type_6)
         Enemy(self, 10, 9, DOWN, type_5)
 
+class Level5(GameScene):
+    def __init__(self, game):
+        super().__init__(game)
+        self.map = TiledMap(path.join(MAP_FOLDER, 'Level5.tmx'))
+        self.scene_number = self.game.get_scene_number(Level5)
+        self.draw_objects()
 
 """
 Unit test scene for blocks

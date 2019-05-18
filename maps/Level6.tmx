@@ -26,7 +26,7 @@
 7,7,7,7,7,7,7,7,7,7,7,7,7,11,12,12,12,12,12,13
 </data>
  </layer>
- <objectgroup id="2" name="objects" visible="0">
+ <objectgroup id="2" name="objects">
   <object id="1" name="Wall" x="608" y="32" width="32" height="32"/>
   <object id="2" name="Wall" x="32" y="32" width="32" height="32"/>
   <object id="3" name="Wall" x="96" y="32" width="32" height="32"/>
@@ -73,8 +73,8 @@
   <object id="80" name="Wall" x="608" y="352" width="32" height="32"/>
   <object id="82" name="Wall" x="608" y="384" width="32" height="32"/>
   <object id="83" name="Wall" x="608" y="416" width="32" height="32"/>
-  <object id="86" name="Entrance" x="32" y="64" width="32" height="32"/>
-  <object id="87" name="Exit" x="256" y="416" width="32" height="32"/>
+  <object id="86" name="Entrance" type="Door" x="32" y="64" width="32" height="32"/>
+  <object id="87" name="Exit" type="Door" x="256" y="416" width="32" height="32"/>
   <object id="88" name="Key" x="512" y="576" width="32" height="32"/>
   <object id="89" name="Wall" x="32" y="128" width="32" height="32"/>
   <object id="90" name="Wall" x="0" y="128" width="32" height="32"/>

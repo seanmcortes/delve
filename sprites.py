@@ -270,18 +270,20 @@ class Wall(GameObject):
         self.collidable = True
 
 class Switch(GameObject):
-    def __init__(self, scene, x, y):
+    def __init__(self, scene, x, y, type):
         super().__init__(scene, x, y)
         self.groups = scene.all_sprites, scene.switches
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.interactable = True
         self.collidable = False
+        self.switchType = type
+
 
         sprite_sheet = SpriteSheet(SWITCH_SPRITESHEET)
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
 
 class Door(GameObject):
-    def __init__(self, scene, x, y, doorType, type=None):
+    def __init__(self, scene, x, y, doorType, imageType=None):
         super().__init__(scene, x, y)
         self.groups = scene.all_sprites, scene.doors
         pygame.sprite.Sprite.__init__(self, self.groups)
@@ -290,22 +292,26 @@ class Door(GameObject):
         self.interactable = False
         self.collidable = True
         self.doorType = doorType
+        self.unlocked = False
 
-        if type == "ice":
+        if imageType == "Ice":
             self.sprite_sheet = SpriteSheet(ICEDOOR_SPRITESHEET)
-        else:
+        elif doorType == "Entrance" or doorType == "Exit":
             self.sprite_sheet = SpriteSheet(DOOR_SPRITESHEET)
+        else:
+            self.sprite_sheet = SpriteSheet(WALLDOOR_SPRITESHEET)
         self.image = self.sprite_sheet.get_image(0, 0, 32, 32)
 
     def openDoor(self):
-        if self.doorType == 'exit':
+        if self.doorType != 'Entrance':
             self.isOpen = True
             self.image = self.sprite_sheet.get_image(64, 0, 32, 32)
 
     def closeDoor(self):
-        if self.doorType == 'exit':
-            self.isOpen = False
-            self.image = self.sprite_sheet.get_image(32, 0, 32, 32)
+        if self.unlocked == False: #only unlocked doors can be closed
+            if self.doorType != "Entrance":
+                self.isOpen = False
+                self.image = self.sprite_sheet.get_image(32, 0, 32, 32)
 
 
 class Ice(GameObject):
