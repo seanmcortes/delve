@@ -5,7 +5,7 @@ import pygame.freetype
 from settings import *
 from sprites import *
 from scenes import TutorialMovement, TutorialBlock, TutorialEnemy, TutorialIce, \
-    BlockUnitTest, Level5, Level6
+    BlockUnitTest, Level5, Level6, jasonlevel
 from menu import *
 
 """
@@ -29,8 +29,8 @@ class Game:
                     4: TutorialIce,
                     5: Level5,
                     6: Level6,
-                    7: CreditScene,
-                    8: GameOverScene,
+                    7: jasonlevel,
+                    8: CreditScene,
                     9: GameOverScene,
                     10: GameOverScene,
                     11: GameOverScene,
@@ -51,8 +51,8 @@ class Game:
             #self.go_to(TutorialIce(self))
             #self.go_to(TutorialEnemy(self))
             #self.go_to(TutorialBlocks(self))
-            #self.go_to(Level5(self))
-            self.go_to(MainMenuScene(self))
+            self.go_to(jasonlevel(self))
+            #self.go_to(MainMenuScene(self))
 
     def go_to(self, scene):
         self.scene = scene

@@ -452,6 +452,39 @@ class Level6(GameScene):
         Enemy(self, 12, 13, DOWN, type_6)
         Enemy(self, 10, 9, DOWN, type_5)
 
+"""
+Display Level: More boxes
+- Complex level featuring only enemies.
+"""
+class jasonlevel(GameScene):
+    def __init__(self, game):
+        super().__init__(game)
+        self.map = TiledMap(path.join(MAP_FOLDER, 'jasonlevel.tmx'))
+        self.scene_number = self.game.get_scene_number(jasonlevel)
+        self.draw_objects()
+        self.spawn_enemies()
+
+    def spawn_enemies(self):
+        type_1 = [UP, UP, UP,
+                  RIGHT, RIGHT, RIGHT, RIGHT,
+                  RIGHT, RIGHT, RIGHT, RIGHT]
+
+        type_2 = [DOWN, DOWN, DOWN,
+                  LEFT, LEFT, LEFT, LEFT]
+
+        type_3 = [DOWN, DOWN, DOWN,
+                  RIGHT, RIGHT, RIGHT, RIGHT,
+                  RIGHT, RIGHT, RIGHT, RIGHT,
+                  UP, UP, UP, UP]
+
+        type_4 = [UP, UP, UP,
+                  LEFT, LEFT, LEFT, LEFT]
+
+        Enemy(self, 5, 5, UP, type_1)
+        Enemy(self, 6, 15, DOWN, type_2)
+        Enemy(self, 15, 15, UP, type_3)
+        Enemy(self, 16, 4, DOWN, type_4)
+
 class Level5(GameScene):
     def __init__(self, game):
         super().__init__(game)
