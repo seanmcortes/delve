@@ -468,14 +468,14 @@ class Level6(GameScene):
 
 
 """
-Display Level 7: Blocks and enemies
+Display Level 8: Blocks and enemies
 - 
 """
-class Level7(GameScene):
+class Level8(GameScene):
     def __init__(self, game):
         super().__init__(game)
-        self.map = TiledMap(path.join(MAP_FOLDER, 'Level7.tmx'))
-        self.scene_number = self.game.get_scene_number(Level7)
+        self.map = TiledMap(path.join(MAP_FOLDER, 'Level8.tmx'))
+        self.scene_number = self.game.get_scene_number(Level8)
         self.draw_objects()
         self.spawn_enemies()
 
