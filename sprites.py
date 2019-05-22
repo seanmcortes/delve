@@ -205,6 +205,7 @@ class Block(GameObject):
         self.groups = scene.all_sprites, scene.blocks
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.image.fill(BLUE)
+        self.collidable = True
         self.interactable = True
         self.sliding = False
         self.orientation = None

@@ -48,11 +48,7 @@ class Game:
             function_index = sys.argv.index("-debug") + 1
             self.go_to(eval(sys.argv[function_index])(self))
         else:
-            #self.go_to(TutorialIce(self))
-            #self.go_to(TutorialEnemy(self))
-            #self.go_to(TutorialBlocks(self))
-            self.go_to(jasonlevel(self))
-            #self.go_to(MainMenuScene(self))
+            self.go_to(MainMenuScene(self))
 
     def go_to(self, scene):
         self.scene = scene
