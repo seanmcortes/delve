@@ -34,6 +34,7 @@ GRIDHEIGHT = HEIGHT / TILESIZE
 # object variables
 ENEMY_SPEED = 500 # delay in ms between enemy movement
 PLAYER_IDLE_DELAY = 200
+PLAYER_ATTACK_DELAY = 50
 KEY_IDLE_DELAY = 300
 HIT_DELAY = 60
 

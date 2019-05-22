@@ -1,7 +1,7 @@
 import os
 import pygame
 from settings import *
-from helper import Animate
+from helper import Animate, Animate_Attack
 from menu import GameOverScene
 
 
@@ -64,19 +64,28 @@ class Player(GameObject):
 
         # State
         self.sliding = False #tells if the player is sliding on the ice
+        self.attacking = False
 
         # Animation
         self.update_delay = PLAYER_IDLE_DELAY
+        self.update_attack_delay = PLAYER_ATTACK_DELAY
         self.last_update = pygame.time.get_ticks()
         self.walking_up = []
         self.walking_down = []
         self.walking_left = []
         self.walking_right = []
+        self.attacking_up = []
+        self.attacking_down = []
+        self.attacking_left = []
+        self.attacking_right = []
         self.animation_index = 0
+        self.animation_attack_index = 0
 
         # Sprite sheet definition
         sprite_sheet = SpriteSheet(PLAYER_SPRITE_SHEET)
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
+
+        # Add sprites to walking arrays
         for x in range(0, 97, 32):
             self.walking_right.append(sprite_sheet.get_image(x, 0, 32, 32))
         for x in range(0, 97, 32):
@@ -85,6 +94,16 @@ class Player(GameObject):
             self.walking_down.append(sprite_sheet.get_image(x, 64, 32, 32))
         for x in range(0, 97, 32):
             self.walking_up.append(sprite_sheet.get_image(x, 96, 32, 32))
+
+        # Add sprites to attacking arrays
+        for x in range(0, 97, 32):
+            self.attacking_right.append(sprite_sheet.get_image(x, 128, 32, 32))
+        for x in range(0, 97, 32):
+            self.attacking_left.append(sprite_sheet.get_image(x, 160, 32, 32))
+        for x in range(0, 97, 32):
+            self.attacking_down.append(sprite_sheet.get_image(x, 192, 32, 32))
+        for x in range(0, 97, 32):
+            self.attacking_up.append(sprite_sheet.get_image(x, 224, 32, 32))
 
     def move(self, dx=0, dy=0):
         if not self.collision_object(dx, dy):
@@ -130,6 +149,7 @@ class Player(GameObject):
 
     """
     def interact(self):
+        self.attacking = True
         for object in self.scene.all_sprites:
             if object.x == self.x + self.orientation[0] and \
                     object.y == self.y + self.orientation[1]:
@@ -137,20 +157,33 @@ class Player(GameObject):
                     if object.hit_detected is False: # check if enemy is not invulnerable
                         object.health -= 1
                         object.hit = True
+                        self.attacking = True
 
     def update(self):
         now = pygame.time.get_ticks()
 
-        if now - self.last_update >= self.update_delay:
-            self.last_update = now
-            if self.orientation == UP:
-                Animate(self, self.walking_up)
-            elif self.orientation == LEFT:
-                Animate(self, self.walking_left)
-            elif self.orientation == DOWN:
-                Animate(self, self.walking_down)
-            else:
-                Animate(self, self.walking_right)
+        if self.attacking:
+            if now - self.last_update >= self.update_attack_delay:
+                self.last_update = now
+                if self.orientation == UP:
+                    Animate_Attack(self, self.attacking_up)
+                elif self.orientation == LEFT:
+                    Animate_Attack(self, self.attacking_left)
+                elif self.orientation == DOWN:
+                    Animate_Attack(self, self.attacking_down)
+                else:
+                    Animate_Attack(self, self.attacking_right)
+        else:
+            if now - self.last_update >= self.update_delay:
+                self.last_update = now
+                if self.orientation == UP:
+                    Animate(self, self.walking_up)
+                elif self.orientation == LEFT:
+                    Animate(self, self.walking_left)
+                elif self.orientation == DOWN:
+                    Animate(self, self.walking_down)
+                else:
+                    Animate(self, self.walking_right)
 
 
 
