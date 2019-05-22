@@ -181,6 +181,7 @@ class GameScene(object):
                                         door.collidable = False
                                         door.unlocked = True
                                         door.openDoor()
+                                        self.inventory.item_list.pop()
                 elif self.player.y == door.y and (self.player.x == door.x + 1 or self.player.x == door.x - 1):
                             if len(self.inventory.item_list) > 0:
                                 if type(self.inventory.item_list[0]) == Key:
@@ -189,6 +190,7 @@ class GameScene(object):
                                         door.collidable = False
                                         door.unlocked = True
                                         door.openDoor()
+                                        self.inventory.item_list.pop()
                 if self.player.x == door.x and self.player.y == door.y:
                     if door.doorType == 'Exit':
                         self.game.select_scene(self.scene_number + 1)
@@ -377,7 +379,6 @@ class TutorialEnemy(GameScene):
         super().__init__(game)
         self.map = TiledMap(path.join(MAP_FOLDER, 'TutorialEnemy.tmx'))
         self.scene_number = self.game.get_scene_number(TutorialEnemy)
-        # self.tile_map = create_tiles("tutorialEnemyTile.map")
         self.draw_objects()
         self.spawn_enemies()
         self.instructions.add("Press the Spacebar while standing next to an enemy to attack it.", 100)
@@ -409,6 +410,19 @@ class TutorialIce(GameScene):
         self.instructions.add("You will slide until you collide with an object.", 140)
         self.instructions.add("Try to position the blocks to help you", 180)
         self.instructions.add("reach the key and unlock the door.", 220)
+
+
+"""
+Display Level 5
+- Level which teaches interaction between blocks, switches, and 
+    unlocking doors and the exit.
+"""
+class Level5(GameScene):
+    def __init__(self, game):
+        super().__init__(game)
+        self.map = TiledMap(path.join(MAP_FOLDER, 'Level5.tmx'))
+        self.scene_number = self.game.get_scene_number(Level5)
+        self.draw_objects()
 
 
 """
@@ -452,6 +466,31 @@ class Level6(GameScene):
         Enemy(self, 12, 13, DOWN, type_6)
         Enemy(self, 10, 9, DOWN, type_5)
 
+
+"""
+Display Level 7: Blocks and enemies
+- 
+"""
+class Level7(GameScene):
+    def __init__(self, game):
+        super().__init__(game)
+        self.map = TiledMap(path.join(MAP_FOLDER, 'Level7.tmx'))
+        self.scene_number = self.game.get_scene_number(Level7)
+        self.draw_objects()
+        self.spawn_enemies()
+
+    def spawn_enemies(self):
+        type_1 = [LEFT, LEFT,
+                  DOWN,
+                  LEFT, LEFT, LEFT, LEFT, LEFT]
+
+        type_2 = [LEFT, LEFT,
+                  UP,
+                  LEFT, LEFT, LEFT, LEFT, LEFT]
+
+        Enemy(self, 16, 8, DOWN, type_1)
+        Enemy(self, 16, 12, DOWN, type_2)
+
 """
 Display Level: More boxes
 - Complex level featuring only enemies.
@@ -484,13 +523,6 @@ class jasonlevel(GameScene):
         Enemy(self, 6, 15, DOWN, type_2)
         Enemy(self, 15, 15, UP, type_3)
         Enemy(self, 16, 4, DOWN, type_4)
-
-class Level5(GameScene):
-    def __init__(self, game):
-        super().__init__(game)
-        self.map = TiledMap(path.join(MAP_FOLDER, 'Level5.tmx'))
-        self.scene_number = self.game.get_scene_number(Level5)
-        self.draw_objects()
 
 """
 Unit test scene for blocks

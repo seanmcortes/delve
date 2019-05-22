@@ -18,6 +18,8 @@ class Inventory(GameObject):
         if len(self.item_list) > 0:
             if type(self.item_list[0]) == Key:
                 self.image = self.sprite_sheet.get_image(0, 32, 32, 32)
+        else:
+            self.image = self.sprite_sheet.get_image(0, 0, 32, 32)
 
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
