@@ -157,28 +157,28 @@ class GameScene(object):
                     self.player.interact()
             if len(self.switches) > 0:
                 for door in self.doors: #set all the doors to closed by default
-                    door.isOpen = False
-                    door.collidable = True
+                    #door.isOpen = False
+                    #door.collidable = True
                     door.closeDoor()
                 for door in self.doors:
                     for block in self.blocks:
                         for switch in self.switches:
                             if door.doorType == switch.switchType:
                                 if block.x == switch.x and block.y == switch.y:
-                                    door.isOpen = True
-                                    door.collidable = False
+                                    #door.isOpen = True
+                                    #door.collidable = False
                                     door.openDoor()
                                 elif switch.x == self.player.x and switch.y == self.player.y:
-                                    door.isOpen = True
-                                    door.collidable = False
+                                    #door.isOpen = True
+                                    #door.collidable = False
                                     door.openDoor()
             for door in self.doors:
                 if self.player.x == door.x and (self.player.y == door.y + 1 or self.player.y == door.y - 1):
                             if len(self.inventory.item_list) > 0:
                                 if type(self.inventory.item_list[0]) == Key:
                                     if door.doorType == 'Exit':
-                                        door.isOpen = True
-                                        door.collidable = False
+                                        #door.isOpen = True
+                                        #door.collidable = False
                                         door.unlocked = True
                                         door.openDoor()
                                         self.inventory.item_list.pop()
@@ -186,13 +186,17 @@ class GameScene(object):
                             if len(self.inventory.item_list) > 0:
                                 if type(self.inventory.item_list[0]) == Key:
                                     if door.doorType == 'Exit':
-                                        door.isOpen = True
-                                        door.collidable = False
+                                        #door.isOpen = True
+                                        #door.collidable = False
                                         door.unlocked = True
                                         door.openDoor()
                                         self.inventory.item_list.pop()
                 if self.player.x == door.x and self.player.y == door.y:
                     if door.doorType == 'Exit':
+                        self.update()
+                        self.render()
+                        pygame.display.flip()
+                        pygame.time.delay(500)
                         self.game.select_scene(self.scene_number + 1)
 
 
@@ -414,7 +418,7 @@ class TutorialIce(GameScene):
 
 """
 Display Level 5
-- Level which teaches interaction between blocks, switches, and 
+- Level which teaches interaction between blocks, switches, and
     unlocking doors and the exit.
 """
 class Level5(GameScene):
@@ -469,7 +473,7 @@ class Level6(GameScene):
 
 """
 Display Level 8: Blocks and enemies
-- 
+-
 """
 class Level8(GameScene):
     def __init__(self, game):

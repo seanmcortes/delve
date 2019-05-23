@@ -339,12 +339,14 @@ class Door(GameObject):
     def openDoor(self):
         if self.doorType != 'Entrance':
             self.isOpen = True
+            self.collidable = False
             self.image = self.sprite_sheet.get_image(64, 0, 32, 32)
 
     def closeDoor(self):
         if self.unlocked == False: #only unlocked doors can be closed
             if self.doorType != "Entrance":
                 self.isOpen = False
+                self.collidable = True
                 self.image = self.sprite_sheet.get_image(32, 0, 32, 32)
 
 
