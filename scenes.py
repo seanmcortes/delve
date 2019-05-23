@@ -54,6 +54,49 @@ class GameScene(object):
         self.draw_HUD(self.game.screen)
 
     def update(self):
+        if len(self.switches) > 0:
+            for door in self.doors: #set all the doors to closed by default
+                #door.isOpen = False
+                #door.collidable = True
+                door.closeDoor()
+            for door in self.doors:
+                for block in self.blocks:
+                    for switch in self.switches:
+                        if door.doorType == switch.switchType:
+                            if block.x == switch.x and block.y == switch.y:
+                                #door.isOpen = True
+                                #door.collidable = False
+                                door.openDoor()
+                            elif switch.x == self.player.x and switch.y == self.player.y:
+                                #door.isOpen = True
+                                #door.collidable = False
+                                door.openDoor()
+        for door in self.doors:
+            if self.player.x == door.x and (self.player.y == door.y + 1 or self.player.y == door.y - 1):
+                        if len(self.inventory.item_list) > 0:
+                            if type(self.inventory.item_list[0]) == Key:
+                                if door.doorType == 'Exit':
+                                    #door.isOpen = True
+                                    #door.collidable = False
+                                    door.unlocked = True
+                                    door.openDoor()
+                                    self.inventory.item_list.pop()
+            elif self.player.y == door.y and (self.player.x == door.x + 1 or self.player.x == door.x - 1):
+                        if len(self.inventory.item_list) > 0:
+                            if type(self.inventory.item_list[0]) == Key:
+                                if door.doorType == 'Exit':
+                                    #door.isOpen = True
+                                    #door.collidable = False
+                                    door.unlocked = True
+                                    door.openDoor()
+                                    self.inventory.item_list.pop()
+            if self.player.x == door.x and self.player.y == door.y:
+                if door.doorType == 'Exit':
+                    #self.update()
+                    self.render()
+                    pygame.display.flip()
+                    pygame.time.delay(500)
+                    self.game.select_scene(self.scene_number + 1)
         self.ice.update()
         self.walls.update()
         self.blocks.update() #update blocks before player so blocks sliding on the ice stop before the player
@@ -155,49 +198,7 @@ class GameScene(object):
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_SPACE:
                     self.player.interact()
-            if len(self.switches) > 0:
-                for door in self.doors: #set all the doors to closed by default
-                    #door.isOpen = False
-                    #door.collidable = True
-                    door.closeDoor()
-                for door in self.doors:
-                    for block in self.blocks:
-                        for switch in self.switches:
-                            if door.doorType == switch.switchType:
-                                if block.x == switch.x and block.y == switch.y:
-                                    #door.isOpen = True
-                                    #door.collidable = False
-                                    door.openDoor()
-                                elif switch.x == self.player.x and switch.y == self.player.y:
-                                    #door.isOpen = True
-                                    #door.collidable = False
-                                    door.openDoor()
-            for door in self.doors:
-                if self.player.x == door.x and (self.player.y == door.y + 1 or self.player.y == door.y - 1):
-                            if len(self.inventory.item_list) > 0:
-                                if type(self.inventory.item_list[0]) == Key:
-                                    if door.doorType == 'Exit':
-                                        #door.isOpen = True
-                                        #door.collidable = False
-                                        door.unlocked = True
-                                        door.openDoor()
-                                        self.inventory.item_list.pop()
-                elif self.player.y == door.y and (self.player.x == door.x + 1 or self.player.x == door.x - 1):
-                            if len(self.inventory.item_list) > 0:
-                                if type(self.inventory.item_list[0]) == Key:
-                                    if door.doorType == 'Exit':
-                                        #door.isOpen = True
-                                        #door.collidable = False
-                                        door.unlocked = True
-                                        door.openDoor()
-                                        self.inventory.item_list.pop()
-                if self.player.x == door.x and self.player.y == door.y:
-                    if door.doorType == 'Exit':
-                        self.update()
-                        self.render()
-                        pygame.display.flip()
-                        pygame.time.delay(500)
-                        self.game.select_scene(self.scene_number + 1)
+
 
 
     """
@@ -470,7 +471,12 @@ class Level6(GameScene):
         Enemy(self, 12, 13, DOWN, type_6)
         Enemy(self, 10, 9, DOWN, type_5)
 
-
+class Level7(GameScene):
+    def __init__(self, game):
+        super().__init__(game)
+        self.map = TiledMap(path.join(MAP_FOLDER, 'Level7.tmx'))
+        self.scene_number = self.game.get_scene_number(Level7)
+        self.draw_objects()
 """
 Display Level 8: Blocks and enemies
 -

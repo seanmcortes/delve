@@ -5,7 +5,7 @@ import pygame.freetype
 from settings import *
 from sprites import *
 from scenes import TutorialMovement, TutorialBlock, TutorialEnemy, TutorialIce, \
-    BlockUnitTest, Level5, Level6, Level8, jasonlevel
+    BlockUnitTest, Level5, Level6, Level7, Level8, jasonlevel
 from menu import *
 
 """
@@ -31,7 +31,7 @@ class Game:
                     6: Level6,
                     7: GameOverScene,
                     8: Level8,
-                    9: GameOverScene,
+                    9: Level7,
                     10: jasonlevel,
                     11: GameOverScene,
                     12: GameOverScene,
@@ -48,7 +48,8 @@ class Game:
             function_index = sys.argv.index("-debug") + 1
             self.go_to(eval(sys.argv[function_index])(self))
         else:
-            self.go_to(MainMenuScene(self))
+            self.go_to(Level7(self))
+            #self.go_to(MainMenuScene(self))
 
     def go_to(self, scene):
         self.scene = scene
