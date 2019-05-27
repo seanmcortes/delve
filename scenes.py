@@ -11,6 +11,8 @@ from menu import PauseScene
 from item import Key, Inventory
 #from main import select_scene
 
+#https://pythonprogramming.net/adding-sounds-music-pygame/
+#https://freesound.org/
 
 """
 Parent class for game scene.
@@ -66,6 +68,11 @@ class GameScene(object):
         self.hud.update()
 
     def handle_events(self, events):
+        attack_sound = pygame.mixer.Sound("attack.ogg")
+        hurt_sound = pygame.mixer.Sound("hurt_sound.wav")
+        #switch_sound = pygame.mixer.Sound("switch.wav")
+        gameover_sound = pygame.mixer.Sound("game_over.wav")
+        boxslide_sound = pygame.mixer.Sound("boxslide.wav")
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -90,6 +97,7 @@ class GameScene(object):
                                 for block in self.blocks:
                                     if block.x == self.player.x+0 and block.y == self.player.y-1:
                                         if block.move(dx=0, dy=-1):
+                                            pygame.mixer.Sound.play(boxslide_sound)
                                             block.orientation = self.player.orientation
                                             self.player.move(dx=0, dy=-1)
                                         else:
@@ -109,6 +117,7 @@ class GameScene(object):
                                 for block in self.blocks:
                                     if block.x == self.player.x+0 and block.y == self.player.y+1:
                                         if block.move(dx=0, dy=1):
+                                            pygame.mixer.Sound.play(boxslide_sound)
                                             block.orientation = self.player.orientation
                                             self.player.move(dx=0, dy=1)
                                         else:
@@ -128,6 +137,7 @@ class GameScene(object):
                                 for block in self.blocks:
                                     if block.x == self.player.x-1 and block.y == self.player.y+0:
                                         if block.move(dx=-1, dy=0):
+                                            pygame.mixer.Sound.play(boxslide_sound)
                                             block.orientation = self.player.orientation
                                             self.player.move(dx=-1, dy=0)
                                         else:
@@ -147,6 +157,7 @@ class GameScene(object):
                                 for block in self.blocks:
                                     if block.x == self.player.x+1 and block.y == self.player.y+0:
                                         if block.move(dx=1, dy=0):
+                                            pygame.mixer.Sound.play(boxslide_sound)
                                             block.orientation = self.player.orientation
                                             self.player.move(dx=1, dy=0)
                                         else:
@@ -154,6 +165,7 @@ class GameScene(object):
                                 self.player.orientation = RIGHT
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_SPACE:
+                    pygame.mixer.Sound.play(attack_sound)
                     self.player.interact()
             if len(self.switches) > 0:
                 for door in self.doors: #set all the doors to closed by default

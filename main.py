@@ -58,6 +58,8 @@ class Game:
         self.scene = scene
 
     def run(self):
+        pygame.mixer.music.load('music_loop.mp3')
+        pygame.mixer.music.play(-1)
         while self.playing:
             self.dt = self.clock.tick(FPS) / 1000
             self.scene.handle_events(pygame.event.get())
