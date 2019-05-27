@@ -96,9 +96,10 @@ class MainMenuScene():
 		#self.game_folder = path.dirname(__file__)
 		#self.image_folder = path.join(self.game_folder, "image")
 		self.text_logo = TextObject("DELVE", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 175, WHITE, WIDTH / 2, HEIGHT / 4)
-		self.textObjects = [self.text_logo]
+		logo_shadow = TextObject("DELVE", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 175, BLACK, WIDTH / 2+1, HEIGHT / 4+1)
+		self.textObjects = [logo_shadow, self.text_logo]
 		self.all_buttons = []
-		self.background = Background(path.join(IMAGE_FOLDER, 'menuback.jpg'), [0,0])
+		self.background = Background(path.join(IMAGE_FOLDER, 'menuback.png'), [0,0])
 		self.button1 = MenuButton(self.game, "Play", [140,400], self.playgame)
 		self.button2 = MenuButton(self.game, "Load", [270,400], self.loadgamescreen)
 		self.button3 = MenuButton(self.game, "Quit", [400,400], self.quitgame)
@@ -201,10 +202,11 @@ class GameOverScene(MainMenuScene):
 		#super().__init__(game)
 		current_scene = game.scene.scene_number
 		self.game = game
-		self.background = Background(path.join(IMAGE_FOLDER,'gameoverback.jpg'), [0,0])
+		self.background = Background(path.join(IMAGE_FOLDER,'gameoverback.png'), [0,0])
 		self.text_logo = TextObject("GAME OVER", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, WHITE, WIDTH / 2, HEIGHT / 4)
+		logo_shadow = TextObject("GAME OVER", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, BLACK, WIDTH / 2+1, HEIGHT / 4+1)
 		self.text_message = TextObject("Would you like to continue?", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 50, WHITE, WIDTH / 2, (HEIGHT / 3)+50)
-		self.textObjects = [self.text_logo, self.text_message]
+		self.textObjects = [logo_shadow, self.text_logo, self.text_message]
 		self.button1 = MenuButton(self.game, "Yes", [270,350], self.loadlevel, current_scene)
 		self.button2 = MenuButton(self.game, "No", [270,425], self.mainmenu)
 		self.all_buttons = [self.button1, self.button2]
@@ -213,9 +215,10 @@ class LoadGameScene(MainMenuScene):
 	def __init__(self, game):
 		#super().__init__(game)
 		self.game = game
-		self.background = Background(path.join(IMAGE_FOLDER, 'menuback.jpg'), [0,0])
+		self.background = Background(path.join(IMAGE_FOLDER, 'menuback.png'), [0,0])
 		self.text_logo = TextObject("Load Game", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, WHITE, WIDTH / 2, HEIGHT / 4)
-		self.textObjects = [self.text_logo]
+		logo_shadow = TextObject("Load Game", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, BLACK, WIDTH / 2+1, HEIGHT / 4+1)
+		self.textObjects = [logo_shadow, self.text_logo]
 		self.button1 = MenuButton(self.game, "Back", [270,450], self.mainmenu)
 		self.all_buttons = [self.button1]
 		#Source: https://stackoverflow.com/questions/3207219/how-do-i-list-all-files-of-a-directory
@@ -246,9 +249,10 @@ class SaveGameScene(MainMenuScene):
 	def __init__(self, game):
 		#super().__init__(game)
 		self.game = game
-		self.background = Background(path.join(IMAGE_FOLDER, 'menuback.jpg'), [0,0])
+		self.background = Background(path.join(IMAGE_FOLDER, 'menuback.png'), [0,0])
 		self.text_logo = TextObject("Pause Menu", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, WHITE, WIDTH / 2, HEIGHT / 4)
-		self.textObjects = [self.text_logo]
+		logo_shadow = TextObject("Pause Menu", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, BLACK, WIDTH / 2+1, HEIGHT / 4+1)
+		self.textObjects = [logo_shadow, self.text_logo]
 		self.button1 = MenuButton(self.game, "Back", [270,550], self.stopwaiting)
 		self.all_buttons = [self.button1]
 		self.WAITING = False #wait for the player to save or quit the save game screen
@@ -311,9 +315,10 @@ class PauseScene(MainMenuScene):
 	def __init__(self, game):
 		#super().__init__(game)
 		self.game = game
-		self.background = Background(path.join(IMAGE_FOLDER, 'menuback.jpg'), [0,0])
+		self.background = Background(path.join(IMAGE_FOLDER, 'menuback.png'), [0,0])
 		self.text_logo = TextObject("Pause Menu", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, WHITE, WIDTH / 2, HEIGHT / 4)
-		self.textObjects = [self.text_logo]
+		logo_shadow = TextObject("Pause Menu", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, BLACK, WIDTH / 2+1, HEIGHT / 4+1)
+		self.textObjects = [logo_shadow, self.text_logo]
 		self.button1 = MenuButton(self.game, "Save Game", [270,250], self.savegame)
 		self.button2 = MenuButton(self.game, "Main Menu", [270,325], self.mainmenu)
 		self.button3 = MenuButton(self.game, "Restart Level", [270,400], self.restartlevel)
@@ -345,7 +350,7 @@ class PauseScene(MainMenuScene):
 class CreditScene(MainMenuScene):
 	def __init__(self, game):
 		self.game = game
-		self.background = Background(path.join(IMAGE_FOLDER, 'menuback.jpg'), [0,0])
+		self.background = Background(path.join(IMAGE_FOLDER, 'menuback.png'), [0,0])
 		#self.textObjects = [TextObject("Credits", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 50, BLACK, WIDTH / 2 + 1, HEIGHT / 4 + 1),
 		#					TextObject("Credits", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 50, WHITE, WIDTH / 2, HEIGHT / 4)]
 		self.instructions = Instructions(30, WHITE)
