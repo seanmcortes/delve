@@ -117,10 +117,13 @@ class Player(GameObject):
         else:
             return False
 
-
+    #https://pythonprogramming.net/adding-sounds-music-pygame/
+    #https://freesound.org/
     def collision_enemy(self):
+        hurt_sound = pygame.mixer.Sound("hurt_sound.wav")
         for enemy in self.scene.enemies:
             if enemy.x == self.x and enemy.y == self.y:
+                pygame.mixer.Sound.play(hurt_sound)
                 self.enemy = enemy
                 return True
         return False
