@@ -36,7 +36,7 @@ ENEMY_SPEED = 500 # delay in ms between enemy movement
 PLAYER_IDLE_DELAY = 200
 PLAYER_ATTACK_DELAY = 50
 KEY_IDLE_DELAY = 300
-HIT_DELAY = 60
+HIT_DELAY = 500
 
 #file folders
 if getattr(sys, 'frozen', False):
@@ -51,7 +51,9 @@ IMAGE_FOLDER = path.join(GAME_FOLDER, "image")
 TILE_FOLDER = path.join(IMAGE_FOLDER, "tiles")
 PLAYER_SPRITE_SHEET = path.join(IMAGE_FOLDER, 'Player.png')
 BLOCK_SPRITE_SHEET = path.join(IMAGE_FOLDER, 'Block.png')
+PLACEHOLDER_SPRITE_SHEET = path.join(IMAGE_FOLDER, 'Placeholder.png')
 BAT_SPRITE_SHEET = path.join(IMAGE_FOLDER, 'Bat.png')
+GHOST_SPRITE_SHEET = path.join(IMAGE_FOLDER, 'Ghost.png')
 WALL_SPRITESHEET = path.join(IMAGE_FOLDER, 'Walls.png')
 KEY_SPRITESHEET = path.join(IMAGE_FOLDER, 'Key.png')
 LIFE_SPRITESHEET = path.join(IMAGE_FOLDER, 'Heart.png')

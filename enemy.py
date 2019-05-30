@@ -1,7 +1,8 @@
 import pygame
 from sprites import GameObject, SpriteSheet
 from settings import RED, GREEN, TILESIZE, ENEMY_SPEED, \
-    HIT_DELAY, UP, DOWN, LEFT, RIGHT, BAT_SPRITE_SHEET
+    HIT_DELAY, UP, DOWN, LEFT, RIGHT, BAT_SPRITE_SHEET, \
+    GHOST_SPRITE_SHEET
 from helper import Animate
 
 
@@ -41,12 +42,21 @@ class Enemy(GameObject):
 
         for x in range(0, 33, 32):
             self.walking_right.append(sprite_sheet.get_image(x, 0, 32, 32))
-        for x in range(0, 33, 32):
             self.walking_left.append(sprite_sheet.get_image(x, 32, 32, 32))
-        for x in range(0, 33, 32):
             self.walking_down.append(sprite_sheet.get_image(x, 64, 32, 32))
-        for x in range(0, 33, 32):
             self.walking_up.append(sprite_sheet.get_image(x, 96, 32, 32))
+
+        self.damage_up = []
+        self.damage_down = []
+        self.damage_left = []
+        self.damage_right = []
+
+        for x in range(64, 128, 32):
+            self.damage_right.append(sprite_sheet.get_image(x, 0, 32, 32))
+            self.damage_left.append(sprite_sheet.get_image(x, 32, 32, 32))
+            self.damage_down.append(sprite_sheet.get_image(x, 64, 32, 32))
+            self.damage_up.append(sprite_sheet.get_image(x, 96, 32, 32))
+
 
     """
     Move object a number of tiles
@@ -98,11 +108,29 @@ class Enemy(GameObject):
 
     """
     Check health, kill if 0
+
+    Returns:
+        True: object has health remaining
+        False: object has no health and is dead
     """
     def check_health(self):
         if self.health <= 0:
             self.kill()
+            return False
+        else:
+            return True
 
+    """
+    Modify object state after being attacked by player
+    """
+    def take_damage(self):
+        self.health -= 1
+        if self.check_health():
+            self.hit = True
+
+    """
+    Display image based on orientation
+    """
     def render_orientation(self):
         if self.orientation == UP:
             self.image = self.walking_up[0]
@@ -133,14 +161,19 @@ class Enemy(GameObject):
             else:
                 Animate(self, self.walking_right)
 
-        self.check_health()
-
         if self.hit and not self.hit_detected: # player first hits enemy, starts recovery timer for enemy
             self.last_update = now
             self.hit_detected = True
         elif self.hit and self.hit_detected:
             if now - self.last_update < self.hit_delay:
-                self.image = self.walking_left[0]
+                if self.orientation == UP:
+                    Animate(self, self.damage_up)
+                elif self.orientation == LEFT:
+                    Animate(self, self.damage_left)
+                elif self.orientation == DOWN:
+                    Animate(self, self.damage_down)
+                else:
+                    Animate(self, self.damage_right)
             else:
                 self.last_update = now
                 self.hit = False
@@ -153,6 +186,39 @@ class Enemy(GameObject):
                 if len(self.moves) > 0:
                     self.move_algorithm()
 
+
+class Ghost(Enemy):
+    def __init__(self, scene, x, y, orientation, moves):
+        super().__init__(scene, x, y, orientation, moves)
+        self.groups = scene.all_sprites, scene.enemies
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.health = 2
+
+        sprite_sheet = SpriteSheet(GHOST_SPRITE_SHEET)
+        self.image = sprite_sheet.get_image(0, 0, 32, 32)
+
+        self.walking_up = []
+        self.walking_down = []
+        self.walking_left = []
+        self.walking_right = []
+
+        for x in range(0, 33, 32):
+            self.walking_right.append(sprite_sheet.get_image(x, 0, 32, 32))
+            self.walking_left.append(sprite_sheet.get_image(x, 32, 32, 32))
+            self.walking_down.append(sprite_sheet.get_image(x, 64, 32, 32))
+            self.walking_up.append(sprite_sheet.get_image(x, 96, 32, 32))
+        
+        self.damage_up = []
+        self.damage_down = []
+        self.damage_left = []
+        self.damage_right = []
+
+        for x in range(64, 128, 32):
+            self.damage_right.append(sprite_sheet.get_image(x, 0, 32, 32))
+            self.damage_left.append(sprite_sheet.get_image(x, 32, 32, 32))
+            self.damage_down.append(sprite_sheet.get_image(x, 64, 32, 32))
+            self.damage_up.append(sprite_sheet.get_image(x, 96, 32, 32))
+            
 
 # Sources:
 # https://github.com/kidscancode/pygame_tutorials/blob/master/tilemap/part%2002/sprites.py

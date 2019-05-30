@@ -6,7 +6,7 @@ from settings import *
 from sprites import *
 from map import create_tiles
 from map import TiledMap
-from enemy import Enemy
+from enemy import Enemy, Ghost
 from menu import PauseScene
 from item import Key, Inventory
 #from main import select_scene
@@ -510,8 +510,8 @@ class Level8(GameScene):
                   UP,
                   LEFT, LEFT, LEFT, LEFT, LEFT]
 
-        Enemy(self, 16, 8, DOWN, type_1)
-        Enemy(self, 16, 12, DOWN, type_2)
+        Ghost(self, 16, 8, DOWN, type_1)
+        Ghost(self, 16, 12, DOWN, type_2)
 
 """
 Display Level: More boxes
@@ -545,6 +545,21 @@ class jasonlevel(GameScene):
         Enemy(self, 6, 15, DOWN, type_2)
         Enemy(self, 15, 15, UP, type_3)
         Enemy(self, 16, 4, DOWN, type_4)
+
+
+class DevRoom(GameScene):
+    def __init__(self, game):
+        super().__init__(game)
+        self.map = TiledMap(path.join(MAP_FOLDER, 'TutorialMovement.tmx'))
+        self.scene_number = self.game.get_scene_number(Level8)
+        self.draw_objects()
+        self.spawn_enemies()
+
+    def spawn_enemies(self):
+        type_1 = []
+
+        Ghost(self, 16, 8, DOWN, type_1)
+        Ghost(self, 16, 12, DOWN, type_1)
 
 """
 Unit test scene for blocks

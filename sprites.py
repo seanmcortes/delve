@@ -70,6 +70,8 @@ class Player(GameObject):
         self.update_delay = PLAYER_IDLE_DELAY
         self.update_attack_delay = PLAYER_ATTACK_DELAY
         self.last_update = pygame.time.get_ticks()
+        self.animation_index = 0
+        self.animation_attack_index = 0
         self.walking_up = []
         self.walking_down = []
         self.walking_left = []
@@ -78,9 +80,6 @@ class Player(GameObject):
         self.attacking_down = []
         self.attacking_left = []
         self.attacking_right = []
-        self.animation_index = 0
-        self.animation_attack_index = 0
-
         # Sprite sheet definition
         sprite_sheet = SpriteSheet(PLAYER_SPRITE_SHEET)
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
@@ -88,21 +87,15 @@ class Player(GameObject):
         # Add sprites to walking arrays
         for x in range(0, 97, 32):
             self.walking_right.append(sprite_sheet.get_image(x, 0, 32, 32))
-        for x in range(0, 97, 32):
             self.walking_left.append(sprite_sheet.get_image(x, 32, 32, 32))
-        for x in range(0, 97, 32):
             self.walking_down.append(sprite_sheet.get_image(x, 64, 32, 32))
-        for x in range(0, 97, 32):
             self.walking_up.append(sprite_sheet.get_image(x, 96, 32, 32))
 
         # Add sprites to attacking arrays
         for x in range(0, 97, 32):
             self.attacking_right.append(sprite_sheet.get_image(x, 128, 32, 32))
-        for x in range(0, 97, 32):
             self.attacking_left.append(sprite_sheet.get_image(x, 160, 32, 32))
-        for x in range(0, 97, 32):
             self.attacking_down.append(sprite_sheet.get_image(x, 192, 32, 32))
-        for x in range(0, 97, 32):
             self.attacking_up.append(sprite_sheet.get_image(x, 224, 32, 32))
 
     def move(self, dx=0, dy=0):
@@ -158,8 +151,10 @@ class Player(GameObject):
                     object.y == self.y + self.orientation[1]:
                 if object in self.scene.enemies: # check if object is an enemy
                     if object.hit_detected is False: # check if enemy is not invulnerable
-                        object.health -= 1
-                        object.hit = True
+                        # object.health -= 1
+                        # object.hit = True
+                        # self.attacking = True
+                        object.take_damage()
                         self.attacking = True
 
     def update(self):
