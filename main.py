@@ -29,10 +29,10 @@ class Game:
                     4: TutorialIce,
                     5: Level5,
                     6: Level6,
-                    7: GameOverScene,
+                    7: Level7,
                     8: Level8,
-                    9: Level7,
-                    10: jasonlevel,
+                    9: jasonlevel,
+                    10: GameOverScene,
                     11: GameOverScene,
                     12: GameOverScene,
                     13: GameOverScene,
@@ -48,7 +48,7 @@ class Game:
             function_index = sys.argv.index("-debug") + 1
             self.go_to(eval(sys.argv[function_index])(self))
         else:
-            self.go_to(Level7(self))
+            self.go_to(Level5(self))
             #self.go_to(MainMenuScene(self))
 
     def go_to(self, scene):

@@ -300,6 +300,7 @@ class Wall(GameObject):
         #self.image = sprite
         self.interactable = False
         self.collidable = True
+        self.checked = False #used to tell if the switch has been checked each updated
 
 class Switch(GameObject):
     def __init__(self, scene, x, y, type):
@@ -309,10 +310,15 @@ class Switch(GameObject):
         self.interactable = True
         self.collidable = False
         self.switchType = type
-
-
+        self.isSwitched = False
         sprite_sheet = SpriteSheet(SWITCH_SPRITESHEET)
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
+        self.switch_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"switch.wav"))
+    def switchOn(self):
+        self.isSwitched = True
+        pygame.mixer.Sound.play(self.switch_sound)
+    def switchOff(self):
+        self.isSwitched = False
 
 class Door(GameObject):
     def __init__(self, scene, x, y, doorType, imageType=None):
@@ -325,6 +331,7 @@ class Door(GameObject):
         self.collidable = True
         self.doorType = doorType
         self.unlocked = False
+        self.checked = False #used to tell if the door has been checked to see if it is open each updated
 
         if imageType == "Ice":
             self.sprite_sheet = SpriteSheet(ICEDOOR_SPRITESHEET)

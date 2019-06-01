@@ -58,28 +58,31 @@ class GameScene(object):
     def update(self):
         if len(self.switches) > 0:
             for door in self.doors: #set all the doors to closed by default
-                #door.isOpen = False
-                #door.collidable = True
-                door.closeDoor()
-            for door in self.doors:
+                door.checked = False
+            for switch in self.switches:
+                switch.checked = False
                 for block in self.blocks:
-                    for switch in self.switches:
+                    for door in self.doors:
                         if door.doorType == switch.switchType:
                             if block.x == switch.x and block.y == switch.y:
-                                #door.isOpen = True
-                                #door.collidable = False
-                                door.openDoor()
+                                door.checked = True
+                                switch.checked = True
+                                if door.isOpen == False:
+                                    door.openDoor()
+                                if switch.isSwitched == False:
+                                    switch.switchOn()
                             elif switch.x == self.player.x and switch.y == self.player.y:
-                                #door.isOpen = True
-                                #door.collidable = False
-                                door.openDoor()
+                                door.checked = True
+                                switch.checked = True
+                                if door.isOpen == False:
+                                    door.openDoor()
+                                if switch.isSwitched == False:
+                                    switch.switchOn()
         for door in self.doors:
             if self.player.x == door.x and (self.player.y == door.y + 1 or self.player.y == door.y - 1):
                         if len(self.inventory.item_list) > 0:
                             if type(self.inventory.item_list[0]) == Key:
                                 if door.doorType == 'Exit':
-                                    #door.isOpen = True
-                                    #door.collidable = False
                                     door.unlocked = True
                                     door.openDoor()
                                     self.inventory.item_list.pop()
@@ -87,8 +90,6 @@ class GameScene(object):
                         if len(self.inventory.item_list) > 0:
                             if type(self.inventory.item_list[0]) == Key:
                                 if door.doorType == 'Exit':
-                                    #door.isOpen = True
-                                    #door.collidable = False
                                     door.unlocked = True
                                     door.openDoor()
                                     self.inventory.item_list.pop()
@@ -99,6 +100,13 @@ class GameScene(object):
                     pygame.display.flip()
                     pygame.time.delay(500)
                     self.game.select_scene(self.scene_number + 1)
+            #unactivate all the switched that no long have objects on them
+            for switch in self.switches:
+                if switch.checked == False and switch.isSwitched ==True:
+                    switch.switchOff()
+            for door in self.doors:
+                if door.checked == False and door.isOpen == True and door.unlocked ==False:
+                    door.closeDoor()
         self.ice.update()
         self.walls.update()
         self.blocks.update() #update blocks before player so blocks sliding on the ice stop before the player
