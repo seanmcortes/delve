@@ -203,10 +203,19 @@ class GameOverScene(MainMenuScene):
 		current_scene = game.scene.scene_number
 		self.game = game
 		self.background = Background(path.join(IMAGE_FOLDER,'gameoverback.png'), [0,0])
-		self.text_logo = TextObject("GAME OVER", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, WHITE, WIDTH / 2, HEIGHT / 4)
+		self.text_logo1 = TextObject("GAME OVER", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, BLACK, WIDTH / 2-1, HEIGHT / 4-1)
+		self.text_logo2 = TextObject("GAME OVER", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, BLACK, WIDTH / 2+1, HEIGHT / 4+1)
+		self.text_logo3 = TextObject("GAME OVER", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, BLACK, WIDTH / 2+1, HEIGHT / 4-1)
+		self.text_logo4 = TextObject("GAME OVER", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, BLACK, WIDTH / 2-1, HEIGHT / 4+1)
+		self.text_logo5 = TextObject("GAME OVER", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, WHITE, WIDTH / 2, HEIGHT / 4)
 		logo_shadow = TextObject("GAME OVER", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, BLACK, WIDTH / 2+1, HEIGHT / 4+1)
-		self.text_message = TextObject("Would you like to continue?", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 50, WHITE, WIDTH / 2, (HEIGHT / 3)+50)
-		self.textObjects = [logo_shadow, self.text_logo, self.text_message]
+		self.text_message1 = TextObject("Would you like to continue?", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 50, BLACK, WIDTH / 2-1, (HEIGHT / 3)+50-1)
+		self.text_message2 = TextObject("Would you like to continue?", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 50, BLACK, WIDTH / 2+1, (HEIGHT / 3)+50+1)
+		self.text_message3 = TextObject("Would you like to continue?", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 50, BLACK, WIDTH / 2-1, (HEIGHT / 3)+50+1)
+		self.text_message4 = TextObject("Would you like to continue?", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 50, BLACK, WIDTH / 2+1, (HEIGHT / 3)+50-1)
+		self.text_message5 = TextObject("Would you like to continue?", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 50, WHITE, WIDTH / 2, (HEIGHT / 3)+50)
+		self.textObjects = [logo_shadow, self.text_logo1, self.text_logo2, self.text_logo3, self.text_logo4, self.text_logo5,
+							self.text_message1, self.text_message2, self.text_message3, self.text_message4, self.text_message5]
 		self.button1 = MenuButton(self.game, "Yes", [270,350], self.loadlevel, current_scene)
 		self.button2 = MenuButton(self.game, "No", [270,425], self.mainmenu)
 		self.all_buttons = [self.button1, self.button2]
