@@ -111,11 +111,11 @@ class GameScene(object):
         self.hud.update()
 
     def handle_events(self, events):
-        attack_sound = pygame.mixer.Sound("attack.ogg")
-        hurt_sound = pygame.mixer.Sound("hurt_sound.wav")
+        attack_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"attack.ogg"))
+        hurt_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"hurt_sound.wav"))
         #switch_sound = pygame.mixer.Sound("switch.wav")
-        gameover_sound = pygame.mixer.Sound("game_over.wav")
-        boxslide_sound = pygame.mixer.Sound("boxslide.wav")
+        gameover_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"game_over.wav"))
+        boxslide_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"boxslide.wav"))
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
