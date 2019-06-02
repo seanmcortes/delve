@@ -384,20 +384,23 @@ class CreditScene(MainMenuScene):
 		self.incrementvalue = 10
 		self.instructions.increment = self.incrementvalue
 		self.start_ticks = None
-		self.exit = False #used to record key presses to exit
+		self.exit = True #used to record key presses to exit
 
 	def render(self):
 		seconds = -1 #create the second variable
-		while self.instructions.opacity > 0 and self.background.opacity < 255:
+		while self.instructions.opacity > 0:
+			print(self.instructions.opacity)
 			self.dt = self.game.clock.tick(FPS) / 1000
 			self.handle_events(pygame.event.get())
 			self.instructions.update()
 			#keep the text at maximum opaqueness for longer
 			if self.instructions.opacity > 250:
 				if self.start_ticks == None:
+					if self.__class__.__name__ == "VictoryScene":
+						self.exit = False #force game to wait for keypress in handle events to exit
 					self.start_ticks=pygame.time.get_ticks() #starter tick
 				seconds=(pygame.time.get_ticks()-self.start_ticks)/1000 #calculate how many seconds
-				if seconds < 5:
+				if seconds < 5 or self.exit == False: #player will have to hit a key to set self.exit to true on VictoryScene
 					self.instructions.opacity = 255
 				else:
 					self.instructions.opacity = 250
@@ -407,50 +410,59 @@ class CreditScene(MainMenuScene):
 			elif self.instructions.increment < 0:
 				self.instructions.increment = -1* self.incrementvalue
 			#draw background and text to screen
-			print(self.background.opacity)
-			if seconds > 4:
+			if self.__class__.__name__ == "CreditScene":
+				self.game.screen.blit(self.background.image, (0,0))
+			elif seconds > 4:
 				self.background.blit_alpha(self.game.screen)
 				if self.background.opacity > 255:
 					self.background.opacity = 255
 				elif self.background.opacity < 255:
 					self.background.opacity += 1
 
-			#if self.background != None:
-			#	self.game.screen.blit(self.background.image, self.background.rect)
-			if self.instructions.opacity >= 0:
-				self.instructions.draw(self.game.screen)
+			self.instructions.draw(self.game.screen)
 			pygame.display.flip()
 
-		while self.exit == False:
-			event = pygame.event.wait()
-			if event.type == pygame.QUIT:
-				pygame.quit()
-				sys.exit()
+		#blit the background one more time to get rid of transparent text
+		self.dt = self.game.clock.tick(FPS) / 1000
+		self.game.screen.blit(self.background.image, (0,0))
+		pygame.display.flip()
+
+		#delay the game before going to next scene
+		seconds = 0
+		start_ticks=pygame.time.get_ticks() #starter tick
+		while seconds < 1:
+			self.handle_events(pygame.event.get())
+			seconds=(pygame.time.get_ticks()-start_ticks)/1000 #calculate how many seconds
+
+
+		''''#while self.exit == False:
+		event = pygame.event.wait()
+		if event.type == pygame.QUIT:
+			pygame.quit()
+			sys.exit()'''
+
 
 	def handle_events(self, events):
 		for event in events:
 			if event.type == pygame.QUIT:
 				pygame.quit()
 				sys.exit()
+			else:
+				self.exit = True
 
 
 	def update(self):
 		if self.instructions.opacity == 0:
 			self.game.go_to(MainMenuScene(self.game))
-		pass
 
 class VictoryScene(CreditScene):
 	def __init__(self, game):
 		super().__init__(game)
 		self.background.opacity = 10
-		#self.background = None
-		#self.game = game
 		self.instructions = Instructions(50, WHITE)
-		#self.instructions.rows.append(TextObject("CONGRATULATIONS", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, BLACK, WIDTH / 2-1, HEIGHT / 4-1))
 		self.instructions.rows.append(TextObject("Congratulations", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, BLACK, WIDTH / 2+1, HEIGHT / 2.5+1))
-		#self.instructions.rows.append(TextObject("CONGRATULATIONS", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, BLACK, WIDTH / 2+1, HEIGHT / 4-1))
-		#self.instructions.rows.append(TextObject("CONGRATULATIONS", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, BLACK, WIDTH / 2-1, HEIGHT / 4+1))
 		self.instructions.rows.append(TextObject("Congratulations", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, WHITE, WIDTH / 2, HEIGHT / 2.5))
 		self.instructions.add("You have found the treasure!", 350)
 		self.instructions.increment = 10
 		self.start_ticks = None
+		self.exit = False #used to record key presses to exit
