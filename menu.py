@@ -110,7 +110,7 @@ class MainMenuScene():
 		self.all_buttons.append(self.button4)
 
 	def render(self):
-		self.dt = self.game.clock.tick(FPS) / 1000
+		self.dt = self.game.clock.tick() / 1000
 		#self.game.screen.fill(BLACK)
 		self.game.screen.blit(self.background.image, self.background.rect)
 		for t in self.textObjects:
@@ -122,11 +122,11 @@ class MainMenuScene():
 		for p in self.all_buttons:
 			if p.CLICKED == True:
 				pygame.display.flip()
-				pygame.time.delay(250)
+				pygame.time.delay(100)
 				p.update()
 				p.draw()
 				pygame.display.flip()
-				pygame.time.delay(500)
+				pygame.time.delay(250)
 				if p.optional_argument == None:
 					p.action()
 				else: #this is used to load a level
