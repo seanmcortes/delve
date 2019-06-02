@@ -63,6 +63,7 @@ INVENTORY_SPRITESHEET = path.join(IMAGE_FOLDER, 'Inventory.png')
 DOOR_SPRITESHEET = path.join(IMAGE_FOLDER, 'Door.png')
 WALLDOOR_SPRITESHEET = path.join(IMAGE_FOLDER, 'WallDoor.png')
 ICEDOOR_SPRITESHEET = path.join(IMAGE_FOLDER, 'IceDoor.png')
+CHEST_SPRITESHEET = path.join(IMAGE_FOLDER, 'Chest.png')
 CUTEFONT = path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf')
 
 # Sources:

@@ -54,7 +54,7 @@ class TextObject():
     	 screen.blit(self.surface, self.rect)
 
     """
-    Draw transparent pbject to screen
+    Draw transparent object to screen
     """
     def blit_alpha(self, screen, opacity):
         x = self.rect.x
@@ -94,6 +94,8 @@ class Instructions():
             self.opacity += self.increment #increment the opacity
             if self.opacity > 250: #when the opacity has reached near maximum, start to decrement it
                 self.increment = -5
+
+
 
 
 '''

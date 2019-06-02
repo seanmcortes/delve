@@ -19,6 +19,17 @@ class Background(pygame.sprite.Sprite):
 		self.image = pygame.image.load(image_file)
 		self.rect = self.image.get_rect()
 		self.rect.left, self.rect.top = location
+		self.opacity = 255 #use with blit_alpha function to make image partially transparent
+		#allow the image to change transparency
+		#Source: https://nerdparadise.com/programming/pygameblitopacity
+	def blit_alpha(self, screen):
+		x = 0
+		y = 0
+		temp = pygame.Surface((self.image.get_width(), self.image.get_height())).convert()
+		temp.blit(screen, (-x, -y))
+		temp.blit(self.image, (0, 0))
+		temp.set_alpha(self.opacity)
+		screen.blit(temp, [x, y])
 
 class MenuButton():
 	def __init__(self, game, msg, location, action=None, optional_argument=None):
@@ -370,11 +381,14 @@ class CreditScene(MainMenuScene):
 		self.instructions.add("Jason Anderson, Esq.", 270)
 		self.instructions.add("Mr. Joshua Nutt", 310)
 		self.instructions.add("Ice tiles by Phyromatical: https://www.deviantart.com/phyromatical", 370)
-		self.instructions.increment = 10
+		self.incrementvalue = 10
+		self.instructions.increment = self.incrementvalue
 		self.start_ticks = None
+		self.exit = False #used to record key presses to exit
 
 	def render(self):
-		while self.instructions.opacity > 0:
+		seconds = -1 #create the second variable
+		while self.instructions.opacity > 0 and self.background.opacity < 255:
 			self.dt = self.game.clock.tick(FPS) / 1000
 			self.handle_events(pygame.event.get())
 			self.instructions.update()
@@ -391,19 +405,52 @@ class CreditScene(MainMenuScene):
 				self.instructions.increment = 0;
 			#speed up the fade away increment for the text
 			elif self.instructions.increment < 0:
-				self.instructions.increment = -10
+				self.instructions.increment = -1* self.incrementvalue
 			#draw background and text to screen
-			self.game.screen.blit(self.background.image, self.background.rect)
-			self.instructions.draw(self.game.screen)
+			print(self.background.opacity)
+			if seconds > 4:
+				self.background.blit_alpha(self.game.screen)
+				if self.background.opacity > 255:
+					self.background.opacity = 255
+				elif self.background.opacity < 255:
+					self.background.opacity += 1
+
+			#if self.background != None:
+			#	self.game.screen.blit(self.background.image, self.background.rect)
+			if self.instructions.opacity >= 0:
+				self.instructions.draw(self.game.screen)
 			pygame.display.flip()
 
+		while self.exit == False:
+			event = pygame.event.wait()
+			if event.type == pygame.QUIT:
+				pygame.quit()
+				sys.exit()
+
 	def handle_events(self, events):
-	    for event in events:
-	        if event.type == pygame.QUIT:
-	            pygame.quit()
-	            sys.exit()
+		for event in events:
+			if event.type == pygame.QUIT:
+				pygame.quit()
+				sys.exit()
+
 
 	def update(self):
 		if self.instructions.opacity == 0:
 			self.game.go_to(MainMenuScene(self.game))
 		pass
+
+class VictoryScene(CreditScene):
+	def __init__(self, game):
+		super().__init__(game)
+		self.background.opacity = 10
+		#self.background = None
+		#self.game = game
+		self.instructions = Instructions(50, WHITE)
+		#self.instructions.rows.append(TextObject("CONGRATULATIONS", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, BLACK, WIDTH / 2-1, HEIGHT / 4-1))
+		self.instructions.rows.append(TextObject("Congratulations", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, BLACK, WIDTH / 2+1, HEIGHT / 2.5+1))
+		#self.instructions.rows.append(TextObject("CONGRATULATIONS", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, BLACK, WIDTH / 2+1, HEIGHT / 4-1))
+		#self.instructions.rows.append(TextObject("CONGRATULATIONS", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, BLACK, WIDTH / 2-1, HEIGHT / 4+1))
+		self.instructions.rows.append(TextObject("Congratulations", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, WHITE, WIDTH / 2, HEIGHT / 2.5))
+		self.instructions.add("You have found the treasure!", 350)
+		self.instructions.increment = 10
+		self.start_ticks = None

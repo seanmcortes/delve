@@ -7,7 +7,7 @@ from sprites import *
 from map import create_tiles
 from map import TiledMap
 from enemy import Enemy, Ghost
-from menu import PauseScene
+from menu import PauseScene, CreditScene, VictoryScene
 from item import Key, Inventory
 #from main import select_scene
 
@@ -259,6 +259,8 @@ class GameScene(object):
                     door = Door(self,tile_object.x/32,tile_object.y/32, tile_object.name)
                 if door.doorType != 'Entrance':
                     door.closeDoor()
+            if tile_object.name == 'Chest':
+                Chest(self, tile_object.x/32,tile_object.y/32)
 
 
         LifeHUD(self, 3, 0)
@@ -338,18 +340,20 @@ class GameScene(object):
             if self.player.x == door.x and (self.player.y == door.y + 1 or self.player.y == door.y - 1):
                         if len(self.inventory.item_list) > 0:
                             if type(self.inventory.item_list[0]) == Key:
-                                if door.doorType == 'Exit':
+                                if door.doorType == 'Exit' or door.doorType == "Chest":
                                     door.unlocked = True
                                     door.openDoor()
                                     self.inventory.item_list.pop()
             elif self.player.y == door.y and (self.player.x == door.x + 1 or self.player.x == door.x - 1):
                         if len(self.inventory.item_list) > 0:
                             if type(self.inventory.item_list[0]) == Key:
-                                if door.doorType == 'Exit':
+                                if door.doorType == 'Exit' or door.doorType == "Chest":
                                     door.unlocked = True
                                     door.openDoor()
                                     self.inventory.item_list.pop()
             if self.player.x == door.x and self.player.y == door.y:
+                if door.doorType == 'Chest':
+                    self.game.go_to(VictoryScene(self.game))
                 if door.doorType == 'Exit':
                     #self.update()
                     self.players.update()
@@ -556,6 +560,26 @@ class jasonlevel(GameScene):
         Enemy(self, 6, 15, DOWN, type_2)
         Enemy(self, 15, 15, UP, type_3)
         Enemy(self, 16, 4, DOWN, type_4)
+
+class Level10(GameScene):
+    def __init__(self, game):
+        super().__init__(game)
+        self.map = TiledMap(path.join(MAP_FOLDER, 'Level10.tmx'))
+        self.scene_number = self.game.get_scene_number(Level10)
+        self.draw_objects()
+        self.spawn_enemies()
+
+    def spawn_enemies(self):
+        type_1 = [LEFT, LEFT,
+                  DOWN,
+                  LEFT, LEFT, LEFT, LEFT, LEFT]
+
+        type_2 = [LEFT, LEFT,
+                  UP,
+                  LEFT, LEFT, LEFT, LEFT, LEFT]
+
+        Ghost(self, 16, 8, DOWN, type_1)
+        Ghost(self, 16, 12, DOWN, type_2)
 
 
 class DevRoom(GameScene):

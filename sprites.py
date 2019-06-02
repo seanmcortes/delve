@@ -320,6 +320,7 @@ class Switch(GameObject):
     def switchOff(self):
         self.isSwitched = False
 
+#Door object.  ImageType filed is "Ice" if this is to be an ice door
 class Door(GameObject):
     def __init__(self, scene, x, y, doorType, imageType=None):
         super().__init__(scene, x, y)
@@ -331,7 +332,7 @@ class Door(GameObject):
         self.collidable = True
         self.doorType = doorType
         self.unlocked = False
-        self.checked = False #used to tell if the door has been checked to see if it is open each updated
+        self.checked = False #used to tell if the door has been checked to see if it is open each update
 
         if imageType == "Ice":
             self.sprite_sheet = SpriteSheet(ICEDOOR_SPRITESHEET)
@@ -353,6 +354,25 @@ class Door(GameObject):
                 self.isOpen = False
                 self.collidable = True
                 self.image = self.sprite_sheet.get_image(32, 0, 32, 32)
+
+class Chest(GameObject):
+    def __init__(self, scene, x, y):
+        super().__init__(scene, x, y)
+        self.groups = scene.all_sprites, scene.doors
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.isOpen = False
+        self.interactable = False
+        self.collidable = True
+        self.doorType = "Chest"
+        self.unlocked = False
+        self.checked = False #used to tell if the door has been checked to see if it is open each update
+        self.sprite_sheet = SpriteSheet(CHEST_SPRITESHEET)
+        self.image = self.sprite_sheet.get_image(32, 0, 32, 32)
+
+    def openDoor(self):
+        self.isOpen = True
+        self.collidable = False
+        self.image = self.sprite_sheet.get_image(64, 0, 32, 32)
 
 
 class Ice(GameObject):
