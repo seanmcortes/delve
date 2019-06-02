@@ -51,6 +51,8 @@ class MenuButton():
 		self.NORMAL = True
 		self.CLICKED = False
 		self.optional_argument = optional_argument
+		self.sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"button.wav"))
+		self.sound.set_volume(.05)
 
 	class img_holder():
 		def __init__(self):
@@ -67,6 +69,7 @@ class MenuButton():
 		    self.image = self.img.hover
 
 		    if click[0] == 1 and self.action != None:
+		        pygame.mixer.Sound.play(self.sound)
 		        self.image = self.img.click
 		        self.CLICKED = True
 		        self.NORMAL = False

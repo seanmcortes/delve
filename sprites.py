@@ -314,6 +314,7 @@ class Switch(GameObject):
         sprite_sheet = SpriteSheet(SWITCH_SPRITESHEET)
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
         self.switch_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"switch.wav"))
+        self.switch_sound.set_volume(.1)
     def switchOn(self):
         self.isSwitched = True
         pygame.mixer.Sound.play(self.switch_sound)
