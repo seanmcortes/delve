@@ -65,10 +65,13 @@ class Player(GameObject):
         # State
         self.sliding = False #tells if the player is sliding on the ice
         self.attacking = False
+        self.hit = False
+        self.hit_detected = False
 
         # Animation
         self.update_delay = PLAYER_IDLE_DELAY
         self.update_attack_delay = PLAYER_ATTACK_DELAY
+        self.hit_delay = HIT_DELAY
         self.last_update = pygame.time.get_ticks()
         self.animation_index = 0
         self.animation_attack_index = 0
@@ -80,6 +83,11 @@ class Player(GameObject):
         self.attacking_down = []
         self.attacking_left = []
         self.attacking_right = []
+        self.damage_up = []
+        self.damage_down = []
+        self.damage_left = []
+        self.damage_right = []
+
         # Sprite sheet definition
         sprite_sheet = SpriteSheet(PLAYER_SPRITE_SHEET)
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
@@ -97,6 +105,12 @@ class Player(GameObject):
             self.attacking_left.append(sprite_sheet.get_image(x, 160, 32, 32))
             self.attacking_down.append(sprite_sheet.get_image(x, 192, 32, 32))
             self.attacking_up.append(sprite_sheet.get_image(x, 224, 32, 32))
+
+        for x in range(128, 161, 32):
+            self.damage_right.append(sprite_sheet.get_image(x, 0, 32, 32))
+            self.damage_left.append(sprite_sheet.get_image(x, 32, 32, 32))
+            self.damage_down.append(sprite_sheet.get_image(x, 64, 32, 32))
+            self.damage_up.append(sprite_sheet.get_image(x, 96, 32, 32))
 
     def move(self, dx=0, dy=0):
         if not self.collision_object(dx, dy):
@@ -123,7 +137,6 @@ class Player(GameObject):
 
     def take_damage(self):
         self.health -= 1
-        print("You have taken damage. Current health: ", self.health) # place-holder
         if self.prev_location[0] + self.orientation[0] == self.x and\
                 self.prev_location[1] + self.orientation[1] == self.y:
             self.x, self.y = self.prev_location[0], self.prev_location[1]
@@ -160,7 +173,26 @@ class Player(GameObject):
     def update(self):
         now = pygame.time.get_ticks()
 
-        if self.attacking:
+        # Check and animate for damage
+        if self.hit and not self.hit_detected:
+            self.last_update = now
+            self.hit_detected = True
+        elif self.hit and self.hit_detected:
+            if now - self.last_update < self.hit_delay:
+                if self.orientation == UP:
+                    Animate(self, self.damage_up)
+                elif self.orientation == LEFT:
+                    Animate(self, self.damage_left)
+                elif self.orientation == DOWN:
+                    Animate(self, self.damage_down)
+                else:
+                    Animate(self, self.damage_right) 
+            else:
+                self.last_update = now
+                self.hit = False
+                self.hit_detected = False
+        # Animate player attack animation
+        elif self.attacking:
             if now - self.last_update >= self.update_attack_delay:
                 self.last_update = now
                 if self.orientation == UP:
@@ -171,6 +203,7 @@ class Player(GameObject):
                     Animate_Attack(self, self.attacking_down)
                 else:
                     Animate_Attack(self, self.attacking_right)
+        # Render idle animation
         else:
             if now - self.last_update >= self.update_delay:
                 self.last_update = now
@@ -224,8 +257,9 @@ class Player(GameObject):
         self.rect.y = self.y * TILESIZE
         """
 
-        if self.collision_enemy():
+        if self.collision_enemy() and not self.hit_detected:
             self.take_damage()
+            self.hit = True
 
         self.check_health()
 
