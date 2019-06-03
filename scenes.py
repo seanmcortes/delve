@@ -169,7 +169,7 @@ class GameScene(object):
                                             self.player.sliding = False
                                 self.player.orientation = RIGHT
             if event.type == pygame.KEYUP:
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_SPACE and not self.player.hit_detected: # attack only if player is in vulnerable state
                     pygame.mixer.Sound.play(attack_sound)
                     self.player.interact()
 
