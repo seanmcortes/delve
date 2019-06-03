@@ -69,6 +69,8 @@ class GameScene(object):
         self.instructions.update()
         self.hud.update()
 
+    #https://www.pygame.org/docs/ref/mixer.html
+    
     def handle_events(self, events):
         pygame.mixer.music.set_volume(self.volume_level)
         attack_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"attack.ogg"))
