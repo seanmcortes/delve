@@ -186,7 +186,7 @@ class Player(GameObject):
                 elif self.orientation == DOWN:
                     Animate(self, self.damage_down)
                 else:
-                    Animate(self, self.damage_right) 
+                    Animate(self, self.damage_right)
             else:
                 self.last_update = now
                 self.hit = False

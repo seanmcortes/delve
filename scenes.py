@@ -578,9 +578,17 @@ class Level10(GameScene):
                   UP,
                   LEFT, LEFT, LEFT, LEFT, LEFT]
 
-        Ghost(self, 16, 8, DOWN, type_1)
-        Ghost(self, 16, 12, DOWN, type_2)
+        type_3 = [RIGHT, RIGHT, RIGHT ,RIGHT,
+                    DOWN, LEFT, LEFT, LEFT]
+        type_4 = [RIGHT, RIGHT, RIGHT,
+                    DOWN, DOWN,
+                    LEFT, LEFT, LEFT]
 
+        Ghost(self, 6, 14, DOWN, type_2)
+        Enemy(self, 16, 8, DOWN, type_1)
+        Ghost(self, 12, 14, DOWN, type_3)
+        Enemy(self, 2, 17, DOWN, type_3)
+        Enemy(self, 2, 3, DOWN, type_4)
 
 class DevRoom(GameScene):
     def __init__(self, game):
