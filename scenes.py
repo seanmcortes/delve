@@ -70,14 +70,10 @@ class GameScene(object):
 
     def handle_events(self, events):
         attack_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"attack.ogg"))
-        attack_sound.set_volume(.05)
         hurt_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"hurt_sound.wav"))
-        hurt_sound.set_volume(.1)
         #switch_sound = pygame.mixer.Sound("switch.wav")
         gameover_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"game_over.wav"))
-        gameover_sound.set_volume(.1)
         boxslide_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"boxslide.wav"))
-        boxslide_sound.set_volume(.1)
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
