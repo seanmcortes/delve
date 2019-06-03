@@ -348,12 +348,14 @@ class Switch(GameObject):
         sprite_sheet = SpriteSheet(SWITCH_SPRITESHEET)
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
         self.switch_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"switch.wav"))
-        self.switch_sound.set_volume(.1)
+        self.switch_sound.set_volume(.5)
     def switchOn(self):
         self.isSwitched = True
         pygame.mixer.Sound.play(self.switch_sound)
     def switchOff(self):
         self.isSwitched = False
+    def adjustVolume(self,volume):
+        self.switch_sound.set_volume(volume)
 
 #Door object.  ImageType filed is "Ice" if this is to be an ice door
 class Door(GameObject):

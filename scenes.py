@@ -37,6 +37,7 @@ class GameScene(object):
         self.game = game
         #self.tile_map = create_tiles("defaultTile.map")
         self.scene_number = 0
+        self.volume_level = 0.5
 
     def render(self):
         self.game.screen.fill(BGCOLOR)
@@ -69,17 +70,27 @@ class GameScene(object):
         self.hud.update()
 
     def handle_events(self, events):
+        pygame.mixer.music.set_volume(self.volume_level)
         attack_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"attack.ogg"))
+        attack_sound.set_volume(self.volume_level)
         hurt_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"hurt_sound.wav"))
-        #switch_sound = pygame.mixer.Sound("switch.wav")
+        hurt_sound.set_volume(self.volume_level)
         gameover_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"game_over.wav"))
+        gameover_sound.set_volume(self.volume_level)
         boxslide_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"boxslide.wav"))
+        boxslide_sound.set_volume(self.volume_level)
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
 
             keyState = pygame.key.get_pressed()
+            if keyState[pygame.K_EQUALS]:
+                if (attack_sound.get_volume() < 1.0):
+                    self.volume_level += .1
+            if keyState[pygame.K_MINUS]:
+                if (attack_sound.get_volume() > 0.0):
+                    self.volume_level -= .1
             if keyState[pygame.K_p]: #Pause the game
                 pauseScene = PauseScene(self.game) #create a pause scene
                 pauseScene.paused() #loop until the player exits the pause screen
@@ -317,6 +328,7 @@ class GameScene(object):
             for door in self.doors: #set all the doors to closed by default
                 door.checked = False
             for switch in self.switches:
+                switch.adjustVolume(self.volume_level)
                 switch.checked = False
                 for block in self.blocks:
                     for door in self.doors:
