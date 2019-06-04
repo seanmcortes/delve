@@ -91,7 +91,7 @@ class Player(GameObject):
         #audio
         self.hurt_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"hurt_sound.wav"))
         self.gameover_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"game_over.wav"))
-        self.attack_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"attack.ogg"))
+        self.attack_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"attack.wav"))
 
         # Sprite sheet definition
         sprite_sheet = SpriteSheet(PLAYER_SPRITE_SHEET)

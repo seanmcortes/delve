@@ -50,7 +50,7 @@ class Game:
         self.scene = scene
 
     def run(self):
-        pygame.mixer.music.load(path.join(MUSIC_FOLDER,'music_loop.mp3'))
+        pygame.mixer.music.load(path.join(MUSIC_FOLDER,'music_loop.wav'))
         pygame.mixer.music.play(-1)
         while self.playing:
             self.dt = self.clock.tick(FPS) / 1000
