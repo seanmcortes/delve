@@ -502,11 +502,11 @@ class Level8(GameScene):
 Display Level: More boxes
 - Complex level featuring only enemies.
 """
-class jasonlevel(GameScene):
+class Level9(GameScene):
     def __init__(self, game):
         super().__init__(game)
-        self.map = TiledMap(path.join(MAP_FOLDER, 'jasonlevel.tmx'))
-        self.scene_number = self.game.get_scene_number(jasonlevel)
+        self.map = TiledMap(path.join(MAP_FOLDER, 'Level9.tmx'))
+        self.scene_number = self.game.get_scene_number(Level9)
         self.draw_objects()
         self.spawn_enemies()
 

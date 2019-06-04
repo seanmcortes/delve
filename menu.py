@@ -448,7 +448,7 @@ class CreditScene(MainMenuScene):
 		self.instructions.rows.append(TextObject("Credits", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 60, WHITE, WIDTH / 2, HEIGHT / 4 - 40))
 		self.instructions.add("Developers:", 190)
 		self.instructions.add("Sir Sean Cortes", 230)
-		self.instructions.add("Jason Anderson, Esq.", 270)
+		self.instructions.add("Jason Anderson", 270)
 		self.instructions.add("Mr. Joshua Nutt", 310)
 		self.instructions.add("Ice tiles by Phyromatical: https://www.deviantart.com/phyromatical", 370)
 		self.incrementvalue = 10
