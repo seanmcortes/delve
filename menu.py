@@ -194,13 +194,21 @@ class MainMenuScene():
 
 	def savelevel(self, file_name):
 		f = open(path.join(SAVE_FOLDER, file_name),"w+")
-		f.write(str(self.game.scene.scene_number) + "\n")
+		scene_list = list(str(self.game.scene.scene_number) + "\n")
+		scene_str = ""
+		for letter in scene_list:
+			scene_str = scene_str + chr(ord(letter) + 1)
+		print(scene_str)
+		f.write(scene_str)
 		#get current Time
 		#source: https://stackoverflow.com/questions/415511/how-to-get-the-current-time-in-python
 		current_time = datetime.datetime.now()
 		#convert time to a string
 		#Source: https://stackoverflow.com/questions/311627/how-to-print-a-date-in-a-regular-format
-		time_str = current_time.strftime('%m/%d/%Y, %H:%M:%S')
+		time_list = list(current_time.strftime('%m/%d/%Y, %H:%M:%S'))
+		time_str = ""
+		for letter in time_list:
+			time_str = time_str + chr(ord(letter) + 1)
 		f.write(time_str)
 		f.close()
 		self.WAITING = False #exit the save screen
@@ -278,23 +286,34 @@ class LoadGameScene(MainMenuScene):
 		y = 250
 		count = 0
 		files = [f for f in listdir(SAVE_FOLDER) if isfile(join(SAVE_FOLDER, f))]
-		for o in files:
-				f = open(join(SAVE_FOLDER, o), "r")
+		for file_name in files:
+				f = open(join(SAVE_FOLDER, file_name), "r")
 				if f.mode == 'r' and count < 5:
-					try:
-						number = int(f.readline().strip())
-					except:
-						number = "Not an integer"
-					if isinstance(number, int) and count < 3: #to do: make sure number is an actual level
-						date = f.readline().strip()
-						if (number < 10):
-							save_text = "Level:   " + str(number) + " Time: " + date
-						else:
-							save_text = "Level: " + str(number) + " Time: " + date
-						self.textObjects.append(TextObject(save_text, path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 30, WHITE, 210, y+14, "left"))
-						self.all_buttons.append(MenuButton(self.game, "Load", [100, y], self.loadlevel, number))
-						y += 60
-						count += 1
+					file_list = list(f.read())
+					file_str = ""
+					for letter in file_list:
+						file_str = file_str + chr(ord(letter) - 1)
+					if count < 3:
+						number, date = file_str.split('\n')
+						number = int(number)
+						"""for o in files:
+								f = open(join(SAVE_FOLDER, o), "r")
+								if f.mode == 'r' and count < 5:
+									try:
+										number = int(f.readline().strip())
+									except:
+										number = "Not an integer"
+									if isinstance(number, int) and count < 3: #to do: make sure number is an actual level
+										date = f.readline().strip()"""
+						if isinstance(number, int): #to do: make sure number is an actual level
+							if (number < 10):
+								save_text = "Level:   " + str(number) + " Time: " + date
+							else:
+								save_text = "Level: " + str(number) + " Time: " + date
+							self.textObjects.append(TextObject(save_text, path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 30, WHITE, 210, y+14, "left"))
+							self.all_buttons.append(MenuButton(self.game, "Load", [100, y], self.loadlevel, number))
+							y += 60
+							count += 1
 					f.close()
 #####################################################################################################
 # Display the Save Game screen
@@ -321,25 +340,23 @@ class SaveGameScene(MainMenuScene):
 		for file_name in files:
 				f = open(join(SAVE_FOLDER, file_name), "r")
 				if f.mode == 'r' and count < 5:
-					try:
-						number = int(f.readline().strip())
-					except:
-						number = "Not an integer"
-					if isinstance(number, int) and count < 3: #to do: make sure number is an actual level
-						date = f.readline().strip()
-						if (number < 10):
-							save_text = "Level:   " + str(number) + " Time: " + date
-						else:
-							save_text = "Level: " + str(number) + " Time: " + date
-						self.textObjects.append(TextObject(save_text, path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 30, WHITE, 210, y+14, "left"))
-						self.all_buttons.append(MenuButton(self.game, "Save", [100, y], self.savelevel, file_name))
-						y += 60
-						count += 1
-						f.close()
-					#delete corrupted files
-					elif not isinstance(number, int):
-						f.close()
-						remove(join(SAVE_FOLDER, file_name))
+					file_list = list(f.read())
+					file_str = ""
+					for letter in file_list:
+						file_str = file_str + chr(ord(letter) - 1)
+					if count < 3:
+						number, date = file_str.split('\n')
+						number = int(number)
+						if isinstance(number, int): #to do: make sure number is an actual level
+							if (number < 10):
+								save_text = "Level:   " + str(number) + " Time: " + date
+							else:
+								save_text = "Level: " + str(number) + " Time: " + date
+							self.textObjects.append(TextObject(save_text, path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 30, WHITE, 210, y+14, "left"))
+							self.all_buttons.append(MenuButton(self.game, "Save", [100, y], self.savelevel, file_name))
+							y += 60
+							count += 1
+				f.close()
 		while count < 3: #create more save files if there are some that do no exist
 			file_num = 1
 			temp_name = str(file_num) + ".sav"
@@ -349,7 +366,6 @@ class SaveGameScene(MainMenuScene):
 			self.all_buttons.append(MenuButton(self.game, "Save", [100, y], self.savelevel, temp_name))
 			y += 60
 			count += 1
-
 
 	#####################################################################################################
 	# This causes the gameplay to pause and loops the Save Game screen while waiting for player input
