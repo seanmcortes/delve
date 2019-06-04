@@ -2,14 +2,6 @@ import pygame
 import pytmx
 from settings import *
 
-tile_dict =	{
-  # ".": "pebble_brown0.png",
-    ".": "dirt0.png",
-  "t": "tomb0.png"
-}
-#map_folder = "maps"
-#tile_folder = "image/tiles"
-
 """
     This function generates the background tiles. It does this by reading
     in characters from a .map file.  Each character is mapped to a tile image
@@ -38,23 +30,9 @@ def create_tiles(map_file):
                 surface.blit(tile, (map_x*32, map_y*32)) #draw the tile to the surface
     f.close()
     return surface
-""" Code for debugging
-        window = (WIDTH, HEIGHT)
-        screen = pygame.display.set_mode(window)
-        clock = pygame.time.Clock()
-
-        while True:
-            dt = clock.tick(FPS) / 1000
-
-            for event in pygame.event.get():
-    	        if event.type == pygame.QUIT:
-    	            pygame.quit()
-    	            sys.exit()
-
-            screen.blit(surface, [0,0])
-            pygame.display.flip()
-
-newMap = Map("level1.map")
+"""
+This class creates the Tiled maps.  It is used with the .tmx files created in the
+third-party Tiled program
 """
 class TiledMap:
     def __init__(self, filename):

@@ -239,23 +239,6 @@ class Player(GameObject):
         else:
             self.rect.x = self.x * TILESIZE
             self.rect.y = self.y * TILESIZE
-        """version without sliding animations
-        if self.sliding == True: #if the player is sliding on the Ice
-            #stop sliding if they collide into a collidable object
-            if self.collision_object(self.orientation[0], self.orientation[1]):
-                self.sliding = False
-            #stop sliding if they collide with a block
-            if self.collision_block(self.orientation[0], self.orientation[1]):
-                self.sliding = False
-            #stop sliding if they are not on an ice tile
-            elif not self.collision_ice():
-                self.sliding = False
-            else: #else, move them to the next tile
-                self.move(self.orientation[0], self.orientation[1])
-
-        self.rect.x = self.x * TILESIZE
-        self.rect.y = self.y * TILESIZE
-        """
 
         if self.collision_enemy() and not self.hit_detected:
             self.take_damage()
@@ -290,6 +273,7 @@ class Block(GameObject):
         return False
 
   def update(self):
+    #test if the block is sliding on the ice
     if self.sliding == True: #if the block is sliding on the Ice
         self.rect.x += (self.orientation[0] * 32)
         self.rect.y += (self.orientation[1] * 32)
@@ -307,24 +291,6 @@ class Block(GameObject):
     else:
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
-    """ Version without sliding animations
-    if self.sliding == True: #if the player is sliding on the Ice
-        #stop sliding if they collide into a collidable object
-        if self.collision_object(self.scene.player.orientation[0], self.scene.player.orientation[1]):
-            self.sliding = False
-        #stop sliding if they collide with a block
-        if self.collision_block(self.scene.player.orientation[0], self.scene.player.orientation[1]):
-            self.sliding = False
-        #stop sliding if they are not on an ice tile
-        elif not self.collision_ice():
-            self.sliding = False
-        else: #else, move them to the next tile
-            self.move(self.scene.player.orientation[0], self.scene.player.orientation[1])
-
-    self.rect.x = self.x * TILESIZE
-    self.rect.y = self.y * TILESIZE
-    """
-
 
 class Wall(GameObject):
     def __init__(self, scene, x, y):
@@ -391,7 +357,11 @@ class Door(GameObject):
                 self.isOpen = False
                 self.collidable = True
                 self.image = self.sprite_sheet.get_image(32, 0, 32, 32)
-
+"""
+This is the Treasure Chest the player opens to win the game
+It is stored in the doors container since it functions similar
+to an exit door
+"""
 class Chest(GameObject):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
@@ -406,12 +376,16 @@ class Chest(GameObject):
         self.sprite_sheet = SpriteSheet(CHEST_SPRITESHEET)
         self.image = self.sprite_sheet.get_image(32, 0, 32, 32)
 
+    # Opens the treasure chest
     def openDoor(self):
         self.isOpen = True
         self.collidable = False
         self.image = self.sprite_sheet.get_image(64, 0, 32, 32)
 
-
+"""
+This is the ice tiles.  The player will slide on an ice tile
+until colliding with another object
+"""
 class Ice(GameObject):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)

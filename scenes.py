@@ -70,7 +70,7 @@ class GameScene(object):
         self.hud.update()
 
     #https://www.pygame.org/docs/ref/mixer.html
-    
+
     def handle_events(self, events):
         pygame.mixer.music.set_volume(self.volume_level)
         attack_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"attack.ogg"))
@@ -278,46 +278,6 @@ class GameScene(object):
 
         LifeHUD(self, 3, 0)
         self.inventory = Inventory(self, 17, 0)
-        """
-        if f.mode == 'r':
-            map = f.readlines()
-            map = [item.strip() for item in map]
-            for row, tiles in enumerate(map):
-                for col, tile in enumerate(tiles):
-                    if tile == 'Q':
-                        Wall(self, col, row, sprite_sheet.get_image(0, 0, 32, 32))
-                    if tile == 'W':
-                        Wall(self, col, row, sprite_sheet.get_image(32, 0, 32, 32))
-                    if tile == 'E':
-                        Wall(self, col, row, sprite_sheet.get_image(64, 0, 32, 32))
-                    if tile == 'A':
-                        Wall(self, col, row, sprite_sheet.get_image(0, 32, 32, 32))
-                    if tile == 'X':
-                        Wall(self, col, row, sprite_sheet.get_image(32, 32, 32, 32))
-                    if tile == 'D':
-                        Wall(self, col, row, sprite_sheet.get_image(64, 32, 32, 32))
-                    if tile == 'Z':
-                        Wall(self, col, row, sprite_sheet.get_image(0, 64, 32, 32))
-                    if tile == 'S':
-                        Wall(self, col, row, sprite_sheet.get_image(32, 64, 32, 32))
-                    if tile == 'C':
-                        Wall(self, col, row, sprite_sheet.get_image(64, 64, 32, 32))
-                    if tile == 'P':
-                        self.player = Player(self, col, row)
-                    if tile == 'B':
-                        Block(self, col, row)
-                    if tile == 'i':
-                        Ice(self, col, row)
-                    if tile == 'K':
-                        Key(self, col, row)
-                    if tile == 'F':
-                        Switch(self,col,row)
-                    if tile == 'G':
-                        Door(self,col,row, "entrance")
-                    if tile == 'H':
-                        exit = Door(self,col,row, "exit")
-                        exit.closeDoor()
-            """
 
     def draw_HUD(self, screen):
 
@@ -325,6 +285,10 @@ class GameScene(object):
                                         HEIGHT/32)
         life_text.render(screen)
 
+    """
+    This checks the switches to to see if the player or a block has activated the switch
+    and checks the exits and treasure chest to see if the player interacted with them
+    """
     def checkSwitches(self):
         if len(self.switches) > 0:
             for door in self.doors: #set all the doors to closed by default
@@ -574,7 +538,10 @@ class jasonlevel(GameScene):
         Enemy(self, 6, 15, DOWN, type_2)
         Enemy(self, 15, 15, UP, type_3)
         Enemy(self, 16, 4, DOWN, type_4)
-
+"""
+Display Level 10: Final level with Treasure Chest
+-
+"""
 class Level10(GameScene):
     def __init__(self, game):
         super().__init__(game)
