@@ -34,12 +34,7 @@ class Game:
                     8: Level8,
                     9: jasonlevel,
                     10: Level10,
-                    11: GameOverScene,
-                    12: GameOverScene,
-                    13: GameOverScene,
-                    14: GameOverScene
                 }
-        # self.load_data()
 
         if "-debug" in sys.argv:
             self.debug = True
@@ -49,8 +44,7 @@ class Game:
             function_index = sys.argv.index("-debug") + 1
             self.go_to(eval(sys.argv[function_index])(self))
         else:
-            self.go_to(Level10(self))
-            #self.go_to(MainMenuScene(self))
+            self.go_to(MainMenuScene(self))
 
     def go_to(self, scene):
         self.scene = scene
