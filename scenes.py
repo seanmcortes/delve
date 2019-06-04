@@ -57,6 +57,7 @@ class GameScene(object):
         self.draw_HUD(self.game.screen)
 
     def update(self):
+        self.adjust_music_volume()
         self.checkSwitches()
         self.ice.update()
         self.walls.update()
@@ -72,26 +73,16 @@ class GameScene(object):
     #https://www.pygame.org/docs/ref/mixer.html
 
     def handle_events(self, events):
-        pygame.mixer.music.set_volume(self.volume_level)
-        attack_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"attack.ogg"))
-        attack_sound.set_volume(self.volume_level)
-        hurt_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"hurt_sound.wav"))
-        hurt_sound.set_volume(self.volume_level)
-        gameover_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"game_over.wav"))
-        gameover_sound.set_volume(self.volume_level)
-        boxslide_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"boxslide.wav"))
-        boxslide_sound.set_volume(self.volume_level)
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-
             keyState = pygame.key.get_pressed()
             if keyState[pygame.K_EQUALS]:
-                if (attack_sound.get_volume() < 1.0):
+                if (self.volume_level < 1.0):
                     self.volume_level += .1
             if keyState[pygame.K_MINUS]:
-                if (attack_sound.get_volume() > 0.0):
+                if self.volume_level > 0.1:
                     self.volume_level -= .1
             if keyState[pygame.K_p]: #Pause the game
                 pauseScene = PauseScene(self.game) #create a pause scene
@@ -111,7 +102,6 @@ class GameScene(object):
                                 for block in self.blocks:
                                     if block.x == self.player.x+0 and block.y == self.player.y-1:
                                         if block.move(dx=0, dy=-1):
-                                            pygame.mixer.Sound.play(boxslide_sound)
                                             block.orientation = self.player.orientation
                                             self.player.move(dx=0, dy=-1)
                                         else:
@@ -131,7 +121,6 @@ class GameScene(object):
                                 for block in self.blocks:
                                     if block.x == self.player.x+0 and block.y == self.player.y+1:
                                         if block.move(dx=0, dy=1):
-                                            pygame.mixer.Sound.play(boxslide_sound)
                                             block.orientation = self.player.orientation
                                             self.player.move(dx=0, dy=1)
                                         else:
@@ -151,7 +140,6 @@ class GameScene(object):
                                 for block in self.blocks:
                                     if block.x == self.player.x-1 and block.y == self.player.y+0:
                                         if block.move(dx=-1, dy=0):
-                                            pygame.mixer.Sound.play(boxslide_sound)
                                             block.orientation = self.player.orientation
                                             self.player.move(dx=-1, dy=0)
                                         else:
@@ -171,7 +159,6 @@ class GameScene(object):
                                 for block in self.blocks:
                                     if block.x == self.player.x+1 and block.y == self.player.y+0:
                                         if block.move(dx=1, dy=0):
-                                            pygame.mixer.Sound.play(boxslide_sound)
                                             block.orientation = self.player.orientation
                                             self.player.move(dx=1, dy=0)
                                         else:
@@ -179,9 +166,14 @@ class GameScene(object):
                                 self.player.orientation = RIGHT
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_SPACE and not self.player.hit_detected: # attack only if player is in vulnerable state
-                    pygame.mixer.Sound.play(attack_sound)
                     self.player.interact()
 
+
+    """
+    Adjust volume levels for sounds
+    """
+    def adjust_music_volume(self):
+        pygame.mixer.music.set_volume(self.volume_level)
 
 
     """

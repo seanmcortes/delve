@@ -88,6 +88,11 @@ class Player(GameObject):
         self.damage_left = []
         self.damage_right = []
 
+        #audio
+        self.hurt_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"hurt_sound.wav"))
+        self.gameover_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"game_over.wav"))
+        self.attack_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"attack.ogg"))
+
         # Sprite sheet definition
         sprite_sheet = SpriteSheet(PLAYER_SPRITE_SHEET)
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
@@ -127,10 +132,10 @@ class Player(GameObject):
     #https://pythonprogramming.net/adding-sounds-music-pygame/
     #https://freesound.org/
     def collision_enemy(self):
-        hurt_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"hurt_sound.wav"))
+        self.hurt_sound.set_volume(self.scene.volume_level)
         for enemy in self.scene.enemies:
             if enemy.x == self.x and enemy.y == self.y:
-                pygame.mixer.Sound.play(hurt_sound)
+                pygame.mixer.Sound.play(self.hurt_sound)
                 self.enemy = enemy
                 return True
         return False
@@ -149,6 +154,8 @@ class Player(GameObject):
     def check_health(self):
         if self.health <= 0:
             self.kill()
+            self.gameover_sound.set_volume(self.scene.volume_level)
+            pygame.mixer.Sound.play(self.gameover_sound)
             self.scene.game.go_to(GameOverScene(self.scene.game))
 
     """
@@ -159,6 +166,8 @@ class Player(GameObject):
     """
     def interact(self):
         self.attacking = True
+        self.attack_sound.set_volume(self.scene.volume_level)
+        pygame.mixer.Sound.play(self.attack_sound)
         for object in self.scene.all_sprites:
             if object.x == self.x + self.orientation[0] and \
                     object.y == self.y + self.orientation[1]:
@@ -258,12 +267,17 @@ class Block(GameObject):
         self.sliding = False
         self.orientation = None
 
+        #audio
+        self.boxslide_sound = pygame.mixer.Sound(path.join(MUSIC_FOLDER,"boxslide.wav"))
+
         sprite_sheet = SpriteSheet(BLOCK_SPRITE_SHEET)
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
 
   def move(self, dx=0, dy=0):
         #Test if this block is going to collide with anything
         if not self.collision_object(dx, dy) and not self.collision_block(dx, dy):
+            self.boxslide_sound.set_volume(self.scene.volume_level)
+            pygame.mixer.Sound.play(self.boxslide_sound)
             self.x += dx
             self.y += dy
             if self.collision_ice(): #if the box has just been pused onto ice
