@@ -195,26 +195,7 @@ class MainMenuScene():
 
 	def savelevel(self, file_name):
 		f = open(path.join(SAVE_FOLDER, file_name),"w+")
-		#get current Time so it can be converted to a formated date
-		#Source: https://stackoverflow.com/questions/415511/how-to-get-the-current-time-in-python
-		#Source: https://stackoverflow.com/questions/311627/how-to-print-a-date-in-a-regular-format
-		current_time = datetime.datetime.now()
-		text_list = list(str(self.game.scene.scene_number) + "\n" + current_time.strftime('%m/%d/%Y, %H:%M:%S'))
-		scene_str = ""
-		for letter in text_list:
-			if letter == " " :
-				number = 10
-			elif letter == ',' :
-				number = 11
-			elif letter == '\n':
-				number = 12
-			elif letter == '/':
-				number = 13
-			elif letter == ':':
-				number = 14
-			else:
-				number = ord(letter)-48 #convert character number to string
-			scene_str = scene_str + chr((number + (random.randint(0,5) * 15)) + 32)
+		scene_str = encrypt(self.game)
 		f.write(scene_str)
 		f.close()
 		self.WAITING = False #exit the save screen
@@ -294,42 +275,18 @@ class LoadGameScene(MainMenuScene):
 		files = [f for f in listdir(SAVE_FOLDER) if isfile(join(SAVE_FOLDER, f))]
 		for file_name in files:
 				f = open(join(SAVE_FOLDER, file_name), "r")
-				if f.mode == 'r' and count < 5:
+				if f.mode == 'r' and count < 3:
 					file_list = list(f.read())
-					file_str = ""
-					for char in file_list:
-						#scene_str = scene_str + chr((number + (random.randint(1,6) * 15)) + 32)
-						number = (ord(char) - 32) % 15
-						if number == 10:
-							letter = " "
-						elif number == 11:
-							letter = ','
-						elif number == 12:
-							letter = '\n'
-						elif number == 13:
-							letter = '/'
-						elif number == 14:
-							letter = ':'
+					number, date = decrypt(file_list)
+					if isinstance(number, int): #to do: make sure number is an actual level
+						if (number < 10):
+							save_text = "Level:   " + str(number) + " Time: " + date
 						else:
-							letter = chr(number+48) #convert character number to string
-						file_str = file_str + letter
-						#scene_str = scene_str + chr(((number+1) * random.randint(1,6)) + 32)
-					print(file_str)
-					if count < 3:
-						number, date = file_str.split('\n')
-						try:
-							number = int(number)
-						except:
-							number = "Not an integer"
-						if isinstance(number, int): #to do: make sure number is an actual level
-							if (number < 10):
-								save_text = "Level:   " + str(number) + " Time: " + date
-							else:
-								save_text = "Level: " + str(number) + " Time: " + date
-							self.textObjects.append(TextObject(save_text, path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 30, WHITE, 210, y+14, "left"))
-							self.all_buttons.append(MenuButton(self.game, "Load", [100, y], self.loadlevel, number))
-							y += 60
-							count += 1
+							save_text = "Level: " + str(number) + " Time: " + date
+						self.textObjects.append(TextObject(save_text, path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 30, WHITE, 210, y+14, "left"))
+						self.all_buttons.append(MenuButton(self.game, "Load", [100, y], self.loadlevel, number))
+						y += 60
+						count += 1
 					f.close()
 #####################################################################################################
 # Display the Save Game screen
@@ -355,42 +312,18 @@ class SaveGameScene(MainMenuScene):
 		files = [f for f in listdir(SAVE_FOLDER) if isfile(join(SAVE_FOLDER, f))]
 		for file_name in files:
 				f = open(join(SAVE_FOLDER, file_name), "r")
-				if f.mode == 'r' and count < 5:
+				if f.mode == 'r' and count < 3:
 					file_list = list(f.read())
-					file_str = ""
-					for char in file_list:
-						#scene_str = scene_str + chr((number + (random.randint(1,6) * 15)) + 32)
-						number = (ord(char) - 32) % 15
-						if number == 10:
-							letter = " "
-						elif number == 11:
-							letter = ','
-						elif number == 12:
-							letter = '\n'
-						elif number == 13:
-							letter = '/'
-						elif number == 14:
-							letter = ':'
+					number, date = decrypt(file_list)
+					if isinstance(number, int): #to do: make sure number is an actual level
+						if (number < 10):
+							save_text = "Level:   " + str(number) + " Time: " + date
 						else:
-							letter = chr(number+48) #convert character number to string
-						file_str = file_str + letter
-						#scene_str = scene_str + chr(((number+1) * random.randint(1,6)) + 32)
-					print(file_str)
-					if count < 3:
-						number, date = file_str.split('\n')
-						try:
-							number = int(number)
-						except:
-							number = "Not an integer"
-						if isinstance(number, int): #to do: make sure number is an actual level
-							if (number < 10):
-								save_text = "Level:   " + str(number) + " Time: " + date
-							else:
-								save_text = "Level: " + str(number) + " Time: " + date
-							self.textObjects.append(TextObject(save_text, path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 30, WHITE, 210, y+14, "left"))
-							self.all_buttons.append(MenuButton(self.game, "Save", [100, y], self.savelevel, file_name))
-							y += 60
-							count += 1
+							save_text = "Level: " + str(number) + " Time: " + date
+						self.textObjects.append(TextObject(save_text, path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 30, WHITE, 210, y+14, "left"))
+						self.all_buttons.append(MenuButton(self.game, "Save", [100, y], self.savelevel, file_name))
+						y += 60
+						count += 1
 				f.close()
 		while count < 3: #create more save files if there are some that do no exist
 			file_num = 1
@@ -437,10 +370,10 @@ class PauseScene(MainMenuScene):
 		self.text_logo = TextObject("Pause Menu", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, WHITE, WIDTH / 2, HEIGHT / 4)
 		logo_shadow = TextObject("Pause Menu", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, BLACK, WIDTH / 2+1, HEIGHT / 4+1)
 		self.textObjects = [logo_shadow, self.text_logo]
-		self.button1 = MenuButton(self.game, "Save Game", [270,250], self.savegame)
-		self.button2 = MenuButton(self.game, "Main Menu", [270,325], self.mainmenu)
+		self.button1 = MenuButton(self.game, "Back to Game", [270,250], self.unpause)
+		self.button2 = MenuButton(self.game, "Save Game", [270,325], self.savegame)
 		self.button3 = MenuButton(self.game, "Restart Level", [270,400], self.restartlevel)
-		self.button4 = MenuButton(self.game, "Back to Game", [270,475], self.unpause)
+		self.button4 = MenuButton(self.game, "Main Menu", [270,475], self.mainmenu)
 		self.all_buttons = [self.button1, self.button2, self.button3, self.button4]
 		save_path = 'save'
 	#####################################################################################################
@@ -478,7 +411,7 @@ class CreditScene(MainMenuScene):
 		self.background = Background(path.join(IMAGE_FOLDER, 'menuback.png'), [0,0])
 		#self.textObjects = [TextObject("Credits", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 50, BLACK, WIDTH / 2 + 1, HEIGHT / 4 + 1),
 		#					TextObject("Credits", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 50, WHITE, WIDTH / 2, HEIGHT / 4)]
-		self.instructions = Instructions(30, WHITE)
+		self.instructions = Instructions(25, WHITE)
 		self.instructions.rows.append(TextObject("Credits", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 60, BLACK, WIDTH / 2 + 1, HEIGHT / 4 - 40 + 1))
 		self.instructions.rows.append(TextObject("Credits", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 60, WHITE, WIDTH / 2, HEIGHT / 4 - 40))
 		self.instructions.add("Developers:", 190)
@@ -486,6 +419,10 @@ class CreditScene(MainMenuScene):
 		self.instructions.add("Jason Anderson", 270)
 		self.instructions.add("Mr. Joshua Nutt", 310)
 		self.instructions.add("Ice tiles by Phyromatical: https://www.deviantart.com/phyromatical", 370)
+		self.instructions.add("Click2 sound created by Sebastian at www.soundbible.com licensed under CC BY 3.0", 400)
+		self.instructions.add("Game over screen background vector created by kjpargeterat www.freepik.com", 430)
+		self.instructions.add("Treasure chest sprite by goo30 at www.opengameart.org licensed under CC0 1.0", 460)
+		self.instructions.add("Free fantasy GUI by pzUH at www.opengameart.org licensed under CC0 1.0", 490)
 		self.incrementvalue = 10
 		self.instructions.increment = self.incrementvalue
 		self.start_ticks = None
@@ -578,3 +515,76 @@ class VictoryScene(CreditScene):
 		self.instructions.increment = 10
 		self.start_ticks = None
 		self.exit = False #used to record key presses to exit
+
+#################################################################################################
+# Creates and returns a random string to pad the beginning and ending of the save files
+# Returns: the random string
+#################################################################################################
+def randomString():
+	random_str = ""
+	count = random.randint(20,51)
+	for x in range(count):
+		number = random.randint(0,13) # select a number from 0 to 13
+		random_str = random_str + chr((number + (random.randint(0,5) * 15)) + 32)
+	#add a newline character at the end
+	newline = 14
+	random_str = random_str + chr((newline + (random.randint(0,5) * 15)) + 32)
+	return random_str
+
+#################################################################################################
+# Encrypts the current level and datetime to store in the save files
+# Arguments: A copy of the game object
+# Returns: The encrypted string
+#################################################################################################
+def encrypt(game):
+	#get current Time so it can be converted to a formated date
+	#Source: https://stackoverflow.com/questions/415511/how-to-get-the-current-time-in-python
+	#Source: https://stackoverflow.com/questions/311627/how-to-print-a-date-in-a-regular-format
+	current_time = datetime.datetime.now()
+	text_list = list(str(game.scene.scene_number) + "\n" + current_time.strftime('%m/%d/%Y, %H:%M:%S') + "\n")
+	scene_str = randomString()
+	for letter in text_list:
+		if letter == " " :
+			number = 10
+		elif letter == ',' :
+			number = 11
+		elif letter == ':':
+			number = 12
+		elif letter == '/':
+			number = 13
+		elif letter == '\n':
+			number = 14
+		else:
+			number = ord(letter)-48 #convert character number to string
+		scene_str = scene_str + chr((number + (random.randint(0,5) * 15)) + 32)
+	scene_str = scene_str + randomString()
+	return scene_str
+#################################################################################################
+# Decrypts the text stored in the save files
+# Arguments:The input of the file stored as a list
+# Returns: The level number and the time the game was saved at
+#################################################################################################
+def decrypt(file_list):
+	file_str = ""
+	for char in file_list:
+		#scene_str = scene_str + chr((number + (random.randint(1,6) * 15)) + 32)
+		number = (ord(char) - 32) % 15
+		if number == 10:
+			letter = " "
+		elif number == 11:
+			letter = ','
+		elif number == 12:
+			letter = ':'
+		elif number == 13:
+			letter = '/'
+		elif number == 14:
+			letter = '\n'
+		else:
+			letter = chr(number+48) #convert character number to string
+		file_str = file_str + letter
+	junk1, number, date, junk2, junk3 = file_str.split('\n')
+	try:
+		number = int(number)
+	except:
+		number = "Not an integer"
+	return number, date
