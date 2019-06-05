@@ -11,9 +11,6 @@ from menu import PauseScene, CreditScene, VictoryScene
 from item import Key, Inventory
 #from main import select_scene
 
-#https://pythonprogramming.net/adding-sounds-music-pygame/
-#https://freesound.org/
-
 """
 Parent class for game scene.
 
@@ -35,17 +32,12 @@ class GameScene(object):
         self.instructions = Instructions(30, WHITE)
         self.player = None
         self.game = game
-        #self.tile_map = create_tiles("defaultTile.map")
         self.scene_number = 0
         self.volume_level = 0.5
 
     def render(self):
         self.game.screen.fill(BGCOLOR)
         self.game.screen.blit(self.map.image, self.map.rect)
-        #self.game.screen.blit(self.tile_map, [0,0])
-        # self.draw_grid()
-        #self.ice.draw(self.game.screen)#draw ice tiles on the bottom
-        #self.walls.draw(self.game.screen)
         self.switches.draw(self.game.screen)
         self.blocks.draw(self.game.screen)
         self.doors.draw(self.game.screen)
@@ -69,8 +61,6 @@ class GameScene(object):
         self.items.update()
         self.instructions.update()
         self.hud.update()
-
-    #https://www.pygame.org/docs/ref/mixer.html
 
     def handle_events(self, events):
         for event in events:
@@ -171,6 +161,7 @@ class GameScene(object):
 
     """
     Adjust volume levels for sounds
+    #https://www.pygame.org/docs/ref/mixer.html
     """
     def adjust_music_volume(self):
         pygame.mixer.music.set_volume(self.volume_level)
@@ -325,7 +316,6 @@ class GameScene(object):
                 if door.doorType == 'Chest':
                     self.game.go_to(VictoryScene(self.game))
                 if door.doorType == 'Exit':
-                    #self.update()
                     self.players.update()
                     self.render()
                     pygame.display.flip()
@@ -349,7 +339,6 @@ class TutorialMovement(GameScene):
         super().__init__(game)
         self.map = TiledMap(path.join(MAP_FOLDER, 'TutorialMovement.tmx'))
         self.scene_number = self.game.get_scene_number(TutorialMovement)
-        #self.tile_map = create_tiles("tutorialMovementTile.map")
         self.draw_objects()
         self.instructions.add("Use the WASD keys to move around.", 100)
         self.instructions.add("Press P to pause the game.", 140)
@@ -404,9 +393,6 @@ class TutorialIce(GameScene):
         self.map = TiledMap(path.join(MAP_FOLDER, 'TutorialIce.tmx'))
         self.scene_number = self.game.get_scene_number(TutorialIce)
         self.draw_objects()
-        #Block(self, 2, 10)
-        #Block(self, 16, 11)
-        #Key(self, 16, 17)
         self.instructions = Instructions(30, BLUE)
         self.instructions.add("Be careful on the ice!", 100)
         self.instructions.add("You will slide until you collide with an object.", 140)

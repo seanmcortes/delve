@@ -50,6 +50,7 @@ class Game:
         self.scene = scene
 
     def run(self):
+        #https://www.pygame.org/docs/ref/mixer.html
         pygame.mixer.music.load(path.join(MUSIC_FOLDER,'music_loop.wav'))
         pygame.mixer.music.play(-1)
         while self.playing:

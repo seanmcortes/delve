@@ -4,6 +4,25 @@ from settings import *
 from helper import Animate, Animate_Attack
 from menu import GameOverScene
 
+#for the audio inplementation, the following resources were used.
+#https://pythonprogramming.net/adding-sounds-music-pygame/
+
+#Disclaimer: all of these sounds were not authored by the writers of this program and are credited to the 
+#authors below and used in this program under the creative commons licenses listed next to the sounds.
+
+#This program uses these sounds from https://freesound.org/:
+
+#Rock Scrape 2.wav by Benboncan | License: Attribution | https://freesound.org/people/Benboncan/sounds/74441/
+#the sound volume levels were altered and any extra silence at the beginning and end of the files were trimmed.
+
+#These sounds were used under creative commons 0, and have had their levels changed and silence trimmed:
+#Game sound by chris_schum | License: Creative Commons 0 | https://freesound.org/people/chris_schum/sounds/418149/
+#Retro Game sfx_jump bump.wav by mikala_oidua | License: Creative Commons 0 | https://freesound.org/people/mikala_oidua/sounds/365672/
+
+#metal sound, fighting game by evilus | License: Creative Commons 0 | https://freesound.org/people/evilus/sounds/203454/
+#this sound has also had some parts removed that were clipping and popping in order to make for a smoother listening experience.
+
+#Game Over Sound by TheZero | License: Creative Commons 0 | https://freesound.org/people/TheZero/sounds/368367/
 
 class GameObject(pygame.sprite.Sprite):
     def __init__(self, scene, x, y):
@@ -24,14 +43,7 @@ class GameObject(pygame.sprite.Sprite):
 
     """
         Check if enemy has collided with a collidable object
-
-        Args:
-            dx (int): x-coordinate for collision check
-            dy (int): y-coordinate for collision check
-
-        Returns:
-            bool: True if collision with collidable object. False if not
-        """
+    """
 
     def collision_object(self, dx, dy):
         for game_object in self.scene.all_sprites:
@@ -39,11 +51,19 @@ class GameObject(pygame.sprite.Sprite):
                 return True
         return False
 
+    """
+        Check if enemy has collided with an ice tile
+    """
+
     def collision_ice(self):
         for ice in self.scene.ice:
             if ice.x == self.x and ice.y == self.y:
                 return True
         return False
+
+    """
+        Check if enemy has collided with a block object (which moves when collided with)
+    """
 
     def collision_block(self, dx, dy):
         for block in self.scene.blocks:
@@ -51,6 +71,9 @@ class GameObject(pygame.sprite.Sprite):
                 return True
         return False
 
+    """
+        This object represents the player character
+    """
 
 class Player(GameObject):
     def __init__(self, scene, x, y):
@@ -117,6 +140,9 @@ class Player(GameObject):
             self.damage_down.append(sprite_sheet.get_image(x, 64, 32, 32))
             self.damage_up.append(sprite_sheet.get_image(x, 96, 32, 32))
 
+    """
+        Check if enemy has collided with a collidable object
+    """
     def move(self, dx=0, dy=0):
         if not self.collision_object(dx, dy):
             self.prev_location = (self.x, self.y)
@@ -129,8 +155,6 @@ class Player(GameObject):
         else:
             return False
 
-    #https://pythonprogramming.net/adding-sounds-music-pygame/
-    #https://freesound.org/
     def collision_enemy(self):
         self.hurt_sound.set_volume(self.scene.volume_level)
         for enemy in self.scene.enemies:
@@ -160,8 +184,8 @@ class Player(GameObject):
 
     """
     Have player interact with different objects:
-        box: push box one unit in the direction the player is facing
-        enemy: attack the enemy, deal one damage to health, have enemy enter invulnerable state
+    box: push box one unit in the direction the player is facing
+    enemy: attack the enemy, deal one damage to health, have enemy enter invulnerable state
 
     """
     def interact(self):
@@ -173,11 +197,12 @@ class Player(GameObject):
                     object.y == self.y + self.orientation[1]:
                 if object in self.scene.enemies: # check if object is an enemy
                     if object.hit_detected is False: # check if enemy is not invulnerable
-                        # object.health -= 1
-                        # object.hit = True
-                        # self.attacking = True
                         object.take_damage()
                         self.attacking = True
+
+    """
+    Update the player's state for animations
+    """
 
     def update(self):
         now = pygame.time.get_ticks()
@@ -225,8 +250,6 @@ class Player(GameObject):
                 else:
                     Animate(self, self.walking_right)
 
-
-
         if self.sliding == True: #if the player is sliding on the Ice
             self.rect.x += (self.orientation[0] * 32)
             self.rect.y += (self.orientation[1] * 32)
@@ -255,7 +278,9 @@ class Player(GameObject):
 
         self.check_health()
 
-
+"""
+The block class is used for the sliding boxes
+"""
 class Block(GameObject):
   def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
@@ -273,6 +298,9 @@ class Block(GameObject):
         sprite_sheet = SpriteSheet(BLOCK_SPRITE_SHEET)
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
 
+  """
+  Moves the sliding box if possible according to the surface it is contacting(normal/ice)
+  """
   def move(self, dx=0, dy=0):
         #Test if this block is going to collide with anything
         if not self.collision_object(dx, dy) and not self.collision_block(dx, dy):
@@ -286,6 +314,9 @@ class Block(GameObject):
 
         return False
 
+  """
+  Updates the state of the box
+  """
   def update(self):
     #test if the block is sliding on the ice
     if self.sliding == True: #if the block is sliding on the Ice
@@ -306,16 +337,21 @@ class Block(GameObject):
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
 
+"""
+Non passable structure 
+"""
 class Wall(GameObject):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
         self.groups = scene.all_sprites, scene.walls
         pygame.sprite.Sprite.__init__(self, self.groups)
-        #self.image = sprite
         self.interactable = False
         self.collidable = True
         self.checked = False #used to tell if the switch has been checked each updated
 
+"""
+A boolean object that is either on or off, resulting in assigned effects like opened doors
+"""
 class Switch(GameObject):
     def __init__(self, scene, x, y, type):
         super().__init__(scene, x, y)
@@ -337,6 +373,9 @@ class Switch(GameObject):
     def adjustVolume(self,volume):
         self.switch_sound.set_volume(volume)
 
+"""
+Structure with two states, opened or closed. May be opened with keys or switches
+"""
 #Door object.  ImageType filed is "Ice" if this is to be an ice door
 class Door(GameObject):
     def __init__(self, scene, x, y, doorType, imageType=None):
@@ -359,18 +398,26 @@ class Door(GameObject):
             self.sprite_sheet = SpriteSheet(WALLDOOR_SPRITESHEET)
         self.image = self.sprite_sheet.get_image(0, 0, 32, 32)
 
+    """
+    Changes the doors state to open
+    """
     def openDoor(self):
         if self.doorType != 'Entrance':
             self.isOpen = True
             self.collidable = False
             self.image = self.sprite_sheet.get_image(64, 0, 32, 32)
 
+    """
+    Changes the doors state to closed
+    """
+    
     def closeDoor(self):
         if self.unlocked == False: #only unlocked doors can be closed
             if self.doorType != "Entrance":
                 self.isOpen = False
                 self.collidable = True
                 self.image = self.sprite_sheet.get_image(32, 0, 32, 32)
+
 """
 This is the Treasure Chest the player opens to win the game
 It is stored in the doors container since it functions similar
@@ -408,6 +455,10 @@ class Ice(GameObject):
         self.interactable = False
         self.collidable = False
 
+"""
+Represents the amount of life the player currently has
+"""
+
 class LifeHUD(GameObject):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
@@ -421,12 +472,19 @@ class LifeHUD(GameObject):
 
         for x in range(0, 97, 32):
             self.heart_state.append(sprite_sheet.get_image(0, x, 96, 32))
-
+    
+    """
+    update the players life hud
+    """
     def update(self):
         heart_state_index = self.scene.player.health - 1
         self.image = self.heart_state[heart_state_index]
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
+
+"""
+Collection of images for the game
+"""
 
 class SpriteSheet(object):
     def __init__(self, file_name):
@@ -434,6 +492,9 @@ class SpriteSheet(object):
         # the surface is transparent.
         self.sprite_sheet = pygame.image.load(file_name).convert_alpha()
 
+    """
+    Fetches an image from the spritesheet     
+    """
     def get_image(self, x, y, width, height):
         # Use a transparent surface as the base image (pass pygame.SRCALPHA).
         image = pygame.Surface([width, height], pygame.SRCALPHA)
