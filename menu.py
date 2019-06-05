@@ -1,6 +1,7 @@
 import pygame
 import pygame.freetype
 import sys
+import random
 from os import path
 from os import remove # to delete corrupted save files
 from settings import *
@@ -194,22 +195,27 @@ class MainMenuScene():
 
 	def savelevel(self, file_name):
 		f = open(path.join(SAVE_FOLDER, file_name),"w+")
-		scene_list = list(str(self.game.scene.scene_number) + "\n")
-		scene_str = ""
-		for letter in scene_list:
-			scene_str = scene_str + chr(ord(letter) + 1)
-		print(scene_str)
-		f.write(scene_str)
-		#get current Time
-		#source: https://stackoverflow.com/questions/415511/how-to-get-the-current-time-in-python
-		current_time = datetime.datetime.now()
-		#convert time to a string
+		#get current Time so it can be converted to a formated date
+		#Source: https://stackoverflow.com/questions/415511/how-to-get-the-current-time-in-python
 		#Source: https://stackoverflow.com/questions/311627/how-to-print-a-date-in-a-regular-format
-		time_list = list(current_time.strftime('%m/%d/%Y, %H:%M:%S'))
-		time_str = ""
-		for letter in time_list:
-			time_str = time_str + chr(ord(letter) + 1)
-		f.write(time_str)
+		current_time = datetime.datetime.now()
+		text_list = list(str(self.game.scene.scene_number) + "\n" + current_time.strftime('%m/%d/%Y, %H:%M:%S'))
+		scene_str = ""
+		for letter in text_list:
+			if letter == " " :
+				number = 10
+			elif letter == ',' :
+				number = 11
+			elif letter == '\n':
+				number = 12
+			elif letter == '/':
+				number = 13
+			elif letter == ':':
+				number = 14
+			else:
+				number = ord(letter)-48 #convert character number to string
+			scene_str = scene_str + chr((number + (random.randint(0,5) * 15)) + 32)
+		f.write(scene_str)
 		f.close()
 		self.WAITING = False #exit the save screen
 
@@ -291,20 +297,30 @@ class LoadGameScene(MainMenuScene):
 				if f.mode == 'r' and count < 5:
 					file_list = list(f.read())
 					file_str = ""
-					for letter in file_list:
-						file_str = file_str + chr(ord(letter) - 1)
+					for char in file_list:
+						#scene_str = scene_str + chr((number + (random.randint(1,6) * 15)) + 32)
+						number = (ord(char) - 32) % 15
+						if number == 10:
+							letter = " "
+						elif number == 11:
+							letter = ','
+						elif number == 12:
+							letter = '\n'
+						elif number == 13:
+							letter = '/'
+						elif number == 14:
+							letter = ':'
+						else:
+							letter = chr(number+48) #convert character number to string
+						file_str = file_str + letter
+						#scene_str = scene_str + chr(((number+1) * random.randint(1,6)) + 32)
+					print(file_str)
 					if count < 3:
 						number, date = file_str.split('\n')
-						number = int(number)
-						"""for o in files:
-								f = open(join(SAVE_FOLDER, o), "r")
-								if f.mode == 'r' and count < 5:
-									try:
-										number = int(f.readline().strip())
-									except:
-										number = "Not an integer"
-									if isinstance(number, int) and count < 3: #to do: make sure number is an actual level
-										date = f.readline().strip()"""
+						try:
+							number = int(number)
+						except:
+							number = "Not an integer"
 						if isinstance(number, int): #to do: make sure number is an actual level
 							if (number < 10):
 								save_text = "Level:   " + str(number) + " Time: " + date
@@ -342,11 +358,30 @@ class SaveGameScene(MainMenuScene):
 				if f.mode == 'r' and count < 5:
 					file_list = list(f.read())
 					file_str = ""
-					for letter in file_list:
-						file_str = file_str + chr(ord(letter) - 1)
+					for char in file_list:
+						#scene_str = scene_str + chr((number + (random.randint(1,6) * 15)) + 32)
+						number = (ord(char) - 32) % 15
+						if number == 10:
+							letter = " "
+						elif number == 11:
+							letter = ','
+						elif number == 12:
+							letter = '\n'
+						elif number == 13:
+							letter = '/'
+						elif number == 14:
+							letter = ':'
+						else:
+							letter = chr(number+48) #convert character number to string
+						file_str = file_str + letter
+						#scene_str = scene_str + chr(((number+1) * random.randint(1,6)) + 32)
+					print(file_str)
 					if count < 3:
 						number, date = file_str.split('\n')
-						number = int(number)
+						try:
+							number = int(number)
+						except:
+							number = "Not an integer"
 						if isinstance(number, int): #to do: make sure number is an actual level
 							if (number < 10):
 								save_text = "Level:   " + str(number) + " Time: " + date
