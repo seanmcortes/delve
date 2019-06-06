@@ -1,8 +1,8 @@
 import pygame
 from sprites import GameObject, SpriteSheet
 from settings import RED, GREEN, TILESIZE, ENEMY_SPEED, \
-    HIT_DELAY, UP, DOWN, LEFT, RIGHT, BAT_SPRITE_SHEET, \
-    GHOST_SPRITE_SHEET
+    HIT_DELAY, ENEMY_ATTACK_DELAY, UP, DOWN, LEFT, RIGHT, \
+    BAT_SPRITE_SHEET, GHOST_SPRITE_SHEET
 from helper import Animate
 
 
@@ -21,6 +21,8 @@ class Enemy(GameObject):
         self.health = 1
         self.hit = False
         self.hit_detected = False
+        self.attacking = False
+        self.attack_detected = False
 
         if len(moves) > 0:
             self.direction = None
@@ -28,6 +30,7 @@ class Enemy(GameObject):
         # Animation
         self.animation_index = 0
         self.update_delay = ENEMY_SPEED
+        self.attack_delay = ENEMY_ATTACK_DELAY
         self.last_update = pygame.time.get_ticks()
         self.last_idle_update = pygame.time.get_ticks()
         self.hit_delay = HIT_DELAY
@@ -150,20 +153,11 @@ class Enemy(GameObject):
 
         now = pygame.time.get_ticks()
 
-        if now - self.last_idle_update >= self.update_delay:
-            self.last_idle_update = now
-            if self.orientation == UP:
-                Animate(self, self.walking_up)
-            elif self.orientation == LEFT:
-                Animate(self, self.walking_left)
-            elif self.orientation == DOWN:
-                Animate(self, self.walking_down)
-            else:
-                Animate(self, self.walking_right)
-
-        if self.hit and not self.hit_detected: # player first hits enemy, starts recovery timer for enemy
+        # Enemy is attacked by player
+        if self.hit and not self.hit_detected:
             self.last_update = now
             self.hit_detected = True
+        # Animate hurt
         elif self.hit and self.hit_detected:
             if now - self.last_update < self.hit_delay:
                 if self.orientation == UP:
@@ -178,11 +172,29 @@ class Enemy(GameObject):
                 self.last_update = now
                 self.hit = False
                 self.hit_detected = False
+        # Pause while player recovers from being attacked
+        elif self.attacking and not self.attack_detected:
+            self.last_update = now
+            self.attack_detected = True
+        elif self.attacking and self.attack_detected:
+            if now - self.last_update >= self.attack_delay:
+                self.last_update = now
+                self.attacking = False
+                self.attack_detected = False
         else:
-            # self.render_orientation()
+            if now - self.last_idle_update >= self.update_delay:
+                self.last_idle_update = now
+                if self.orientation == UP:
+                    Animate(self, self.walking_up)
+                elif self.orientation == LEFT:
+                    Animate(self, self.walking_left)
+                elif self.orientation == DOWN:
+                    Animate(self, self.walking_down)
+                else:
+                    Animate(self, self.walking_right)
+
             if now - self.last_update >= self.update_delay:
                 self.last_update = now
-
                 if len(self.moves) > 0:
                     self.move_algorithm()
 
