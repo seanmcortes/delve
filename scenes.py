@@ -4,12 +4,10 @@ from os import path
 from helper import *
 from settings import *
 from sprites import *
-from map import create_tiles
 from map import TiledMap
 from enemy import Enemy, Ghost
 from menu import PauseScene, CreditScene, VictoryScene
 from item import Key, Inventory
-#from main import select_scene
 
 """
 Parent class for game scene.
