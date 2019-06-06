@@ -411,18 +411,37 @@ class CreditScene(MainMenuScene):
 		self.background = Background(path.join(IMAGE_FOLDER, 'menuback.png'), [0,0])
 		#self.textObjects = [TextObject("Credits", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 50, BLACK, WIDTH / 2 + 1, HEIGHT / 4 + 1),
 		#					TextObject("Credits", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 50, WHITE, WIDTH / 2, HEIGHT / 4)]
-		self.instructions = Instructions(25, WHITE)
-		self.instructions.rows.append(TextObject("Credits", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 60, BLACK, WIDTH / 2 + 1, HEIGHT / 4 - 40 + 1))
-		self.instructions.rows.append(TextObject("Credits", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 60, WHITE, WIDTH / 2, HEIGHT / 4 - 40))
-		self.instructions.add("Developers:", 190)
-		self.instructions.add("Sir Sean Cortes", 230)
-		self.instructions.add("Jason Anderson", 270)
-		self.instructions.add("Mr. Joshua Nutt", 310)
-		self.instructions.add("Ice tiles by Phyromatical: https://www.deviantart.com/phyromatical", 370)
-		self.instructions.add("Click2 sound created by Sebastian at www.soundbible.com licensed under CC BY 3.0", 400)
-		self.instructions.add("Game over screen background vector created by kjpargeterat www.freepik.com", 430)
-		self.instructions.add("Treasure chest sprite by goo30 at www.opengameart.org licensed under CC0 1.0", 460)
-		self.instructions.add("Free fantasy GUI by pzUH at www.opengameart.org licensed under CC0 1.0", 490)
+		self.instructions = Instructions(20, WHITE)
+		self.instructions.rows.append(TextObject("Credits", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, BLACK, WIDTH / 2 + 1, 60 + 1))
+		self.instructions.rows.append(TextObject("Credits", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 100, WHITE, WIDTH / 2, 60))
+		self.instructions.rows.append(TextObject("Developers:", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 40, BLACK, WIDTH / 2 + 1, 120+ 1))
+		self.instructions.rows.append(TextObject("Sean Cortes", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 36, BLACK, WIDTH / 2 + 1, 150+ 1))
+		self.instructions.rows.append(TextObject("Jason Anderson:", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 36,BLACK, WIDTH / 2 + 1, 180+ 1))
+		self.instructions.rows.append(TextObject("Joshua Nutt", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 36, BLACK, WIDTH / 2 + 1, 210+ 1))
+		self.instructions.rows.append(TextObject("Developers:", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 40, WHITE,  WIDTH / 2, 120))
+		self.instructions.rows.append(TextObject("Sean Cortes", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 36, WHITE,  WIDTH / 2, 150))
+		self.instructions.rows.append(TextObject("Jason Anderson:", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 36, WHITE,  WIDTH / 2, 180))
+		self.instructions.rows.append(TextObject("Joshua Nutt", path.join(IMAGE_FOLDER, 'CuteFont-Regular.ttf'), 36, WHITE,  WIDTH / 2, 210))
+		self.instructions.add("Ice tiles by Phyromatical | https://www.deviantart.com/phyromatical", 240)
+		self.instructions.add("Game over screen background vector created by kjpargeterat | www.freepik.com", 270)
+		self.instructions.add("Treasure chest sprite by goo30 | www.opengameart.org | License: CC0 1.0", 300)
+		self.instructions.add("Free fantasy GUI by pzUH | www.opengameart.org | License: CC0 1.0", 330)
+		self.instructions.add("Click2 sound created by Sebastian | www.soundbible.com | License: CC BY 3.0", 360)
+		self.instructions.add("Rock Scrape 2.wav by Benboncan | License: CC BY 3.0", 390)
+		self.instructions.add("https://freesound.org/people/Benboncan/sounds/74441/ | Edits: Silence trimmed, volume adjusted", 410)
+		self.instructions.add("Game sound by chris_schum | | License: CC0 |", 440)
+		self.instructions.add("https://freesound.org/people/chris_schum/sounds/418149/ | Edits: Silence trimmed, volume adjusted", 460)
+		self.instructions.add("Retro Game sfx_jump bump.wav by mikala_oidua | License: CC0", 490)
+		self.instructions.add("https://freesound.org/people/mikala_oidua/sounds/365672/ | Edits: Silence trimmed, volume adjusted", 510)
+		self.instructions.add("Metal sound, fighting game by evilus | License: CC0", 540)
+		self.instructions.add("https://freesound.org/people/evilus/sounds/203454/ | Edits: Silence trimmed, volume adjusted" , 560)
+		self.instructions.add("Game Over Sound by TheZero | License: License: CC0", 590)
+		self.instructions.add("https://freesound.org/people/TheZero/sounds/368367/ | Edited to remove noise artifacts", 610)
+
+
+
+
+
 		self.incrementvalue = 10
 		self.instructions.increment = self.incrementvalue
 		self.start_ticks = None
