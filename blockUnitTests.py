@@ -8,7 +8,6 @@ from scenes import Level1Scene, TutorialEnemy, TutorialIce, BlockUnitTest
 from menu import *
 import unittest
 
-#block unit tests
 class Game:
     def __init__(self):
         pygame.init()

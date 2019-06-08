@@ -43,6 +43,7 @@ class Enemy(GameObject):
         self.walking_left = []
         self.walking_right = []
 
+        # Append sprites to walking arrays
         for x in range(0, 33, 32):
             self.walking_right.append(sprite_sheet.get_image(x, 0, 32, 32))
             self.walking_left.append(sprite_sheet.get_image(x, 32, 32, 32))
@@ -54,6 +55,7 @@ class Enemy(GameObject):
         self.damage_left = []
         self.damage_right = []
 
+        # Append sprites to damage arrays
         for x in range(64, 128, 32):
             self.damage_right.append(sprite_sheet.get_image(x, 0, 32, 32))
             self.damage_left.append(sprite_sheet.get_image(x, 32, 32, 32))
@@ -181,6 +183,7 @@ class Enemy(GameObject):
                 self.last_update = now
                 self.attacking = False
                 self.attack_detected = False
+        # Animate idle
         else:
             if now - self.last_idle_update >= self.update_delay:
                 self.last_idle_update = now
@@ -193,12 +196,16 @@ class Enemy(GameObject):
                 else:
                     Animate(self, self.walking_right)
 
+            # Continue pathing
             if now - self.last_update >= self.update_delay:
                 self.last_update = now
                 if len(self.moves) > 0:
                     self.move_algorithm()
 
-
+'''
+Ghost enemy:
+    Inherits from Enemy class, sets new sprites and health value.
+'''
 class Ghost(Enemy):
     def __init__(self, scene, x, y, orientation, moves):
         super().__init__(scene, x, y, orientation, moves)
@@ -214,6 +221,7 @@ class Ghost(Enemy):
         self.walking_left = []
         self.walking_right = []
 
+        # Append sprites to walking arrays
         for x in range(0, 33, 32):
             self.walking_right.append(sprite_sheet.get_image(x, 0, 32, 32))
             self.walking_left.append(sprite_sheet.get_image(x, 32, 32, 32))
@@ -225,6 +233,7 @@ class Ghost(Enemy):
         self.damage_left = []
         self.damage_right = []
 
+        # Append sprites to damage arrays
         for x in range(64, 128, 32):
             self.damage_right.append(sprite_sheet.get_image(x, 0, 32, 32))
             self.damage_left.append(sprite_sheet.get_image(x, 32, 32, 32))

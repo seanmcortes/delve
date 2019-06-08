@@ -3,7 +3,10 @@ from sprites import GameObject, SpriteSheet
 from settings import KEY_SPRITESHEET, INVENTORY_SPRITESHEET, TILESIZE, KEY_IDLE_DELAY
 from helper import Animate
 
-
+'''
+Inventory class:
+    Holds a list of Items
+'''
 class Inventory(GameObject):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
@@ -24,14 +27,18 @@ class Inventory(GameObject):
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
 
-
+'''
+Base item class
+'''
 class Item(GameObject):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
         self.groups = scene.all_sprites, scene.items
         pygame.sprite.Sprite.__init__(self, self.groups)
 
-
+'''
+Key class
+'''
 class Key(Item):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
@@ -46,12 +53,14 @@ class Key(Item):
         sprite_sheet = SpriteSheet(KEY_SPRITESHEET)
         self.image = sprite_sheet.get_image(0, 0, 32, 32)
 
+        # Append sprites to animation array
         for x in range(0, 65, 32):
             self.animation.append(sprite_sheet.get_image(x, 0, 32, 32))
 
     def update(self):
         now = pygame.time.get_ticks()
 
+        # Increment animation
         if now - self.last_update >= self.update_delay:
             self.last_update = now
             Animate(self, self.animation)
@@ -59,6 +68,7 @@ class Key(Item):
         self.rect.x = self.x * TILESIZE
         self.rect.y = self.y * TILESIZE
 
+        # Append self to inventory and remove object sprite from map
         if self.scene.player.x == self.x and self.scene.player.y == self.y:
             self.scene.inventory.item_list.append(self)
             self.kill()

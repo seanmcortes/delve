@@ -71,10 +71,9 @@ class GameObject(pygame.sprite.Sprite):
                 return True
         return False
 
-    """
-        This object represents the player character
-    """
-
+"""
+    This object represents the player character
+"""
 class Player(GameObject):
     def __init__(self, scene, x, y):
         super().__init__(scene, x, y)
@@ -205,7 +204,6 @@ class Player(GameObject):
     """
     Update the player's state for animations
     """
-
     def update(self):
         now = pygame.time.get_ticks()
 

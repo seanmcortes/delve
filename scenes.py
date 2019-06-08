@@ -33,8 +33,10 @@ class GameScene(object):
         self.scene_number = 0
         self.volume_level = 0.5
 
+    '''
+    Draw all sprites to screen
+    '''
     def render(self):
-        print("start of render")
         self.game.screen.fill(BGCOLOR)
         self.game.screen.blit(self.map.image, self.map.rect)
         self.switches.draw(self.game.screen)
@@ -46,10 +48,11 @@ class GameScene(object):
         self.items.draw(self.game.screen)
         self.instructions.draw(self.game.screen)
         self.draw_HUD(self.game.screen)
-        print("end of render")
 
+    '''
+    Call the update function of all objects
+    '''
     def update(self):
-        print("start of update")
         self.checkSwitches()
         self.ice.update()
         self.walls.update()
@@ -61,10 +64,20 @@ class GameScene(object):
         self.items.update()
         self.instructions.update()
         self.hud.update()
-        print("end of update")
 
+    '''
+     Read and handle player input:
+       QUIT: close game
+       EQUALS: increase volume level
+       MINUS: decrease volume level
+       p: pause the game
+       w: move player up
+       a: move player left
+       s: move player down
+       d: move player right
+       space: interact with object
+    '''
     def handle_events(self, events):
-        print("start handle events")
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -160,8 +173,7 @@ class GameScene(object):
                                 self.player.orientation = RIGHT
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_SPACE and not self.player.hit_detected: # attack only if player is in vulnerable state
-                    self.player.interact()
-        print("end of handle events")    
+                    self.player.interact()  
 
 
     """
@@ -217,7 +229,6 @@ class GameScene(object):
     """
     Draw lines for map grid
     """
-    # TODO: potentially remove, unecessary function
     def draw_grid(self):
         for x in range(0, WIDTH, TILESIZE):
             pygame.draw.line(self.game.screen, LIGHTGREY, (x, 0), (x, HEIGHT))
@@ -333,9 +344,9 @@ class GameScene(object):
             for door in self.doors:
                 if door.checked == False and door.isOpen == True and door.unlocked ==False:
                     door.closeDoor()
+
 """
 Display Level 1: Tutorial Movement
-
 - Simple tutorial, show player how to move character and what the objectives
     of the game are.
 """
@@ -464,6 +475,9 @@ class Level6(GameScene):
         Enemy(self, 12, 13, DOWN, type_6)
         Enemy(self, 10, 9, DOWN, type_5)
 
+"""
+Display Level 7
+"""
 class Level7(GameScene):
     def __init__(self, game):
         super().__init__(game)
@@ -473,7 +487,7 @@ class Level7(GameScene):
         pygame.event.clear() #clear the queue of any keystrokes that happen while the stage was loaing
 """
 Display Level 8: Blocks and enemies
--
+- Complex level with block blocks and enemies
 """
 class Level8(GameScene):
     def __init__(self, game):
@@ -529,9 +543,9 @@ class Level9(GameScene):
         Enemy(self, 6, 15, DOWN, type_2)
         Enemy(self, 15, 15, UP, type_3)
         Enemy(self, 16, 4, DOWN, type_4)
+
 """
 Display Level 10: Final level with Treasure Chest
--
 """
 class Level10(GameScene):
     def __init__(self, game):
@@ -563,6 +577,9 @@ class Level10(GameScene):
         Enemy(self, 2, 17, DOWN, type_3)
         Enemy(self, 2, 3, DOWN, type_4)
 
+"""
+Room for testing
+"""
 class DevRoom(GameScene):
     def __init__(self, game):
         super().__init__(game)
