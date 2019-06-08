@@ -34,6 +34,7 @@ class GameScene(object):
         self.volume_level = 0.5
 
     def render(self):
+        print("start of render")
         self.game.screen.fill(BGCOLOR)
         self.game.screen.blit(self.map.image, self.map.rect)
         self.switches.draw(self.game.screen)
@@ -45,8 +46,10 @@ class GameScene(object):
         self.items.draw(self.game.screen)
         self.instructions.draw(self.game.screen)
         self.draw_HUD(self.game.screen)
+        print("end of render")
 
     def update(self):
+        print("start of update")
         self.adjust_music_volume()
         self.checkSwitches()
         self.ice.update()
@@ -59,8 +62,10 @@ class GameScene(object):
         self.items.update()
         self.instructions.update()
         self.hud.update()
+        print("end of update")
 
     def handle_events(self, events):
+        print("start handle events")
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -155,6 +160,7 @@ class GameScene(object):
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_SPACE and not self.player.hit_detected: # attack only if player is in vulnerable state
                     self.player.interact()
+        print("end of handle events")    
 
 
     """
