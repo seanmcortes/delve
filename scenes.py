@@ -341,7 +341,7 @@ class TutorialMovement(GameScene):
         self.instructions.add("Use the WASD keys to move around.", 100)
         self.instructions.add("Press P to pause the game.", 140)
         self.instructions.add("Get the key to unlock the door and proceed to the next level.", 180)
-
+        pygame.event.clear() #clear the queue of any keystrokes that happen while the stage was loaing
 
 """
 Display Level 2: Tutorial Blocks
@@ -357,6 +357,7 @@ class TutorialBlock(GameScene):
         self.instructions.add("You can move the blocks by standing next to them", 100)
         self.instructions.add("and pushing the directional buttons.", 140)
         self.instructions.add("Push the block on top of the switch to unlock the door.", 180)
+        pygame.event.clear() #clear the queue of any keystrokes that happen while the stage was loaing
 
 
 """
@@ -372,6 +373,7 @@ class TutorialEnemy(GameScene):
         self.spawn_enemies()
         self.instructions.add("Press the Spacebar while standing next to an enemy to attack it.", 100)
         self.instructions.add("Make sure you don't run out of Hearts!", 140)
+        pygame.event.clear() #clear the queue of any keystrokes that happen while the stage was loaing
 
     def spawn_enemies(self):
         Enemy(self, 10, 5, LEFT, [])
@@ -396,6 +398,7 @@ class TutorialIce(GameScene):
         self.instructions.add("You will slide until you collide with an object.", 140)
         self.instructions.add("Try to position the blocks to help you", 180)
         self.instructions.add("reach the key and unlock the door.", 220)
+        pygame.event.clear() #clear the queue of any keystrokes that happen while the stage was loaing
 
 
 """
@@ -409,6 +412,7 @@ class Level5(GameScene):
         self.map = TiledMap(path.join(MAP_FOLDER, 'Level5.tmx'))
         self.scene_number = self.game.get_scene_number(Level5)
         self.draw_objects()
+        pygame.event.clear() #clear the queue of any keystrokes that happen while the stage was loaing
 
 
 """
@@ -422,6 +426,7 @@ class Level6(GameScene):
         self.scene_number = self.game.get_scene_number(Level6)
         self.draw_objects()
         self.spawn_enemies()
+        pygame.event.clear() #clear the queue of any keystrokes that happen while the stage was loaing
 
     def spawn_enemies(self):
         type_1 = [UP, UP, UP,
@@ -458,6 +463,7 @@ class Level7(GameScene):
         self.map = TiledMap(path.join(MAP_FOLDER, 'Level7.tmx'))
         self.scene_number = self.game.get_scene_number(Level7)
         self.draw_objects()
+        pygame.event.clear() #clear the queue of any keystrokes that happen while the stage was loaing
 """
 Display Level 8: Blocks and enemies
 -
@@ -469,6 +475,7 @@ class Level8(GameScene):
         self.scene_number = self.game.get_scene_number(Level8)
         self.draw_objects()
         self.spawn_enemies()
+        pygame.event.clear() #clear the queue of any keystrokes that happen while the stage was loaing
 
     def spawn_enemies(self):
         type_1 = [LEFT, LEFT,
@@ -493,6 +500,7 @@ class Level9(GameScene):
         self.scene_number = self.game.get_scene_number(Level9)
         self.draw_objects()
         self.spawn_enemies()
+        pygame.event.clear() #clear the queue of any keystrokes that happen while the stage was loaing
 
     def spawn_enemies(self):
         type_1 = [UP, UP, UP,
@@ -525,6 +533,7 @@ class Level10(GameScene):
         self.scene_number = self.game.get_scene_number(Level10)
         self.draw_objects()
         self.spawn_enemies()
+        pygame.event.clear() #clear the queue of any keystrokes that happen while the stage was loaing
 
     def spawn_enemies(self):
         type_1 = [LEFT, LEFT,
@@ -554,6 +563,7 @@ class DevRoom(GameScene):
         self.scene_number = self.game.get_scene_number(Level8)
         self.draw_objects()
         self.spawn_enemies()
+        pygame.event.clear() #clear the queue of any keystrokes that happen while the stage was loaing
 
     def spawn_enemies(self):
         type_1 = []
