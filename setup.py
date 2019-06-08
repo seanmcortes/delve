@@ -1,6 +1,7 @@
 from cx_Freeze import setup, Executable
 
-buildOptions = dict(include_files = ['enemy.py',
+buildOptions = dict(include_files = [
+                                     'enemy.py',
                                      'helper.py',
                                      'map.py',
                                      'menu.py',
@@ -10,11 +11,13 @@ buildOptions = dict(include_files = ['enemy.py',
                                      'item.py',
                                      'image/',
                                      'maps/',
-                                     'save/'])
+                                     'save/',
+                                     'music/',
+                                     ])
 
 setup(
     name = 'delve',
-    version = '0.1',
+    version = '1.0',
     description = 'A game about delving.',
     author = 'Jason Anderson, Sean Cortes, Joshua Nutt',
     options = dict(build_exe = buildOptions),
