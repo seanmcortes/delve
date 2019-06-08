@@ -161,6 +161,7 @@ class Player(GameObject):
             if enemy.x == self.x and enemy.y == self.y:
                 pygame.mixer.Sound.play(self.hurt_sound)
                 self.enemy = enemy
+                self.enemy.attacking = True
                 return True
         return False
 
@@ -198,6 +199,7 @@ class Player(GameObject):
                 if object in self.scene.enemies: # check if object is an enemy
                     if object.hit_detected is False: # check if enemy is not invulnerable
                         object.take_damage()
+                        
                         self.attacking = True
 
     """
