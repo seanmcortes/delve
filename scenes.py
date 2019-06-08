@@ -50,7 +50,6 @@ class GameScene(object):
 
     def update(self):
         print("start of update")
-        self.adjust_music_volume()
         self.checkSwitches()
         self.ice.update()
         self.walls.update()
@@ -74,9 +73,11 @@ class GameScene(object):
             if keyState[pygame.K_EQUALS]:
                 if (self.volume_level < 1.0):
                     self.volume_level += .1
+                    self.adjust_music_volume()
             if keyState[pygame.K_MINUS]:
                 if self.volume_level > 0.1:
                     self.volume_level -= .1
+                    self.adjust_music_volume()
             if keyState[pygame.K_p]: #Pause the game
                 pauseScene = PauseScene(self.game) #create a pause scene
                 pauseScene.paused() #loop until the player exits the pause screen
